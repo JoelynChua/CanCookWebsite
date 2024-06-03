@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 
 //Enable firebase in the react application
-import { getfirestore } from "@firebase/firestore";
+import { getFirestore } from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,4 +18,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 //Initialize cloud firestore and get a reference to the service
-const db = getfirestore(app);
+export const db = getFirestore(app);
