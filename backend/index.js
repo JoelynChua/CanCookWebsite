@@ -1,34 +1,19 @@
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/userRoutes');
+const { handleError } = require('./utils/errorHandler');
 
-// //Enable firebase in the react application
-// import { getfirestore } from "@firebase/firestore";
+const app = express();
+const port = process.env.PORT || 3000;
 
-// // Your web app's Firebase configuration
-// const firebaseConfig = {
-//     apiKey: process.env.REACT_APP_API_KEY,
-//     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-//     projectId: process.env.REACT_APP_PROJECT_ID,
-//     storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-//     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-//     appId: process.env.REACT_APP_APP_ID
-// };
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// // Initialize Firebase
-// const firebaseClient = initializeApp(firebaseConfig);
+app.use('/api', userRoutes);
 
-// //Initialize cloud firestore and get a reference to the service
-// const db = getfirestore(app);
+app.use(handleError);
 
-
-
-// const express = require("express");
-
-// //create an instance of our application
-// const app = express();
-// app.use(express.json()) //Is to tell express to understand JSON
-// const PORT = 5000;
-
-
-
-
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});

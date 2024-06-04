@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Prevent .env file from being commited into repo
 .env
+/config/serviceAccountKey.json
