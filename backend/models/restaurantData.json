@@ -1,0 +1,50 @@
+{
+    "recipes": {
+      "recipe1": {
+        "recipeName": "Smokey roasted tomato soup",
+        "publisher": "userID1",
+        "cuisine": "Chinese",
+        "duration": "1hr 45 mins",
+        "serving size": 5,
+        "calories": 240,
+        "ingredients": [
+            "1.5kg of Tomato",
+            "1 1/2 tsp of Smoked Paprika",
+            "2 of Garlic cloves",
+            "1 (diced) of Onion",
+            "1 L (4 cups) of Vegetable Stock"
+        ],
+        "equipments":[
+            "Large Pot",
+            "Oven",
+            "Baking Tray",
+            "Blender",
+            "knife",
+            "Ladder/Spatula"
+        ],
+        "steps":[
+          "1. Place halved tomatoes and unpeeled garlic cloves on a baking tray. Toss with olive oil, smoked paprika, salt and pepper. Arrange them cut face up.",
+          "2. Roast for 40 to 45 minutes in a hot oven until the surface has little charred bits and the tomatoes are completely soft.",
+          "3. Sauté the onion and garlic in a little oil until the onion is soft and translucent.",
+          "4. Add the tomatoes and vegetable stock.",
+          "5. Squeeze the roasted garlic flesh from the skins. The garlic flavour will be very mellowed and sweet. (It's tempting to smear it on toast - in fact, it's a brilliant way to use it!).",
+          "6. Blitz until smooth using a stick blender. Or do this step in a food processor or blender (you need a high powered blender like a Vitamin or Blendtec to make the soup perfectly smooth).",
+          "7. Simmer for 10 minutes to bring the flavours together, then stir in the cream.",
+          "8. Ladle into bowls and serve with a drizzle of cream and sprinkle of fresh basil!"
+
+
+        ]
+
+      },
+      "user2": {
+        "nickname": "codingdoug",
+        "age": 42,
+        "fab": true
+      },
+      "user3": {
+        "nickname": "puf",
+        "age": 42,
+        "fab": true
+      }
+    }
+  }
