@@ -4,6 +4,8 @@ import HomePage from "./screens/HomePage";
 import Wishlist from "./screens/Wishlist";
 import NaviBar from "./components/naviBar";
 
+
+
 function App() {
   return (
     <div >

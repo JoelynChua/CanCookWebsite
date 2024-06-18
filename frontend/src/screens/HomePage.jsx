@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {collection, getDocs} from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 //import { db } from '../../../backend/config/firebase';
 
 // import { ref, onValue } from "firebase/database";
@@ -10,63 +10,57 @@ import { getAllRecipes } from "../services/recipeService";
 export default function HomePage() {
 
   {/* Working on the display of recipe details */ }
+  // Source: https://www.youtube.com/watch?v=F7t-n5c7JsE&list=PLzKiusGbAW3gDkFz9nlohhxEaWhMxnGHX&index=8
   const [recipeList, setrecipeList] = useState([]);
-  
+
   useEffect(() => {
     getRecipes()
   }, [])
 
-  function getRecipes(){
+  // Helper function
+  function getRecipes() {
     getAllRecipes()
-    .then(response=> {
-      console.log(response)
-    }).catch(error=> console.log(error.message))
-   
-}
-  //   const recipeRef = collection(db, 'recipes')
-  //   getDocs(recipeRef).then(response => {
-  //     console.log(response)
-  //   }).catch(error=> console.log(error.message))
-  // }
+      .then((response) => {
+        console.log(response)
+        // set the list of receipes
+        setrecipeList(response)
 
-  // console.log(recipeList);
+      }).catch(error => console.log(error.message))
 
-  // let ref = getDatabase.ref("/recipes");
-  // ref.on("value", snapshot => {
-  //   const data = snapshot.val()
-  //   console.log(data)
-  // })
+  }
 
-  // const dbRef = ref(getDatabase());
-  // console.log(dbRef);
-  // get(child(dbRef, `recpies`)).then((snapshot) => {
-  //   if (snapshot.exists()) {
-  //     console.log(snapshot.val());
-  //   } else {
-  //     console.log("No data available");
-  //   }
-  // }).catch((error) => {
-  //   console.error(error);
-  // });
 
   return (
     <div className='flex justify-center items-center w-full h-screen'>
-      <h1>Homepage</h1>
-      <p>testJoelyn123</p>
-      <p>testHSU</p>
-      <p>testzheqing_part2</p>
 
-      {/* Actual list of tasks */}
-      {/* <div>
-        {recipeList.map((recipe) => {
+      {/* Actual list of recipes */}
+      <div>
+        {recipeList.map((recipe, index) => {
           return (
             <div
-              key={recipe.recipeName}
+              key={index}
               id={recipe._id}
-            />
+            >
+              {/* Render your recipe details here, e.g., recipe name, cuisine, etc. */}
+              <p class="font-bold text-2xl">{recipe.recipeName}</p>
+              <br></br>
+              <img class="size-56 rounded-lg" src = {recipe.image} />
+              <p>Cuisine: {recipe.cuisine}</p>
+              <p>Duration: {recipe.duration}</p>
+              <p>Serving Size: {recipe.servingSize}</p>
+              <p>Calories: {recipe.calories}</p>
+              <p>Ingredients: {recipe.ingredients.join(', ')}</p>
+              <p>Equipments: {recipe.equipments.join(', ')}</p>
+              {/* Steps to be printed in new line after every , */}
+              <p>Steps:</p>
+              {recipe.steps.map((step, stepIndex) => (
+                <p key={stepIndex}>{step}</p>
+              ))}
+            </div>
           );
         })}
-      </div> */}
+      </div>
+
 
 
     </div>
