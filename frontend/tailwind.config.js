@@ -11,6 +11,7 @@
 module.exports = {
   content: [
       "./src/**/*.{js,jsx,ts,tsx}",
+      "./src/*.tff",
   ],
   theme: {
       extend: {
@@ -19,8 +20,13 @@ module.exports = {
           pink_main: '#F7D2DB', // Example secondary color
           beige_main: '#FFF9EC',
           purple_main:'#CABAF2',
-          orange_main:'#FA9E05'
+          orange_main:'#FA9E05',
+          blue_main: '#E8F2F6',
         }
+      },
+      fontFamily: {
+        'overlock': ['Overlock SC', 'sans-serif'],
+        'baloo': ['Baloo', 'sans-serif'],
       },
       screens: {
           sm: '640px',
