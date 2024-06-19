@@ -1,14 +1,139 @@
+/*This service interacts with Firebase Realtime Database, 
+handling operations related to user data in the database.*/
+
+const firebase = require('firebase/app');
+require('firebase/auth');
 const db = require('../config/firebase');
 const User = require('../models/userModel');
 
-exports.getUsers = async () => {
-  const snapshot = await db.ref('users').once('value');
-  const users = snapshot.val();
-  return Object.keys(users).map(key => new User(key, users[key].email, users[key].password, users[key].username));
+// Initialise firebase with client SDK
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
-exports.addUser = async (newUser) => {
-  const userRef = db.ref('users').push();
-  await userRef.set(newUser);
-  return new User(userRef.key, newUser.email, newUser.password, newUser.username);
+firebase.initializeApp(firebaseConfig);
+
+//Register a new user
+exports.registerUser = async (email, password, username) => {
+  try {
+      const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+
+      //Create a new user in db with additional username field
+      const newUser = {
+        email: user.email,
+        username: username
+      };
+
+      //Store data in the 'users' node
+      await db.ref(`users/${user.uid}`).set(newUser)
+
+      //Store username to email mapping
+      await db.ref(`usernames/${username}`).set({email: user.email});
+
+      return new User(user.uid, user.email, password, username);
+  }
+  catch (error) {
+    throw new Error(error.message);
+  }
 };
+
+
+//Log in an existing user with email and password
+exports.loginUser = async(email, password) => {
+try {
+  const userCredential = await firebase.auth().signInWithEmailAndPassword(email,password);
+  const user = userCredential.user; //If the credentials match, Firebase returns a userCredential object
+
+  //Retrieve user data from db
+  const snapshot = await db.ref(`users/${user.uid}`).once('value');
+  const userData = snapshot.val();
+
+  return new User(user.uid, user.email, password, userData.username);
+}
+catch (error) {
+  throw new Error(error.message);
+}
+};
+
+
+//Log in an existing user with username and password
+exports.loginUserWithUsername = async(username, password) => {
+  try {
+    //Get user UID by username
+    const usernameSnapshot = await db.ref(`usernames/${username}`).once('value');
+    const userRecord = usernameSnapshot.val();
+
+    if (!userRecord || !userRecord.uid) {
+      throw new Error('Username not found')
+    }
+
+    const uid = userRecord.uid;
+
+    //Get email associated with this UID
+    const userSnapshot = await db.ref(`users/${uid}`).once('value');
+    const userData = userSnapshot.val();
+
+    if (!userData || !userData.email) {
+      throw new Error('User data not found')
+    }
+
+    const email = userData.email;
+
+    //Log in using email and password
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+
+    return new User(user.uid, user.email, password, userData.username);
+  }
+  catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+
+//Log in with Google
+exports.loginWithGoogle = async() => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    const userCredential = await firebase.auth().signInWithPopup(provider);
+    const user = userCredential.user;
+
+    //Retreiebe user data from db or create a new user if it doesn't exist
+    const snapshot = await db.ref(`users/${user.uid}`).once('value');
+    let userData = snapshot.val();
+
+    if (!userData) {
+      //Create new user in db with Google account
+      userData = {
+        email: user.email,
+        username: user.displayName
+      };
+      await db.ref(`users/${user.uid}`).set(userData);
+    }
+    return new User(user.uid, user.email, null, userData.username);
+  }
+  catch (error) {
+    throw new Error (error.message);
+  }
+};
+
+
+//Function to get all users
+exports.getUsers = async () => {
+  const snapshot = await db.ref('users').once('value');
+  const users = snapshot.val(); //objects where keys are user IDs and values are user details
+  return Object.keys(users).map(key => new User(key, users[key].email, users[key].password, users[key].username));
+}; //creates new 'User' object for each user in db to constructor
+
+//Function to add a new user
+exports.addUser = async (newUser) => { //newUser is an object created at frontend that will be push
+  const userRef = db.ref('users').push(); //creates new unique key, reference to new user location stored in db 
+  await userRef.set(newUser); //sets new user values at new user reference in db to 'newUser' object
+  return new User(userRef.key, newUser.email, newUser.password, newUser.username);
+}; //creates new 'User' object. key generated by 'push', email password username from 'newUser' object
