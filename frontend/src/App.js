@@ -9,7 +9,7 @@ import Signin from "./screens/Signin";
 
 const AppContent = () => {
   const location = useLocation();
-  const noNavBarPaths = ['/Signup','/Signin']; // Add routes that should not display the NaviBar here
+  const noNavBarPaths = ['/Signup','/Signin', '/signin', '/signup']; // Add routes that should not display the NaviBar here
 
   return (
     <div>
