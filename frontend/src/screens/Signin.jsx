@@ -1,4 +1,4 @@
-// ../screens/SignIn.js
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -70,7 +70,7 @@ const SignIn = () => {
           </div>
           </div>
           <p className="mt-4 text-textcolor font-bold font-overlock">
-            Are you new here? <Link to="/signup" className=" text-orange_main font-overlock font-bold underline decoration-sky-500/80">Register</Link>
+            Are you new here? <Link to="/Signup" className=" text-orange_main font-overlock font-bold underline decoration-sky-500/80">Register</Link>
           </p>
         </div>
         </div>
