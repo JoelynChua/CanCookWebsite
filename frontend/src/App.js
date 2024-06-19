@@ -4,12 +4,12 @@ import HomePage from "./screens/HomePage";
 import Wishlist from "./screens/Wishlist";
 import NaviBar from "./components/naviBar";
 import Signup from "./screens/Signup"
-import SignIn from "./screens/Signin";
+import Signin from "./screens/Signin";
 
 
 const AppContent = () => {
   const location = useLocation();
-  const noNavBarPaths = ['/signup','/signin']; // Add routes that should not display the NaviBar here
+  const noNavBarPaths = ['/Signup','/Signin']; // Add routes that should not display the NaviBar here
 
   return (
     <div>
@@ -18,7 +18,7 @@ const AppContent = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/Wishlist' element={<Wishlist />} />
         <Route path='/Signup' element={<Signup />} />
-        <Route path='/SignIn' element={<SignIn />} />
+        <Route path='/Signin' element={<Signin />} />
       </Routes>
     </div>
   );
