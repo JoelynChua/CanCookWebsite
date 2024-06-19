@@ -42,6 +42,9 @@ const SignIn = () => {
                 
               />
             </div>
+            <div className="flex justify-end font-overlock underline decoration-sky-500/80 mb-6">
+              Forgot password?
+            </div>
             <div className="flex items-center justify-center">
               <button 
                 className=" bg-orange_main hover:bg-orange-400 text-textcolor hover:text-green-900 py-2 px-4 rounded-3xl font-bold font-overlock" 
