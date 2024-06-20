@@ -3,10 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const SignUp = () => {
-    const userRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { signup, currentUser } = useAuth();
+    const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -54,9 +53,7 @@ const SignUp = () => {
                     <h2 className="text-3xl font-overlock text-textcolor font-bold mb-5">
                         WELCOME
                     </h2>
-                    {/* {currentUser && <p>Current User: {currentUser.email}</p>} */}
                     {error && <p className="text-red-500">{error}</p>}{" "}
-                    {/* Display error */}
                     <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                         {/* <div className="mb-4">
               <label className="block text-3sm font-bold mb-1 font-overlock text-textcolor" htmlFor="username">
