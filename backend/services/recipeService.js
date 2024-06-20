@@ -15,6 +15,25 @@ exports.getAllRecipes = async () => {
     recipe[key].servingSize, recipe[key].calories, recipe[key].image, recipe[key].ingredients, recipe[key].equipments, recipe[key].steps, {key: index}));
 };
 
+exports.getRecipeById = async (id) => {
+  const snapshot = await db.ref(`recipes/${id}`).once('value');
+  const recipe = snapshot.val();
+  if (!recipe) {
+    throw new Error('Recipe not found');
+  }
+  return new Recipe(
+    id, 
+    recipe.recipeName, 
+    recipe.cuisine, 
+    recipe.duration, 
+    recipe.servingSize, 
+    recipe.calories, 
+    recipe.image, 
+    recipe.ingredients, 
+    recipe.equipments, 
+    recipe.steps
+  );
+};
 
 //for admins to include recipe into the database (not shown on website)
 exports.addRecipe = async (newRecipe) => {

@@ -31,3 +31,103 @@
     "8. Ladle into bowls and serve with a drizzle of cream and sprinkle of fresh basil!"
   ]
 }
+
+
+{
+  "recipeName": "Mac and Cheese",
+  "cuisine": "Western",
+  "duration": "1hr 30 mins",
+  "serving size": 2,
+  "calories": 250,
+  "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2014/07/Mac-and-Cheese-4.jpg",
+  "ingredients": [
+    "Elbow macaroni",
+    "Butter",
+    "Flour",
+    "Salt",
+    "Ground black pepper",
+    "Milk",
+    "Shredded Cheddar cheese"
+  ],
+  "equipments": [
+    "Saucepan",
+    "Oven",
+    "Baking dish"
+  ],
+  "steps": [
+    "1. Preheat oven to 325 degrees and lightly grease a square baking dish.",
+    "2. Slightly undercook your macaroni (about 1 minute under al-dente). Drain and set aside.",
+    "3. Make the roux. Melt the butter in a medium saucepan over medium heat. Blend in the flour, salt, and pepper. Cook for 2 minutes.",
+    "4. Add milk and cheese.  Stir in milk and half and half, slowly, stirring constantly. Remove from heat. Add 1 cup shredded cheese to the sauce and stir just until melted. Add the cooked macaroni noodles and toss to coat them in the sauce.",
+    "5. Pour into baking dish.  Pour half or the pasta mixture into the prepared baking dish. Sprinkle ½ cup cheese over the top. Pour remaining pasta over it and sprinkle with remaining cheese"
+  ]
+}
+
+{
+  "recipeName": "Strawberries Romanoff",
+  "cuisine": "Western",
+  "duration": "1 hour 30 mins",
+  "serving size": 6,
+  "calories": 100,
+  "image": "https://www.themealdb.com/images/media/meals/oe8rg51699014028.jpg",
+  "ingredients": [
+    "2 pint strawberries",
+    "4 tablespoon sugar",
+    "4 tablespoon grand marnier ",
+    "1 cup cream",
+    "1/4 cup sour cream"
+  ],
+  "equipments": [
+    "Bowl",
+    "Spatula",
+    "Mixer"
+  ],
+  "steps": [
+    "1. In a medium bowl, combine hulled and quartered strawberries, 4 Tbsp sugar and 4 Tbsp liqueur, stir to combine then cover and refrigerate at least 1 hour and up to 2 hours, stirring once or twice.",
+    "2. Two photos of cut strawberries in a bowl with one having sugar being added to the bowl Two photos of cut up strawberries for Strawberry Romanoff Just before serving, in a large mixing bowl, combine 1 cup cold heavy cream and 1/4 cup powdered sugar, and beat with an electric mixer until stiff peaks form.",
+    "3. Using a spatula, fold in 1/4 cup sour cream just until well blended.",
+    "4. To serve, stir strawberries then divide between 6 serving glasses or bowls.",
+    "5. You can spoon a little syrup over the berries if you like/ use this syrup to soak a cake.",
+    "6. Spoon cream over strawberries, dividing evenly/ use an ice cream scoop with trigger release for a nice rounded puff of cream.",
+    "7. Serve right away or chill and enjoy within 2 hours of assembly."
+  ]
+}
+
+{
+  "recipeName": "Potato Salad (Olivier Salad)",
+  "cuisine": "Vegetarian",
+  "duration": "1 hour 15 mins",
+  "serving size": 1,
+  "calories": 150,
+  "image": "https://www.themealdb.com/images/media/meals/ebvuir1699013665.jpg",
+  "ingredients": [
+    "4 potatoes",
+    "3 carrots",
+    "4 tablespoon salt",
+    "1/2 teaspoon white wine vingar",
+    "4 eggs",
+    "7 oz sausages",
+    "4 oz dill",
+    "1 can pea",
+    "4 onions",
+    "1 cup mayonnaise"
+  ],
+  "equipments": [
+    "Bowl",
+    "Knife",
+    "Large pot"
+  ],
+  "steps": [
+    "1. Cut the potatoes and carrots into small uniform cubes.",
+    "2. Place them in a large pot and fill with water.",
+    "3. Add salt and vinegar.",
+    "4. Bring it to a boil over medium high heat, and then reduce the heat to medium and continue to cook until the potatoes are cooked through, about 15 minutes.",
+    "5. Drain the potatoes and let it cool to room temperature. Meanwhile, cut the sausage and pickles into small cubes, and chop the green onions.",
+    "6. Cut the hard-boiled eggs into small cubes as well.",
+    "7. If using fresh dill, chop them as well.",
+    "8. In a large bowl, combine potatoes, carrots, sausage, pickles, peas and green onions.",
+    "9. Add mayo and dill and mix until well combined.",
+    "10. Salt and pepper to taste.",
+    "11. Cover with a plastic wrap and refrigerate for at least 1 hour before serving."
+  ]
+}

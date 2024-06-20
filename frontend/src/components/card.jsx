@@ -1,13 +1,17 @@
 // Source: https://www.youtube.com/watch?v=EcNXSlcGG_I
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Card({ recipeName, recipeImage, prop }) {
-    const [editable, setEditable] = useState(false);
+export default function Card({ id, recipeName, recipeImage,  }) {
+    // const [viewDetails, setviewDetails] = useState(false);
+    const navigate = useNavigate();
 
-    const handleClick = () => {
-        setEditable(!editable);
+    // OnClick function to parse the recipeID into the url
+    const viewRecipeDetails = () => {
+        navigate(`/recipeDetails/${id}`);
     };
+
 
     return (
         <div className='flex items-center justify-center text-3xl md:text-7xl p-6 md:p-10 w-80 md:w-96 h-80 bg-slate-300 drop-shadow-md rounded-md overflow-hidden'>
@@ -18,21 +22,9 @@ export default function Card({ recipeName, recipeImage, prop }) {
 
             {/* Display the recipe title */}
             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white py-2 px-4 text-center font-bold text-xl break-words">
-                <span className="underline">{recipeName}</span>
+                <span onClick={viewRecipeDetails} className="underline cursor-pointer ">{recipeName}</span>
             </div>
 
-            {/* Edit button and input */}
-            {/* <div onClick={handleClick} className='flex mt-2'>
-                    <div className="text-sm cursor-pointer text-gray-500">
-                        {editable ? 'close | update' : 'edit'}
-                    </div>
-                    <input
-                        className="text-sm w-15 bg-slate-100 ml-2"
-                        type={!editable ? "hidden" : "text"}
-                        value={prop}
-                        readOnly
-                    />
-                </div> */}
         </div>
 
     );

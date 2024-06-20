@@ -13,6 +13,20 @@ async function getAllRecipes() {
     return res.data;
 }
 
+async function getRecipeById(id) {
+    //Send a request to the backend
+    const res = await axiosInstance({
+        method: "get",
+        url: `http://localhost:5000/api/recipeDetails/${id}`
+    });
+
+    //Return the list of to-do tasks
+    console.log(res.data)
+    return res.data;
+}
+
+
 export{
-    getAllRecipes
+    getAllRecipes,
+    getRecipeById
 }

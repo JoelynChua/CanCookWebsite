@@ -37,11 +37,7 @@ export default function HomePage() {
 
       {/* Actual list of recipes */}
       <div><Carousel/></div>
-     
       
-
-
-
     </div>
   )
 
