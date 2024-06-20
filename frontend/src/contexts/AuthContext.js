@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react"
 import {auth} from "../firebase"
 
 
+
 const AuthContext = React.createContext()
 
 export function useAuth() {
@@ -57,7 +58,8 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!loading && children} 
     </AuthContext.Provider>
   )
 }
+//if we are not loading then we render out the children
