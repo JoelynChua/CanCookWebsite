@@ -1,10 +1,22 @@
 
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
 
 const SignUp = () => {
+  const userRef = useRef()
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const { signup } = useAuth()
+  
+  function handleSubmit(e) {
+    e.preventDefault()
+    signup(emailRef.current.value, passwordRef.current.value)
+  }
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-purple_main">
+    <div className="flex justify-center items-center min-h-screen bg-purple_main" >
       <div className="flex flex-col md:flex-row rounded-3xl shadow-lg max-w-6xl max-h-6xl p-5 md:p-0 bg-beige_main">
         
         <div className="flex flex-col justify-center items-center p-10 md:rounded-l-3xl bg-pink_main">
@@ -27,6 +39,7 @@ const SignUp = () => {
                 className="shadow border rounded w-full py-2 px-3 text-textcolor leading-tight bg-blue_main focus:outline-none focus:shadow-outline" 
                 id="username" 
                 type="text" 
+                ref = {userRef}
               />
             </div>
             <div className="mb-4">
@@ -37,6 +50,7 @@ const SignUp = () => {
                 className="shadow border rounded w-full py-2 px-3 text-textcolor leading-tight bg-blue_main focus:outline-none focus:shadow-outline" 
                 id="email" 
                 type="email" 
+                ref = {emailRef}
               />
             </div>
             <div className="mb-6">
@@ -47,6 +61,7 @@ const SignUp = () => {
                 className="shadow border rounded w-full py-2 px-3 text-textcolor leading-tight bg-blue_main focus:outline-none focus:shadow-outline"  
                 id="password" 
                 type="password" 
+                ref = {passwordRef}
               />
             </div>
             <div className="flex justify-end font-overlock underline decoration-sky-500/80 mb-6">

@@ -5,6 +5,7 @@ import Wishlist from "./screens/Wishlist";
 import NaviBar from "./components/naviBar";
 import Signup from "./screens/Signup"
 import Signin from "./screens/Signin";
+import { AuthProvider } from "./contexts/AuthContext"; 
 
 
 const AppContent = () => {
@@ -28,7 +29,9 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <AppContent />
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );
