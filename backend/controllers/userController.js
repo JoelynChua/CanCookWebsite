@@ -4,63 +4,23 @@
 
 const userService = require('../services/userService');
 
-exports.registerUser = async (req, res, next) => {
+// Get all users
+exports.getUsers = async (req, res) => {
   try {
-    const { email, password, username } = req.body;
-    const newUser = await userService.registerUser(email, password, username);
-    res.status(201).json(newUser);
+    const users = await userService.getUsers();
+    res.status(200).json(users);
   } catch (err) {
-    next(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-exports.loginUser = async (req, res, next) => {
+// Add a new user
+exports.addUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await userService.loginUser(email, password);
-    res.status(200).json(user);
+    const newUser = req.body;
+    const user = await userService.addUser(newUser);
+    res.status(201).json(user);
   } catch (err) {
-    next(err);
+    res.status(500).json({ error: err.message });
   }
 };
-
-exports.loginUserWithUsername = async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    const user = await userService.loginUserWithUsername(username, password);
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-};
-
-// exports.loginWithGoogle = async (req, res) => {
-//   try {
-//     const user = await userService.loginWithGoogle();
-//     res.status(200).json(user);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-
-// // Get all users
-// exports.getUsers = async (req, res) => {
-//   try {
-//     const users = await userService.getUsers();
-//     res.status(200).json(users);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
-
-// // Add a new user
-// exports.addUser = async (req, res) => {
-//   try {
-//     const newUser = req.body;
-//     const user = await userService.addUser(newUser);
-//     res.status(201).json(user);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };

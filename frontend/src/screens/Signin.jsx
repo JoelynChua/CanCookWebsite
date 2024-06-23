@@ -12,7 +12,7 @@ const SignIn = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-debugger
+// debugger
         try {
             setError("");
             setLoading(true);
@@ -52,7 +52,7 @@ debugger
                 </div>
 
                 <div className="flex flex-col justify-center items-center w-full p-10 md:p-20 md:rounded-r-3xl">
-                    <h2 className="text-3xl font-overlock text-textcolor font-bold mb-5">
+                    <h2 className="text-4xl font-overlock text-textcolor font-bold mb-5">
                         WELCOME BACK
                     </h2>
                     {error && <p className="text-red-500">{error}</p>}{" "}
@@ -86,7 +86,9 @@ debugger
                             />
                         </div>
                         <div className="flex justify-end font-overlock underline decoration-sky-500/80 mb-6">
+                            <Link to = "/ForgotPassword">
                             Forgot password?
+                            </Link>
                         </div>
                         <div className="flex items-center justify-center">
                             <button

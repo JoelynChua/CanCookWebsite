@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 const AuthContext = React.createContext();
@@ -27,9 +28,6 @@ export function AuthProvider({ children }) {
                 return true;
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // ..
                 console.log(10, error);
                 return false;
             });
@@ -50,20 +48,19 @@ export function AuthProvider({ children }) {
             });
     }
 
+    function forgotpassword(email) {
+        return sendPasswordResetEmail(auth, email)
+        .then(()=>{
+            alert("A password Reset Link has been sent to your email");
+        })
+        .catch((error)=>{
+            console.log(error.code);
+            console.log(error.message);
+        });
+    }
+
     function logout() {
         return auth.signOut();
-    }
-
-    function resetPassword(email) {
-        return auth.sendPasswordResetEmail(email);
-    }
-
-    function updateEmail(email) {
-        return currentUser.updateEmail(email);
-    }
-
-    function updatePassword(password) {
-        return currentUser.updatePassword(password);
     }
 
     useEffect(() => {
@@ -80,9 +77,7 @@ export function AuthProvider({ children }) {
         login,
         signup,
         logout,
-        resetPassword,
-        updateEmail,
-        updatePassword,
+        forgotpassword
     };
 
     return (
