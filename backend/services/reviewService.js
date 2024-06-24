@@ -1,26 +1,57 @@
 const Review = require("../models/reviewModel");
 const db = require('../config/firebase');
 
-const getAllReviews = async () => {
-    const snapshot = await db.ref('reviews').once('value');
-    const reviewsData = snapshot.val();
+// const getAllReviews = async () => {
+//     const snapshot = await db.ref('reviews').once('value');
+//     const reviewsData = snapshot.val();
 
-    if (!reviewsData) {
-        return [];
+//     if (!reviewsData) {
+//         return [];
+//     }
+//     const reviews = Object.keys(reviewsData).map(key => {
+//         const data = reviewsData[key];
+//         return new Review(
+//             key,
+//             data.user,
+//             data.recipe,
+//             data.rating,
+//             data.comments, 
+//             data.createdAt,
+//             data.editedAt
+//         );
+//     });
+//     return reviews;
+// };
+/// Function to get reviews by Recipe ID
+const getReviewsByRecipeID = async (recipeID) => {
+    try {
+        console.log("Recipe ID:", recipeID);
+
+        const snapshot = await db.ref('reviews').orderByChild('recipes').equalTo(recipeID).once('value');
+        const reviewsData = snapshot.val();
+
+        if (!reviewsData) {
+            return [];
+        }
+
+        const reviews = Object.keys(reviewsData).map(key => {
+            const data = reviewsData[key];
+            return new Review(
+                key,
+                data.user,
+                data.recipe,
+                data.rating,
+                data.comments,
+                data.createdAt,
+                data.editedAt
+            );
+        });
+
+        return reviews;
+    } catch (error) {
+        console.error('Error getting reviews by Recipe ID:', error);
+        throw error;
     }
-    const reviews = Object.keys(reviewsData).map(key => {
-        const data = reviewsData[key];
-        return new Review(
-            key,
-            data.user,
-            data.recipe,
-            data.rating,
-            data.comments, 
-            data.createdAt,
-            data.editedAt
-        );
-    });
-    return reviews;
 };
 
 const postReview = async (user, recipeID, rating, comments) => {
@@ -53,7 +84,7 @@ const postReview = async (user, recipeID, rating, comments) => {
         user: newReview.user,
         recipe: newReview.recipe,
         rating: newReview.rating,
-        review: newReview.comments,
+        comments: newReview.comments,
         createdAt: newReview.createdAt,
         editedAt: newReview.editedAt // Track edits 
     });
@@ -62,33 +93,50 @@ const postReview = async (user, recipeID, rating, comments) => {
 
 }; //
 
-const editReview =  async (reviewID, newComments) => {
-    const reviewRef = db.ref(`reviews/${reviewID}`);
-    const snapshot = await reviewRef.once('value');
-    const reviewData = snapshot.val();
+const editReview = async (reviewID, userID, newComments) => {
+    try {
+        // Validate newComments (example validation function)
+        if (!isValidComments(newComments)) {
+            throw new Error('Invalid comments format or length');
+        }
+        reviewID = reviewID.trim();
+        //console.log('Review ID before constructing reviewRef:', reviewID);
+        const reviewRef = db.ref(`reviews/${reviewID}`);
+        //console.log('Firebase reference path:', reviewRef.toString()); // Log the Firebase reference path
+        
+        const snapshot = await reviewRef.once('value');
+        const reviewData = snapshot.val();
 
-    if (!reviewData) {
-        throw new Error('Review not found');
+        if (!reviewData) {
+            throw new Error('Review not found');
+        }
+
+        // Check if the user is authorized to edit this review
+        if (reviewData.user !== userID) {
+            throw new Error('Unauthorized: You are not allowed to edit this review');
+        }
+
+        const updatedReview = {
+            ...reviewData,
+            comments: newComments,
+            editedAt: new Date().toISOString()
+        };
+
+        await reviewRef.update(updatedReview);
+
+        return updatedReview;
+    } catch (error) {
+        console.error('Error editing review:', error);
+        throw error; // Propagate the error to be handled in the controller
     }
+};
 
-    await reviewRef.update({
-        comments: newComments,
-        editedAt: new Date().toISOString()
-    });
-
-    return {
-        id: reviewID,
-        user: reviewData.user,
-        recipe: reviewData.recipe,
-        rating: reviewData.rating,
-        comments: newComments,
-        createdAt: reviewData.createdAt,
-        editedAt: new Date().toISOString()
-    };
-
+const isValidComments = (comments) => {
+    // Example validation function
+    return typeof comments === 'string' && comments.trim().length > 0 && comments.length <= 1000;
 };
 
 
 
 
-module.exports =  { getAllReviews, postReview, editReview  };
+module.exports = { postReview, editReview, getReviewsByRecipeID, isValidComments };
