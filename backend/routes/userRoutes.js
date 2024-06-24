@@ -9,7 +9,8 @@ router.get('/users', userController.getUsers);
 router.post('/users', userController.addUser);
 
 //router.get('/reviews', reviewController.getAllReviews);
-router.get('/reviews/:recipeID', reviewController.getReviewsByRecipeID);
+//router.get('/reviews/:recipeID', reviewController.getReviewsByRecipeID);
+router.get('/recipes/:recipeID/reviews', reviewController.getReviewsByRecipeID);
 router.post('/reviews', reviewController.postReview);
 router.put('/reviews/:reviewID', reviewController.editReview);
 

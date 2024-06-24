@@ -23,14 +23,17 @@ const db = require('../config/firebase');
 //     return reviews;
 // };
 /// Function to get reviews by Recipe ID
+// Function to get reviews by Recipe ID
 const getReviewsByRecipeID = async (recipeID) => {
     try {
-        console.log("Recipe ID:", recipeID);
+        const snapshot = await db.ref('reviews')
+            .orderByChild('recipe')
+            .equalTo(recipeID)
+            .once('value');
 
-        const snapshot = await db.ref('reviews').orderByChild('recipes').equalTo(recipeID).once('value');
         const reviewsData = snapshot.val();
 
-        if (!reviewsData) {
+        if (reviewsData === null || Object.keys(reviewsData).length === 0) {
             return [];
         }
 
