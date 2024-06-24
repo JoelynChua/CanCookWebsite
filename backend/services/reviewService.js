@@ -62,7 +62,33 @@ const postReview = async (user, recipeID, rating, comments) => {
 
 }; //
 
+const editReview =  async (reviewID, newComments) => {
+    const reviewRef = db.ref(`reviews/${reviewID}`);
+    const snapshot = await reviewRef.once('value');
+    const reviewData = snapshot.val();
+
+    if (!reviewData) {
+        throw new Error('Review not found');
+    }
+
+    await reviewRef.update({
+        comments: newComments,
+        editedAt: new Date().toISOString()
+    });
+
+    return {
+        id: reviewID,
+        user: reviewData.user,
+        recipe: reviewData.recipe,
+        rating: reviewData.rating,
+        comments: newComments,
+        createdAt: reviewData.createdAt,
+        editedAt: new Date().toISOString()
+    };
+
+};
 
 
 
-module.exports =  { getAllReviews, postReview };
+
+module.exports =  { getAllReviews, postReview, editReview  };

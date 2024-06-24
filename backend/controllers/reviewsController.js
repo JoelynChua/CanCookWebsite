@@ -15,7 +15,7 @@ const getAllReviews = async(req, res) => {
         console.error('Error getting reviews:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+}; //
 
 //Endpoint to post reviews 
 const postReview = async(req, res) => {
@@ -46,8 +46,29 @@ const postReview = async(req, res) => {
       }
     
 
+}; //
+
+// Endpoint to edit reviews
+const editReview = async (req, res) => {
+    const { reviewID, newComments } = req.body;
+
+    if (!reviewID || !newComments) {
+        return res.status(400).json({ message: 'Review ID and new comments are required.' });
+    }
+
+    try {
+        const updatedReview = await reviewService.editReview(reviewID, newComments);
+        res.status(200).json(updatedReview);
+    } catch (error) {
+        console.error('Error editing review:', error);
+        if (error.message === 'Review not found') {
+            res.status(404).json({ message: error.message });
+        } else {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 };
 
 
 
-module.exports =  { getAllReviews, postReview };
+module.exports =  { getAllReviews, postReview, editReview };
