@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import Carousel from "../components/carousel";
+import SearchBar from '../components/searchbar';
 //import { db } from '../../../backend/config/firebase';
 
 // import { ref, onValue } from "firebase/database";
@@ -30,15 +31,28 @@ export default function HomePage() {
 
   }
 
+  // Search
+  // const RecipeSearchApp = () => {
+  //   const [recipe, setRecipe] = useState(null);
+
+  //   const handleSearch = (data) => {
+  //     setRecipe(data);
+  //   };
+
 
 
   return (
-    <div className='flex justify-center items-center w-full h-screen'>
-
-      {/* Actual list of recipes */}
-      <div><Carousel/></div>
-      
+    <div className="flex flex-col justify-center items-center w-full h-screen">
+      {/* Container for the search bar */}
+      <div className="w-full flex justify-center">
+        <SearchBar />
+      </div>
+      {/* Container for the carousel */}
+      <div className="w-full flex justify-center mt-4">
+        <Carousel />
+      </div>
     </div>
+
   )
 
 }

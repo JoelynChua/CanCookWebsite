@@ -17,6 +17,7 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/Wishlist' element={<Wishlist />} />
           <Route path='/recipeDetails/:id' element={<RecipeDetails />} />
+          <Route path='/recipeDetails/:id' element={<RecipeDetails />} />
         </Routes>
       </BrowserRouter>
     </div>

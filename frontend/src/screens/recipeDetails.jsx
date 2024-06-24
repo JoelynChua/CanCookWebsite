@@ -37,6 +37,7 @@ export default function RecipeDetails() {
 
 
     return (
+        
         <div className="flex items-center justify-center min-h-screen">
             <div id={recipe._id}>
                 {/* Render = how React components output UI elements */}
