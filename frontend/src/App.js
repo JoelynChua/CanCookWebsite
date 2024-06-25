@@ -7,6 +7,7 @@ import Signup from "./screens/Signup"
 import Signin from "./screens/Signin";
 import ForgotPassword from "./screens/ForgotPassword";
 import ResetPassword from "./screens/ResetPassword";
+import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext"; 
 
 
@@ -18,12 +19,14 @@ const AppContent = () => {
     <div>
       {!noNavBarPaths.includes(location.pathname) && <NaviBar />}
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/Wishlist" element={<Wishlist />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Signin" element={<Signin />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
+
+        <Route path="/" element={<PrivateRoute> <HomePage /> </PrivateRoute>} />
+        <Route path="/Wishlist" element={<PrivateRoute> <Wishlist /> </PrivateRoute>} />
+
       </Routes>
     </div>
   );

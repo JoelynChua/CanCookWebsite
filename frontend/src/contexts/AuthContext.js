@@ -24,11 +24,11 @@ export function AuthProvider({ children }) {
                 // Signed up
                 const user = userCredential.user;
                 // ...
-                console.log(5, user);
+                console.log("Signed up user:", user);
                 return true;
             })
             .catch((error) => {
-                console.log(10, error);
+                console.log("Error signing up:", error);
                 return false;
             });
     }
@@ -38,12 +38,12 @@ export function AuthProvider({ children }) {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
+                console.log("Signed in user:", user);
 
                 return true;
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                console.log("Error signing in:", error);
                 return false;
             });
     }
@@ -54,8 +54,7 @@ export function AuthProvider({ children }) {
             alert("A password Reset Link has been sent to your email");
         })
         .catch((error)=>{
-            console.log(error.code);
-            console.log(error.message);
+            console.error("Error sending password reset email:", error);
         });
     }
 
