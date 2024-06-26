@@ -1,0 +1,38 @@
+.leave-review-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 800px; /* Adjust max-width as needed */
+    margin: auto;
+    text-align: center; /* Center align text content */
+}
+
+.review-section {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.rating-section {
+    margin-bottom: 20px;
+}
+
+textarea {
+    height: 150px;
+    width: 100%; /* Ensure textarea fills container width */
+    resize: vertical;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f0ad4e;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white; /* Ensure text is visible */
+}
