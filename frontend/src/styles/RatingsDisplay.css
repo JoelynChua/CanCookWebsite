@@ -1,0 +1,92 @@
+.ratings-display-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adjust for spacing between sections */
+    align-items: center; /* Center align items horizontally */
+    text-align: center; /* Center align text content */
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+.average-rating-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.stars {
+    display: flex;
+}
+
+.star {
+    color: #8a8989; /* Set a default color for the star */
+}
+
+.star-filled {
+    color: orange; /* Color for filled stars */
+}
+
+.star-half {
+    color: orange; /* Color for half star */
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+}
+.star-empty {
+    color: #504f4f; /* Color for empty stars */
+}
+
+.rating-value {
+    font-size: 18px;
+    color: #333;
+}
+
+.progress-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center; 
+}
+
+.rating-row {
+    display: flex;
+    align-items: center;
+}
+
+.star-label {
+    width: 60px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 20px;
+    background-color: rgb(153, 150, 150);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 10px;
+    position: relative;
+}
+
+.progress-bar-filled {
+    height: 100%;
+    background-color: orange;
+    border-radius: 10px 0 0 10px;
+    width: 100%;
+}
+
+.rating-count {
+    width: 50px;
+    text-align: center;
+}
+
+.rating-label {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: blue;
+}
