@@ -1,21 +1,5 @@
 const reviewService = require("../services/reviewService");
 
-
-
-//Endpoint to retrive a list of all reviews
-// const getAllReviews = async(req, res) => {
-//     try {
-//         const reviews = await reviewService.getAllReviews();
-      
-
-//         console.log('Reviews:', reviews);
-//         res.status(200).json(reviews);
-
-//     } catch (error) {
-//         console.error('Error getting reviews:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// }; //
 // Endpoint to get reviews by Recipe ID
 const getReviewsByRecipeID = async (req, res) => {
     try {
