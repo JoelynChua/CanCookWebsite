@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { useNavigate } from 'react-router-dom';
 
 const NaviBar = () => {
   let Links = [
@@ -10,7 +9,6 @@ const NaviBar = () => {
 
   //set the state for switch between X icon and menu bar icon
   let [isOpen, setisOpen] = useState(false)
-  const navigate = useNavigate();
 
   return (
     // <div>naviBar</div>
@@ -37,8 +35,7 @@ const NaviBar = () => {
               </li>
             ))
           }
-        <button className='btn bg-pink text-white py-1 px-3 md:m1-8 rouded md:static'onClick={() => navigate('/Signup')}
-        >Sign up</button>
+        <button className='btn bg-pink-500 text-white py-1 px-3 md:m1-8 rouded md:static'>Sign in</button>
         </ul>
 
     </div>
