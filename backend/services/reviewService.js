@@ -1,28 +1,6 @@
 const Review = require("../models/reviewModel");
 const db = require('../config/firebase');
 
-// const getAllReviews = async () => {
-//     const snapshot = await db.ref('reviews').once('value');
-//     const reviewsData = snapshot.val();
-
-//     if (!reviewsData) {
-//         return [];
-//     }
-//     const reviews = Object.keys(reviewsData).map(key => {
-//         const data = reviewsData[key];
-//         return new Review(
-//             key,
-//             data.user,
-//             data.recipe,
-//             data.rating,
-//             data.comments, 
-//             data.createdAt,
-//             data.editedAt
-//         );
-//     });
-//     return reviews;
-// };
-/// Function to get reviews by Recipe ID
 // Function to get reviews by Recipe ID
 const getReviewsByRecipeID = async (recipeID) => {
     try {
@@ -42,11 +20,13 @@ const getReviewsByRecipeID = async (recipeID) => {
             return new Review(
                 key,
                 data.user,
+                data.username,
                 data.recipe,
                 data.rating,
                 data.comments,
                 data.createdAt,
                 data.editedAt
+
             );
         });
 
@@ -81,10 +61,11 @@ const postReview = async (user, recipeID, rating, comments) => {
             throw new Error('User has already reviewed this recipe!');
         }
     }
-    const newReview = new Review(null, user, recipeID, rating, comments, new Date().toISOString(), new Date().toISOString());
+    const newReview = new Review(null, user, username, recipeID, rating, comments, new Date().toISOString(), new Date().toISOString());
     const reviewRef = await db.ref('reviews').push();
     await reviewRef.set({
         user: newReview.user,
+        username: newReview.username,
         recipe: newReview.recipe,
         rating: newReview.rating,
         comments: newReview.comments,
