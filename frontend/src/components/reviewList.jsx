@@ -1,48 +1,78 @@
-import React from 'react';
-import './../styles/ReviewList.css'; // Adjust the path as per your project structure
+import React, { useState } from 'react';
+import '../styles/ReviewList.css'; // Adjust path as per your project structure
+import { FaPen } from 'react-icons/fa'; // Import the pen icon
 
-const UserReview = ({ username, date, content, rating, isHighlighted = false }) => (
-  <article className={`user-review ${isHighlighted ? 'highlighted' : ''}`}>
-    <header className="user-review-header">
-      <div className="user-review-info">
-        <h2 className="user-review-username">{username}</h2>
-        <div className="user-review-rating">
-          {Array.from({ length: 5 }, (_, index) => (
-            <span key={index} className={`star ${index < rating ? 'filled' : ''}`}>&#9733;</span>
-          ))}
+// Function to format date as DD/MM/YY
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString().slice(-2);
+    return `${day}/${month}/${year}`;
+};
+
+const ReviewList = ({ reviews, onEditReview }) => {
+    const [selectedReview, setSelectedReview] = useState(null);
+    const [editComment, setEditComment] = useState('');
+
+    const openEditModal = (review) => {
+        setSelectedReview(review);
+        setEditComment(review.comments);
+    };
+
+    const closeEditModal = () => {
+        setSelectedReview(null);
+        setEditComment('');
+    };
+
+    const handleSaveReview = () => {
+        if (selectedReview) {
+            onEditReview(selectedReview.id, editComment);
+            closeEditModal();
+        }
+    };
+
+    return (
+        <div className="review-list">
+            {reviews.length === 0 ? (
+                <p>No reviews found.</p>
+            ) : (
+                reviews.map((review, index) => (
+                    <article key={index} className="user-review">
+                        <header className="user-review-header">
+                            <div className="user-review-info">
+                                <h2 className="user-review-username">{review.username}</h2>
+                                <div className="user-review-rating">
+                                    {[...Array(5)].map((_, i) => (
+                                        <span key={i} className={`review-list-star ${i < review.rating ? 'filled' : ''}`}>&#9733;</span>
+                                    ))}
+                                    <time className="user-review-date">{formatDate(review.createdAt)}</time>
+                                </div>
+                            </div>
+                            <div className="edit-review-icon-container">
+                                <FaPen className="edit-review-icon" onClick={() => openEditModal(review)} />
+                            </div>
+                        </header>
+                        <p className="user-review-content">{review.comments}</p>
+                    </article>
+                ))
+            )}
+            {selectedReview && (
+                <div className="edit-review-modal">
+                    <h3>Edit Review</h3>
+                    <textarea
+                        className="edit-review-textarea"
+                        value={editComment}
+                        onChange={(e) => setEditComment(e.target.value)}
+                    />
+                    <div className="edit-review-modal-buttons">
+                        <button className="edit-review-save-button" onClick={handleSaveReview}>Save</button>
+                        <button className="edit-review-cancel-button" onClick={closeEditModal}>Cancel</button>
+                    </div>
+                </div>
+            )}
         </div>
-        <time className="user-review-date">{date}</time>
-      </div>
-    </header>
-    <p className="user-review-content">{content}</p>
-  </article>
-);
-
-const ReviewList = () => {
-  const reviews = [
-    {
-      username: "User ABC",
-      date: "02/06/2024",
-      content: "The recipe was really easy to follow! I could make this recipe within five minutes and it's very delicious. Really recommend others to try! Personally, I love adding a little basil to go with it.",
-      rating: 4,
-    },
-    {
-      username: "User DEF",
-      date: "02/06/2024",
-      content: "The recipe was really easy to follow! I could make this recipe within five minutes and it's very delicious. Really recommend others to try! Personally, I love adding a little basil to go with it. Would also recommend: Stove Only Mac-n-Cheese",
-      isHighlighted: true,
-      rating: 5,
-    },
-  ];
-
-  return (
-    <main className="review-list">
-      {reviews.map((review, index) => (
-        <UserReview key={index} {...review} />
-      ))}
-      <button className="review-list-button">Show More</button>
-    </main>
-  );
+    );
 };
 
 export default ReviewList;
