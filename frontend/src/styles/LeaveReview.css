@@ -1,8 +1,10 @@
+/* LeaveReview.css */
+
 .leave-review-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 5px;
     max-width: 800px; /* Adjust max-width as needed */
     margin: auto;
     text-align: center; /* Center align text content */
@@ -17,13 +19,52 @@
     margin-bottom: 20px;
 }
 
+.rating-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20px; /* Adjust size as needed */
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    min-height: 10vh;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.review-star {
+    cursor: pointer;
+    transition: color 200ms;
+    font-size: 30px; /* Adjust size as needed */
+}
+
+.review-star-filled {
+    color: orange; /* Filled star color */
+}
+
+.review-star-empty {
+    color: #8a8989; /* Empty star color */
+}
+
+.rating-comment {
+    margin-right: 5%; /* Adjust spacing as needed */
+    font-size: 15px; /* Adjust size as needed */
+    color: #333; /* Adjust color as needed */
+    text-align: center;
+}
+
 textarea {
     height: 150px;
     width: 100%; /* Ensure textarea fills container width */
     resize: vertical;
     border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 16px;
+    padding: 5px;
+    font-size: 15px;
 }
 
 button {

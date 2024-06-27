@@ -8,6 +8,12 @@
     max-width: 500px;
     margin: auto;
 }
+.ratings-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
 
 .average-rating-display {
     display: flex;
@@ -17,28 +23,31 @@
     margin-bottom: 20px;
 }
 
-.stars {
+.avg-rating-stars {
     display: flex;
+    align-items: center;
+
 }
 
-.star {
-    color: #8a8989; /* Set a default color for the star */
+.avg-rating-star {
+    color: #8a8989;
+    font-size: 30px; /* Set a default color for the star */
 }
 
-.star-filled {
+.avg-rating-star-filled {
     color: orange; /* Color for filled stars */
 }
 
-.star-half {
+.avg-rating-star-half {
     color: orange; /* Color for half star */
     clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
 }
-.star-empty {
+.avg-rating-star-empty {
     color: #504f4f; /* Color for empty stars */
 }
 
 .rating-value {
-    font-size: 18px;
+    font-size: 25px;
     color: #333;
 }
 
@@ -64,7 +73,7 @@
 .progress-bar {
     flex: 1;
     height: 20px;
-    background-color: rgb(153, 150, 150);
+    background-color: rgb(198, 194, 194);
     border-radius: 10px;
     overflow: hidden;
     margin: 0 10px;
@@ -87,6 +96,5 @@
     text-align: center;
     margin-top: 10px;
     font-size: 24px;
-    font-weight: bold;
-    color: blue;
+    color: rgb(15, 15, 15);
 }
