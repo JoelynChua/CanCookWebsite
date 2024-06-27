@@ -1,12 +1,22 @@
-// LeaveReview.js
 import React, { useState } from 'react';
 import '../styles/LeaveReview.css';
-import StarRating from './starRating'; // Adjust path based on your actual project structure
+import { addReview } from '../services/reviewService';
+import { FaStar } from 'react-icons/fa';
 
-const LeaveReview = ({ reviewCount, onAddReview }) => {
+const comments = {
+    1: "Distraught. Way below my expectations.",
+    2: "Disappointed. I’d expected more.",
+    3: "Satisfied. Met my expectations.",
+    4: "Delighted. Exceeded my expectations.",
+    5: "Blown away. Far exceeded my expectations."
+};
+
+const LeaveReview = ({ userID, recipeID, reviewCount, onAddReview }) => {
     const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(null);
     const [comment, setComment] = useState('');
     const [commentEntered, setCommentEntered] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleRatingChange = (newRating) => {
         setRating(newRating);
@@ -20,22 +30,79 @@ const LeaveReview = ({ reviewCount, onAddReview }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onAddReview(rating, comment);
-        setRating(0);
-        setComment('');
-        setCommentEntered(false);
+        const newReview = {
+            user: userID,
+            recipe: recipeID,
+            rating,
+            comments: comment
+        };
+        addReview(newReview)
+            .then(addedReview => {
+                onAddReview(addedReview);
+                setRating(0);
+                setComment('');
+                setCommentEntered(false);
+                setError(null);
+            })
+            .catch(error => {
+                setError(error.message);
+            });
+    };
+
+    const handleMouseEnter = (ratingValue) => {
+        console.log(`Mouse entered rating ${ratingValue}`);//checks
+        setHover(ratingValue);
+    };
+
+    const handleMouseLeave = () => {
+        console.log(`Mouse left the rating`); //checks
+        setHover(null);
+    };
+
+    const handleClick = (ratingValue) => {
+        console.log(`Clicked on rating ${ratingValue}`);// checks
+        setRating(ratingValue);
+        handleRatingChange(ratingValue);
     };
 
     return (
         <main className="leave-review-container">
-            <h1 className="self-center text-2xl font-semibold underline">Reviews ({reviewCount})</h1>
+            <h1 className="self-center text-2xl font-semibold underline">Reviews({reviewCount})</h1>
+            {error && <p className="text-red-500">{error}</p>}
             <p className="self-center mt-8 text-x0 max-md:max-w-full">
                 See what others have to say, and even make a review yourself!
             </p>
             <div className="review-section">
                 <div className="rating-section">
                     <h2 className="self-start mt-8 text-3xl text-black">Your Rating</h2>
-                    <StarRating initialRating={rating} onChange={handleRatingChange} />
+                    <div className="rating-container">
+                        <div className="rating-stars">
+                            {[...Array(5)].map((_, i) => {
+                                const ratingValue = i + 1;
+                                return (
+                                    <label key={ratingValue}>
+                                        <input
+                                            type="radio"
+                                            name="rating"
+                                            value={ratingValue}
+                                            onClick={() => handleClick(ratingValue)}
+                                            style={{ display: 'none' }} // Hide the radio input
+                                        />
+                                        <span
+                                            className={`review-star ${ratingValue <= (hover || rating) ? 'review-star-filled' : 'review-star-empty'}`}
+                                            onMouseEnter={() => handleMouseEnter(ratingValue)}
+                                            onMouseLeave={handleMouseLeave}
+                                        >
+                                            <FaStar className="rating-stars"/>
+                                        </span>
+                                    </label>
+                                );
+                            })}
+                        </div>
+                        <div className="rating-comment">
+                            {comments[hover || rating]}
+                        </div>
+                    </div>
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col w-full">
                     <label htmlFor="reviewText" className="sr-only">Share your experience</label>
