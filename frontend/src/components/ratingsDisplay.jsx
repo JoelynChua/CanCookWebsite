@@ -1,20 +1,28 @@
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
-import './../styles/RatingsDisplay.css'; // Adjust path as per your project structure
+import './../styles/RatingsDisplay.css';
 
 const RatingsDisplay = ({ reviews }) => {
     // Calculate ratings count and total ratings from reviews
-    const ratingsCount = [0, 0, 0, 0, 0];
+    const calculateRatings = () => {
+        const ratingsCount = [0, 0, 0, 0, 0];
+        let totalRatings = 0;
 
-    reviews.forEach(review => {
-        ratingsCount[review.rating - 1]++;
-    });
+        reviews.forEach(review => {
+            if (review.rating >= 1 && review.rating <= 5) {
+                ratingsCount[review.rating - 1]++;
+                totalRatings++;
+            }
+        });
 
-    const totalRatings = reviews.length;
+        return { ratingsCount, totalRatings };
+    };
+
+    const { ratingsCount, totalRatings } = calculateRatings();
 
     // Calculate average rating
     const averageRating = totalRatings === 0 ? 0 : ratingsCount.reduce((acc, count, index) => acc + count * (index + 1), 0) / totalRatings;
-    
+
     // Calculate full stars, half star, and empty stars
     const fullStars = Math.floor(averageRating);
     const remainder = averageRating % 1;
@@ -32,14 +40,15 @@ const RatingsDisplay = ({ reviews }) => {
 
     return (
         <div className="ratings-display-container">
+            <h2 className="ratings-header">Total Ratings</h2>
             <div className="average-rating-display">
-                <div className="stars">
+                <div className="avg-rating-stars">
                     {[...Array(fullStars)].map((_, i) => (
-                        <FaStar key={`full-${i}`} className="star star-filled" />
+                        <FaStar key={`full-${i}`} className="avg-rating-star avg-rating-star-filled" />
                     ))}
-                    {hasHalfStar && <FaStar className="star star-half" />}
+                    {hasHalfStar && <FaStar className="avg-rating-star avg-rating-star-half" />}
                     {[...Array(emptyStars)].map((_, i) => (
-                        <FaStar key={`empty-${i}`} className="star star-empty" />
+                        <FaStar key={`empty-${i}`} className="avg-rating-star avg-rating-star-empty" />
                     ))}
                 </div>
                 <div className="rating-value">{averageRating.toFixed(1)} / 5</div>
@@ -48,7 +57,7 @@ const RatingsDisplay = ({ reviews }) => {
                 <div className="rating-label">{totalRatings} Ratings</div>
                 {percentages.map((percentage, index) => (
                     <div key={`rating-row-${index}`} className="rating-row">
-                        <span className="star-label">{index + 1} star:</span>
+                        <span className="star-label">{index + 1} stars:</span>
                         <div className="progress-bar">
                             <div
                                 className="progress-bar-filled"
