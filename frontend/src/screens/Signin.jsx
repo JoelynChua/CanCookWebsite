@@ -1,4 +1,4 @@
-import React,{useRef,useState} from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -12,7 +12,7 @@ const SignIn = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-// debugger
+        // debugger
         try {
             setError("");
             setLoading(true);
@@ -27,7 +27,7 @@ const SignIn = () => {
             }
         } catch {
             // setError("Failed to log in");
-            console.log(error)
+            console.log(error);
         }
 
         setLoading(false);
@@ -86,9 +86,7 @@ const SignIn = () => {
                             />
                         </div>
                         <div className="flex justify-end font-overlock underline decoration-sky-500/80 mb-6">
-                            <Link to = "/ForgotPassword">
-                            Forgot password?
-                            </Link>
+                            <Link to="/ForgotPassword">Forgot password?</Link>
                         </div>
                         <div className="flex items-center justify-center">
                             <button
