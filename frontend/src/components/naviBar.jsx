@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
+
 import logo from '../assets/logo.png';
+
+import { useNavigate } from 'react-router-dom';
+
 
 const NaviBar = () => {
   let Links = [
@@ -10,6 +14,7 @@ const NaviBar = () => {
 
   //set the state for switch between X icon and menu bar icon
   let [isOpen, setisOpen] = useState(false)
+  const navigate = useNavigate();
 
   return (
     <div className='md:px-10 py-4 px-7 md:flex md:justify-between md:items-center bg-pink-200'>
@@ -33,17 +38,19 @@ const NaviBar = () => {
         {isOpen ? <XMarkIcon /> : <Bars3BottomRightIcon />}
       </div>
 
-      {/* Navigation links */}
-      <ul className='md:flex md:items-center md:gap-8 md:ml-auto md:mr-auto'>
-        {Links.map((link, index) => (
-          <li key={index} className='font-semibold my-3 md:my-0'>
-            <a href={link.link}>{link.name}</a>
-          </li>
-        ))}
-        <li className="my-3 md:my-0">
-          <button className='btn bg-pink-500 text-white py-1 px-3 rounded md:static'>Sign in</button>
-        </li>
-      </ul>
+        {/* Navigation links */}
+        <ul className = 'md:flex pl-9 md:pl-0 md:items-center md:pb-0 pb-12'>
+          {
+            Links.map(link => (
+              <li className = 'font-semibold my-7 md:my-0 md:m1-8'>
+                <a href= {link.link}>{link.name}</a>
+              </li>
+            ))
+          }
+        <button className='btn bg-pink text-white py-1 px-3 md:m1-8 rouded md:static'onClick={() => navigate('/Signup')}
+        >Sign up</button>
+        </ul>
+
 
     </div>
   )
