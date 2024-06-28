@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {getAllWishlists} from '../services/wishlistService';
 
@@ -42,3 +43,4 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
+

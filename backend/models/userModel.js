@@ -1,3 +1,5 @@
+//Defines the schema for user data.
+
 class User {
     constructor(id, email, password, username) {
       this.id = id;
