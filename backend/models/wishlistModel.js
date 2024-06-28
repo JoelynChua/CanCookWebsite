@@ -6,4 +6,4 @@ class Wishlist {
     }
   }
   
-  module.exports = Wishlist
+module.exports = Wishlist

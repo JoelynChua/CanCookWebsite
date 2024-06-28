@@ -8,8 +8,8 @@ router.get('/users', userController.getUsers);
 router.post('/users', userController.addUser);
 
 router.get('/wishlists', wishlistController.getAllWishlists);
-router.get('/wishlists/:id', wishlistController.getWishlistByID);
+router.get('/wishlists/users/:userID', wishlistController.getWishlistByUserID);
 router.post('/wishlists', wishlistController.addWishlist);
-router.delete('/wishlists/:id', wishlistController.deleteWishlist);
+router.delete('/wishlists/:WishlistID', wishlistController.deleteWishlist);
 
 module.exports = router;
