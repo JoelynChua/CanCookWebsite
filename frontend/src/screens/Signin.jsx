@@ -5,10 +5,8 @@ import { useAuth } from "../contexts/AuthContext";
 const SignIn = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -21,7 +19,6 @@ const SignIn = () => {
                 passwordRef.current.value
             );
             if (isSuccessful) {
-                history("/");
             } else {
                 alert("Incorrect email or password ");
             }
@@ -52,7 +49,6 @@ const SignIn = () => {
                 </div>
 
                 <div className="flex flex-col justify-center items-center w-full p-10 md:p-20 md:rounded-r-3xl">
-                    <h2 className="text-4xl font-overlock text-textcolor font-bold mb-5">
                         WELCOME BACK
                     </h2>
                     {error && <p className="text-red-500">{error}</p>}{" "}
