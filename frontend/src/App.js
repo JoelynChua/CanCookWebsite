@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from "./screens/HomePage";
 import Wishlist from "./screens/Wishlist";
 import NaviBar from "./components/naviBar";
+import RecipeDetails from "./screens/recipeDetails";
 import Signup from "./screens/Signup"
 import Signin from "./screens/Signin";
 import ForgotPassword from "./screens/ForgotPassword";
@@ -23,7 +24,10 @@ const AppContent = () => {
         <Route path="/Signin" element={<Signin />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
-
+         <Route path='/' element={<HomePage />} />
+          <Route path='/Wishlist' element={<Wishlist />} />
+          <Route path='/recipeDetails/:id' element={<RecipeDetails />} />
+          <Route path='/recipeDetails/:id' element={<RecipeDetails />} />
         <Route path="/" element={<PrivateRoute> <HomePage /> </PrivateRoute>} />
         <Route path="/Wishlist" element={<PrivateRoute> <Wishlist /> </PrivateRoute>} />
 
@@ -36,9 +40,11 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+
         <AuthProvider>
           <AppContent />
         </AuthProvider>
+
       </BrowserRouter>
     </div>
   );
