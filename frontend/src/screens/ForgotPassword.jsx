@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const ForgotPassword = () => {
@@ -36,7 +35,7 @@ const ForgotPassword = () => {
           {/* Container for form elements */}
           <div className="flex flex-col justify-center items-center w-full p-10 md:p-20 md:rounded-r-3xl">
             <h2 className="text-4xl font-overlock text-textcolor font-bold mb-1">
-              <Link to='/'>FORGOT PASSWORD</Link>
+              FORGOT PASSWORD
             </h2>
             <h6 className="tracking-tight text-sm text-textcolor font-'Inter mb-6 text-center">
               Enter email address to receive reset password link
