@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 import {
-    getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
+    signInWithRedirect,
+    GoogleAuthProvider,
 } from "firebase/auth";
 
+const provider = new GoogleAuthProvider();
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -57,6 +59,9 @@ export function AuthProvider({ children }) {
                 console.error("Error sending password reset email:", error);
             });
     }
+    function googleLogin() {
+        signInWithRedirect(auth, provider);
+    }
 
     function logout() {
         return auth.signOut();
@@ -77,6 +82,7 @@ export function AuthProvider({ children }) {
         signup,
         logout,
         forgotpassword,
+        googleLogin,
     };
 
     return (

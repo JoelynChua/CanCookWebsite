@@ -1,3 +1,4 @@
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,6 +34,9 @@ const SignUp = () => {
       const user = userCredential.user;
 
       console.log("Signed up user:", user);
+
+        setLoading(false);
+    }
 
       if (user) {
         console.log("Creating user document in Firestore");
@@ -134,20 +138,6 @@ const SignUp = () => {
               </button>
             </div>
           </form>
-          {/* <div className="my-4 w-full flex justify-between items-center">
-            <hr className="w-2/5 bg-blue_main" />
-            <span className="text-textcolor">or</span>
-            <hr className="w-2/5  bg-blue_main" />
-          </div> */}
-          {/* <div
-            onClick={handleGoogleLogin}
-            className="flex items-center hover:bg-blue_main"
-          >
-            <img src="/googlelogo.png" alt="Google" className="w-10 h-9" />
-            <div className=" text-textcolor font-bold underline decoration-sky-500/80 font-overlock">
-              Sign up with Google
-            </div>
-          </div> */}
           <p className="mt-4 text-textcolor font-bold font-overlock">
             Already have an account?{" "}
             <Link
