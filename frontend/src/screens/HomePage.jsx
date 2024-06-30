@@ -5,8 +5,10 @@ import SearchBar from "../components/searchbar";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function HomePage() {
+
     const { currentUser } = useAuth();
     const [recipeList, setRecipeList] = useState([]);
+
 
     useEffect(() => {
         getRecipes();
