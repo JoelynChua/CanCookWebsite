@@ -23,7 +23,7 @@ export default function HomePage() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center w-full h-screen">
+        <div className="flex flex-col justify-center items-center w-full h-screen bg-beige_main">
             <div className="text-center text-2xl mb-4">
                 {currentUser
                     ? `Hello, ${currentUser.email}!`

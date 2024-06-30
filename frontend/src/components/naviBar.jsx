@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext"; // Import useAuth
 
 const NaviBar = () => {
-    const { currentUser } = useAuth(); // Get currentUser from useAuth
+    const { currentUser, logout } = useAuth(); // Get currentUser from useAuth
+    const [isOpen, setIsOpen] = useState(false); // State for menu toggle
+    const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
+
     let Links = [
         { name: "All recipes", link: "/all-recipes" },
         { name: "About Us", link: "/about-us" },
@@ -16,13 +19,20 @@ const NaviBar = () => {
         Links.push({ name: "Wishlist", link: "/wishlist" });
     }
 
-    let [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
+
+    const handleLogout = () => {
+        logout();
+    };
 
     return (
         <div>
             <div className="bg-pink_main flex flex-col items-center py-3">
-                <div className="flex items-center ">
+                <div className="flex items-center">
                     <img src={logo} alt="logo" className="w-20 h-30" />
                     <div>
                         <h1 className="text-3xl font-baloo text-textcolor">
@@ -54,17 +64,39 @@ const NaviBar = () => {
                             ))}
                         </ul>
                     </div>
-                    <div className="flex  items-center ml-3">
+                    <div className="flex items-center ml-3">
                         {currentUser ? (
-                            <div className="flex ">
-                                <img
-                                    src="/userlogo.png"
-                                    alt="User Icon"
-                                    className="w-8 h-8 rounded-full"
-                                />
-                                <span className="text-textcolor ml-3">
-                                    {currentUser.email}
-                                </span>
+                            <div className="relative">
+                                <div
+                                    className="flex cursor-pointer"
+                                    onClick={toggleDropdown}
+                                >
+                                    <img
+                                        src="/userlogo.png"
+                                        alt="User Icon"
+                                        className="w-8 h-8 rounded-full"
+                                    />
+                                    <span className="text-textcolor ml-3">
+                                        {currentUser.email}
+                                    </span>
+                                </div>
+                                {/* Dropdown menu */}
+                                {showDropdown && (
+                                    <div className="absolute right-0 left-1 mt-1 w-40 bg-beige_main rounded-md shadow-lg">
+                                        <a
+                                            href="/manage-account"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        >
+                                            Manage Account
+                                        </a>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <button
