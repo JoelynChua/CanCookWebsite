@@ -48,7 +48,12 @@ const NaviBar = () => {
                 <div className="flex justify-center">
                     <div className="flex justify-center flex-grow">
                         {/* Navigation links */}
-                        <div className="w-40"></div>
+                        {currentUser ? (
+                            <div className="w-40"></div> // Render this when currentUser is true
+                        ) : (
+                            <div className="w-10"></div> // Render this when currentUser is false
+                        )}
+
                         <ul
                             className={`md:flex md:items-center ${
                                 isOpen ? "block" : "hidden"
