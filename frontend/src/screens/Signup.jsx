@@ -1,8 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { auth } from "../firebase";
+import { getRedirectResult } from "firebase/auth";
 
 const SignUp = () => {
+    useEffect(() => {
+        const fetchRedirectResult = async () => {
+            const response = await getRedirectResult(auth);
+            if (response) {
+                console.log(5, response);
+            }
+        };
+
+        fetchRedirectResult();
+    }, []);
+
     const emailRef = useRef();
     const passwordRef = useRef();
     const { signup, googleLogin, currentUser } = useAuth();
@@ -32,17 +45,6 @@ const SignUp = () => {
             setError(error?.message || "Failed to create an account"); // Safely access message
         }
 
-        setLoading(false);
-    }
-    async function handleGoogleLogin(e) {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await googleLogin();
-        } catch (error) {
-            setError(error?.message || "Failed to sign in with Google");
-        }
-        //Hello
         setLoading(false);
     }
 
@@ -118,7 +120,7 @@ const SignUp = () => {
                         <hr className="w-2/5  bg-blue_main" />
                     </div>
                     <div
-                        onClick={handleGoogleLogin}
+                        onClick={googleLogin}
                         className="flex items-center hover:bg-blue_main"
                     >
                         <img
@@ -126,7 +128,10 @@ const SignUp = () => {
                             alt="Google"
                             className="w-10 h-9"
                         />
-                        <div className=" text-textcolor font-bold underline decoration-sky-500/80 font-overlock">
+                        <div
+                            className=" text-textcolor font-bold underline decoration-sky-500/80 font-overlock"
+                            onClick={googleLogin}
+                        >
                             Sign up with Google
                         </div>
                     </div>
