@@ -25,8 +25,41 @@ async function getRecipeById(id) {
     return res.data;
 }
 
+async function getRecipesByCuisine(cuisine) {
+    //Send a request to the backend
+    const res = await axiosInstance({
+        method: "get",
+        url: `http://localhost:5000/api/filteredResults/cuisine/${cuisine}`
+    });
+
+    //Return the list of to-do tasks
+    console.log(res.data)
+    return res.data;
+}
+
+async function getRecipesByIngredients(ingredients) {
+    //Send a request to the backend
+    console.log(ingredients);
+     // Ensure ingredients is an array and not a string
+     if (typeof ingredients === 'string') {
+        ingredients = JSON.parse(ingredients);
+    }
+    
+    const res = await axiosInstance({
+        method: "post",
+        url: `http://localhost:5000/api/filteredResults/ingredients`,
+        data: { ingredients: ingredients }
+    });
+
+    //Return the list of to-do tasks
+    console.log(res.data)
+    return res.data;
+}
+
 
 export{
     getAllRecipes,
-    getRecipeById
+    getRecipeById,
+    getRecipesByCuisine,
+    getRecipesByIngredients
 }
