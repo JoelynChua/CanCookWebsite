@@ -9,16 +9,20 @@ exports.getAllWishlists = async () => {
 };
 
 exports.getWishlistByUserID = async (userID) => {
-  const snapshot = await db.ref('wishlist').orderByChild('UserID').equalTo(userID).once('value');
-  const wishlists = snapshot.val();
-  
-  if (wishlists) {
-    return Object.keys(wishlists).map(key => new wishlist(key, wishlists[key].UserID, wishlists[key].RecipeID));
-  } else {
-    return [];
+  try {
+    const snapshot = await db.ref('wishlists').orderByChild('UserID').equalTo(userID).once('value');
+    const wishlists = snapshot.val();
+
+    if (wishlists) {
+      return Object.keys(wishlists).map(key => new wishlist(key, wishlists[key].UserID, wishlists[key].RecipeID));
+    } else {
+      return "error";
+    }
+  } catch (error) {
+    console.error(`Error fetching wishlists for userID ${userID}:`, error.message);
+    throw new Error(`Could not fetch wishlists for userID ${userID}`);
   }
 };
-
 // POST
 exports.addWishlist = async (newWishlist) => {
   const WishlistRef = db.ref('wishlist').push();
@@ -27,10 +31,10 @@ exports.addWishlist = async (newWishlist) => {
 };
 
 // DELETE
-exports.deleteWishlist = async (WishlistID) => {
-  const wishlistRef = db.ref(`wishlists/${WishlistID}`);
-  console.log(WishlistID);
+exports.deleteWishlist = async (id) => {
+  const wishlistRef = db.ref(`wishlists/${id}`);
+  console.log(id);
   await wishlistRef.remove();
-  return `${WishlistID} deleted successfully.`;
+  return `${id} deleted successfully.`;
 }; 
 

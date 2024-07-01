@@ -12,7 +12,7 @@ exports.getAllWishlists = async (req, res) => {
 
 exports.getWishlistByUserID = async (req, res) => {
   try {
-    const { userID } = req.params;
+    const { userID } = req.params.userID;
     const wishlists = await WishlistService.getWishlistByUserID(userID);
     res.status(200).json(wishlists);
   } catch (error) {

@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {getAllWishlists, addWishlist} from '../services/wishlistService';
+import '../styles/wishlist.css';
+import '../styles/button.css';
 // import { deleteWishlist } from '../../../backend/services/wishlistService';
 
-// function Wishlist() {
-//   return (
-//     <div className='flex justify-center items-center w-full h-screen'>
-//       <h1>Wishlist</h1>
-//     </div>
-//   )
-// }
 
 const Wishlist = () => {
   const [userID, setUserID] = useState('');
@@ -61,16 +56,13 @@ const Wishlist = () => {
       </form>
 
       {/* Start of Display */}
-      <h2>Wishlists</h2>
-      <ul>
-        {wishlists.map((wishlist) => (
-          <li key={wishlist.id}>
-            {wishlist.UserID} - {wishlist.RecipeID} <button> X </button>
-          </li>
-        ))}
-      </ul>
+      <h2>Wishlists</h2>    
+      {wishlists.map((wishlist) => (
+        <div className='card' key={wishlist.id}>
+          {wishlist.UserID} - {wishlist.RecipeID} <button className='button'> X </button>
+        </div>
+      ))}
     </div>
-
   );
 };
 
