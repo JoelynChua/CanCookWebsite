@@ -34,13 +34,3 @@ exports.deleteWishlist = async (WishlistID) => {
   return `${WishlistID} deleted successfully.`;
 }; 
 
-// exports.getWishlistByID = async (UserID) => {
-//   const snapshot = await db.ref(`wishlist/${UserID}`).once('value');
-//   const indiv_wishlist = snapshot.val();
-  
-//   if (indiv_wishlist) {
-//     return (wishlist, indiv_wishlist.UserID, indiv_wishlist.RecipeID);
-//   } else {
-//     return null; 
-//   }
-// };

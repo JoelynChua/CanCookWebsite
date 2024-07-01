@@ -10,6 +10,6 @@ router.post('/users', userController.addUser);
 router.get('/wishlists', wishlistController.getAllWishlists);
 router.get('/wishlists/users/:userID', wishlistController.getWishlistByUserID);
 router.post('/wishlists', wishlistController.addWishlist);
-router.delete('/wishlists/:WishlistID', wishlistController.deleteWishlist);
+router.delete('/wishlists/:id', wishlistController.deleteWishlist);
 
 module.exports = router;
