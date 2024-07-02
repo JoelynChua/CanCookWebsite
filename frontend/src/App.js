@@ -20,6 +20,8 @@ function App() {
           <Route path='/recipeDetails/:id' element={<RecipeDetails />} />
           <Route path='/filteredResults/cuisine/:cuisine' element={<FilteredResults />} />
           <Route path='/filteredResults/ingredients' element={<FilteredResults />} />
+          <Route path='/filteredResults/calories' element={<FilteredResults />} />
+          <Route path='/filteredResults/caloriesIngredients' element={<FilteredResults />} />
         </Routes>
       </BrowserRouter>
     </div>

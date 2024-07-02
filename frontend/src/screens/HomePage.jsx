@@ -51,9 +51,9 @@ export default function HomePage() {
         <SearchBar />
       </div>
       {/* Container for the carousel */}
-      <div className="w-full flex justify-center mt-4">
+      {/* <div className="w-full flex justify-center mt-4">
         <Carousel />
-      </div>
+      </div> */}
     </div>
 
   )

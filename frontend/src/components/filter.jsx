@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom';
 export default function Filter() {
     const [cuisines, setCuisines] = useState([]);
     const [ingredients, setIngredients] = useState([]);
+    const [caloriesRange, setCaloriesRange] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [popupContent, setPopupContent] = useState(null);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const [selectedMinCalories, setSelectedMinCalories] = useState(null);
+    const [selectedMaxCalories, setSelectedMaxCalories] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,6 +24,8 @@ export default function Filter() {
                 const data = await response.json();
                 const cuisineSet = new Set();
                 const ingredientSet = new Set();
+                let minCalories = Infinity;
+                let maxCalories = -Infinity;
 
                 Object.keys(data).forEach(key => {
                     const recipe = data[key];
@@ -36,12 +41,23 @@ export default function Filter() {
                             }
                         });
                     }
+
+                    if (recipe.calories) {
+                        minCalories = Math.min(minCalories, recipe.calories);
+                        maxCalories = Math.max(maxCalories, recipe.calories);
+                    }
                 });
 
                 setCuisines([...cuisineSet]);
                 setIngredients([...ingredientSet]);
+
+                const range = [];
+                for (let i = Math.floor(minCalories / 100) * 100; i <= Math.ceil(maxCalories / 100) * 100; i += 100) {
+                    range.push(i);
+                }
+                setCaloriesRange(range);
+
             } 
-            
             catch (err) {
                 setError('Failed to fetch data');
                 console.error(err);
@@ -81,12 +97,31 @@ export default function Filter() {
         sessionStorage.setItem('selectedIngredients', JSON.stringify(newSelected));
     };
 
-    const handleApplyFilters = () => {
-        // const selectedIngredientsParams = selectedIngredients.join(',');
-        const selectedIngredients = sessionStorage.getItem('selectedIngredients');
-        console.log(selectedIngredients)
-        navigate(`/filteredResults/ingredients`);
+    const handleMinCaloriesChange = (e) => {
+        setSelectedMinCalories(e.target.value);
     };
+
+    const handleMaxCaloriesChange = (e) => {
+        setSelectedMaxCalories(e.target.value);
+    };
+
+    const handleApplyFilters = () => {
+        // Save selected ingredients and calories to sessionStorage
+        sessionStorage.setItem('selectedIngredients', JSON.stringify(selectedIngredients));
+        sessionStorage.setItem('selectedMinCalories', selectedMinCalories);
+        sessionStorage.setItem('selectedMaxCalories', selectedMaxCalories);
+    
+        if (selectedIngredients.length > 0) {
+            navigate('/filteredResults/ingredients');
+        } 
+        else if (selectedMinCalories && selectedMaxCalories) {
+            navigate('/filteredResults/calories');
+        } 
+        else {
+            navigate('/filteredResults/caloriesIngredients');
+        }
+    };
+    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -105,17 +140,19 @@ export default function Filter() {
                 Cuisine
             </button>
             <button 
-                onClick={() => handleItemClick('ingredient')} 
+                onClick={() => handleItemClick('ingredientCalories')} 
                 className="m-2 p-2 bg-green-500 text-white rounded hover:bg-green-700"
             >
-                Ingredients
+                Ingredients & Calories
             </button>
 
             {popupContent && (
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-                    <div className="bg-white p-4 rounded shadow-lg">
+                    <div className="bg-white p-4 rounded shadow-lg max-w-lg max-h-full overflow-y-auto">
                         <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-lg font-semibold">{popupContent === 'cuisine' ? 'Cuisines' : 'Ingredients'}</h2>
+                            <h2 className="text-lg font-semibold">
+                                {popupContent === 'cuisine' ? 'Cuisines' : 'Ingredients & Calories'}
+                            </h2>
                             <button 
                                 onClick={handleClosePopup} 
                                 className="text-gray-500 hover:text-gray-800"
@@ -138,25 +175,51 @@ export default function Filter() {
                                 ))}
                             </div>
                         )}
-                        {popupContent === 'ingredient' && (
+                        {popupContent === 'ingredientCalories' && (
                             <div className="flex flex-wrap">
-                                {ingredients.map(ingredient => (
-                                    <label key={ingredient} className="m-2 p-2 bg-green-500 text-white rounded hover:bg-green-700 cursor-pointer">
-                                        <input 
-                                            type="checkbox" 
-                                            className="mr-2 cursor-pointer"
-                                            checked={selectedIngredients.includes(ingredient)}
-                                            onChange={() => handleIngredientClick(ingredient)} 
-                                        />
-                                        {ingredient}
+                                <div className="flex flex-col w-full">
+                                    <h3 className="text-lg font-semibold mb-2">Ingredients</h3>
+                                    <div className="max-h-64 overflow-y-auto">
+                                        {ingredients.map(ingredient => (
+                                            <label key={ingredient} className="m-2 p-2 bg-green-500 text-white rounded hover:bg-green-700 cursor-pointer">
+                                                <input 
+                                                    type="checkbox" 
+                                                    className="mr-2 cursor-pointer"
+                                                    checked={selectedIngredients.includes(ingredient)}
+                                                    onChange={() => handleIngredientClick(ingredient)} 
+                                                />
+                                                {ingredient}
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col w-full mt-4">
+                                    <h3 className="text-lg font-semibold mb-2">Calories</h3>
+                                    <label className="m-2 p-2 bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer">
+                                        Min Calories:
+                                        <select value={selectedMinCalories} onChange={handleMinCaloriesChange} className="ml-2 p-1 rounded">
+                                            <option value="">Any</option>
+                                            {caloriesRange.map(cal => (
+                                                <option key={cal} value={cal}>{cal}</option>
+                                            ))}
+                                        </select>
                                     </label>
-                                ))}
-                                <button 
-                                    onClick={handleApplyFilters} 
-                                    className="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                                >
-                                    Apply Filters
-                                </button>
+                                    <label className="m-2 p-2 bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer">
+                                        Max Calories:
+                                        <select value={selectedMaxCalories} onChange={handleMaxCaloriesChange} className="ml-2 p-1 rounded">
+                                            <option value="">Any</option>
+                                            {caloriesRange.map(cal => (
+                                                <option key={cal} value={cal}>{cal}</option>
+                                            ))}
+                                        </select>
+                                    </label>
+                                    <button 
+                                        onClick={handleApplyFilters} 
+                                        className="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                                    >
+                                        Apply Filters
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>
