@@ -1,12 +1,24 @@
 import React, { useRef, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { auth } from "../firebase";
+import {sendPasswordResetEmail} from "firebase/auth";
+
 
 const ForgotPassword = () => {
   const emailRef = useRef();
-  const { forgotpassword } = useAuth();
+  // const { forgotpassword } = useAuth();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+   function forgotpassword(email) {
+     return sendPasswordResetEmail(auth, email)
+       .then(() => {
+         alert("A password Reset Link has been sent to your email");
+       })
+       .catch((error) => {
+         console.error("Error sending password reset email:", error);
+       });
+   }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -16,6 +28,7 @@ const ForgotPassword = () => {
       setError("");
       setLoading(true);
       await forgotpassword(emailRef.current.value);
+      
       setMessage("Check your inbox for further instructions");
     } catch {
       setError("Failed to reset password");
