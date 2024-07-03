@@ -13,7 +13,7 @@ const SignIn = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        debugger;
+        // debugger;
         try {
             setError("");
             setLoading(true);
@@ -22,7 +22,11 @@ const SignIn = () => {
             const password = passwordRef.current.value;
 
             await signInWithEmailAndPassword(auth, email, password);
+            console.log(auth);
+            console.log(auth.currentUser.uid);
+            
             console.log(`User ${email} logged in successfully`);
+
 
             navigate("/");
         } catch {

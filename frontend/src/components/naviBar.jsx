@@ -3,6 +3,7 @@ import { Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext"; // Import useAuth
+import { auth } from "../firebase";
 
 const NaviBar = () => {
     const { currentUser, logout } = useAuth(); // Get currentUser from useAuth
@@ -26,7 +27,7 @@ const NaviBar = () => {
     };
 
     const handleLogout = () => {
-        logout();
+        auth.signOut();
     };
 
     return (
