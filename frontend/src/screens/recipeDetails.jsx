@@ -13,14 +13,6 @@ export default function RecipeDetails() {
         }
     }, [id]);
 
-    // const getRecipeDetails = (id) => {
-    //     getRecipeById(id)
-    //         .then((response) => {
-    //             console.log(response);
-    //             setRecipe(response);
-    //         })
-    //         .catch((error) => console.log(error.message));
-    // };
 
     const getRecipeDetails = async (id) => {
         try {
@@ -42,9 +34,9 @@ export default function RecipeDetails() {
             <div id={recipe._id}>
                 {/* Render = how React components output UI elements */}
                 {/* Render (return statement of the function component) your recipe details here, e.g., recipe name, cuisine, etc. */}
-                <p class="font-bold text-2xl">{recipe.recipeName}</p>
+                <p className="font-bold text-2xl">{recipe.recipeName}</p>
                 <br></br>
-                <img class="size-56 rounded-lg" src={recipe.image} />
+                <img className="size-56 rounded-lg" src={recipe.image} />
                 <p>Cuisine: {recipe.cuisine}</p>
                 <p>Duration: {recipe.duration}</p>
                 <p>Serving Size: {recipe.servingSize}</p>

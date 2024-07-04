@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState } from "react";
 import { getAllRecipes } from "../services/recipeService";
 import Carousel from "../components/carousel";
 import SearchBar from "../components/searchbar";
 import { useAuth } from "../contexts/AuthContext";
+import Filter from '../components/filter';
 
 export default function HomePage() {
 
@@ -32,10 +34,12 @@ export default function HomePage() {
                     : "Welcome to CanCook!"}
             </div>
 
+
             {/* Container for the search bar */}
             <div className="w-full flex justify-center mb-4">
                 <SearchBar />
             </div>
+
 
             {/* Container for the carousel */}
             <div className="w-full flex justify-center mb-4">
