@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {getAllWishlists, addWishlist} from '../services/wishlistService';
 import '../styles/wishlist.css';
