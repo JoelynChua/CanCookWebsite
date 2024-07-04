@@ -10,15 +10,116 @@ const NaviBar = () => {
 
   //set the state for switch between X icon and menu bar icon
   let [isOpen, setisOpen] = useState(false)
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown)
+}
 
-  return (
-    <div className='md:px-10 py-4 px-7 md:flex md:justify-between md:items-center bg-pink-200'>
+const handleLogout = () => {
+    auth.signOut()
+}
 
 
-      <div className="flex flex-col items-center md:flex-row md:items-center md:justify-center mb-4 md:mb-0">
-        {/* Logo */}
-        <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-4">
-          <img src={logo} alt="logo" className="w-20 h-20 md:w-24 md:h-24" />
+   
+
+    return (
+        <div>
+            <div className="bg-pink_main flex flex-col items-center py-3">
+                <div className="flex items-center">
+                    <img src={logo} alt="logo" className="w-20 h-30" />
+                    <div>
+                        <h1 className="text-3xl font-baloo text-textcolor">
+                            CanCook??
+                        </h1>
+                        <p className="text-sm font-overlock font-bold text-textcolor">
+                            Effortless Recipes for Every Ingredient
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="bg-purple-200 px-2">
+                <div className="flex justify-center">
+                    <div className="flex justify-center flex-grow">
+                        {/* Navigation links */}
+                        {currentUser ? (
+                            <div className="w-40"></div> // Render this when currentUser is true
+                        ) : (
+                            <div className="w-10"></div> // Render this when currentUser is false
+                        )}
+
+                        <ul
+                            className={`md:flex md:items-center ${
+                                isOpen ? "block" : "hidden"
+                            } md:block`}
+                        >
+                            {Links.map((link, index) => (
+                                <li
+                                    key={index}
+                                    className="font-overlock font-bold text-textcolor mx-4"
+                                >
+                                    <a href={link.link}>{link.name}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="flex items-center ml-3">
+                        {currentUser ? (
+                            <div className="relative">
+                                <div
+                                    className="flex cursor-pointer"
+                                    onClick={toggleDropdown}
+                                >
+                                    <img
+                                        src="/userlogo.png"
+                                        alt="User Icon"
+                                        className="w-8 h-8 rounded-full"
+                                    />
+                                    <span className="text-textcolor ml-3">
+                                        {currentUser.email}
+                                    </span>
+                                </div>
+                                {/* Dropdown menu */}
+                                {showDropdown && (
+                                    <div className="absolute right-0 left-1 mt-1 w-40 bg-beige_main rounded-md shadow-lg">
+                                        <a
+                                            href="/manage-account"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        >
+                                            Manage Account
+                                        </a>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <button
+                                className="bg-orange_main font-overlock font-bold text-textcolor py-2 px-4 rounded-3xl"
+                                onClick={() => navigate("/signup")}
+                            >
+                                Signup
+                            </button>
+                        )}
+
+                        {/* Menu bar -- responsive navbar */}
+                        <div className="md:hidden flex items-center p-3">
+                            <div
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="cursor-pointer"
+                            >
+                                {isOpen ? (
+                                    <XMarkIcon className="w-7 h-7" />
+                                ) : (
+                                    <Bars3BottomRightIcon className="w-7 h-7" />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         {/* App name and headline */}
@@ -46,8 +147,8 @@ const NaviBar = () => {
       </ul>
 
     </div>
-  )
-}
+  
+
 
 export default NaviBar
 
