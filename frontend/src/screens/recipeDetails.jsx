@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getRecipeById } from "../services/recipeService";
 
 export default function RecipeDetails() {
@@ -12,7 +12,6 @@ export default function RecipeDetails() {
             getRecipeDetails(id);
         }
     }, [id]);
-
 
     const getRecipeDetails = async (id) => {
         try {
@@ -27,9 +26,7 @@ export default function RecipeDetails() {
         return <div>Loading...</div>;
     }
 
-
     return (
-        
         <div className="flex items-center justify-center min-h-screen">
             <div id={recipe._id}>
                 {/* Render = how React components output UI elements */}
@@ -41,8 +38,8 @@ export default function RecipeDetails() {
                 <p>Duration: {recipe.duration}</p>
                 <p>Serving Size: {recipe.servingSize}</p>
                 <p>Calories: {recipe.calories}</p>
-                <p>Ingredients: {recipe.ingredients.join(', ')}</p>
-                <p>Equipments: {recipe.equipments.join(', ')}</p>
+                <p>Ingredients: {recipe.ingredients.join(", ")}</p>
+                <p>Equipments: {recipe.equipments.join(", ")}</p>
                 <br></br>
                 {/* Steps to be printed in new line after every , */}
                 <p>Steps:</p>
@@ -51,7 +48,5 @@ export default function RecipeDetails() {
                 ))}
             </div>
         </div>
-
-
-    )
+    );
 }
