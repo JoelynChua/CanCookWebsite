@@ -8,8 +8,8 @@ import Signup from "./screens/Signup";
 import Signin from "./screens/Signin";
 import ForgotPassword from "./screens/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
-import FilteredResults from "./screens/filteredResults";
 import { AuthProvider } from "./contexts/AuthContext";
+
 
 const AppContent = () => {
     const location = useLocation();
@@ -32,22 +32,10 @@ const AppContent = () => {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/Wishlist" element={<Wishlist />} />
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
-                <Route
-                    path="/filteredResults/cuisine/:cuisine"
-                    element={<FilteredResults />}
-                />
-                <Route
-                    path="/filteredResults/ingredients"
-                    element={<FilteredResults />}
-                />
-                <Route
-                    path="/filteredResults/calories"
-                    element={<FilteredResults />}
-                />
-                <Route
-                    path="/filteredResults/caloriesIngredients"
-                    element={<FilteredResults />}
-                />
+          <Route path='/filteredResults/cuisine/:cuisine' element={<FilteredResults />} />
+          <Route path='/filteredResults/ingredients' element={<FilteredResults />} />
+          <Route path='/filteredResults/calories' element={<FilteredResults />} />
+          <Route path='/filteredResults/caloriesIngredients' element={<FilteredResults />} />
                 <Route
                     path="/"
                     element={
