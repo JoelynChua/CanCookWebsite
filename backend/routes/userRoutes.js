@@ -1,3 +1,4 @@
+
 const express = require('express');
 const userController = require('../controllers/userController');
 const wishlistController = require('../controllers/wishlistController');
@@ -5,8 +6,9 @@ const recipeController = require('../controllers/recipeController');
 
 const router = express.Router();
 
-router.get('/users', userController.getUsers);
-router.post('/users', userController.addUser);
+router.get("/users", userController.getUsers);
+router.post("/users", userController.addUser);
+
 
 router.get('/wishlists', wishlistController.getAllWishlists);
 router.get('/wishlists/user/:userID', wishlistController.getWishlistByUserID);
@@ -22,3 +24,4 @@ router.post('/filteredResults/caloriesIngredients', recipeController.getRecipesB
 router.post('/recipes', recipeController.addRecipe);
 
 module.exports = router;
+
