@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/AuthContext"; // Import useAuth
 import { auth } from "../firebase";
 
 const NaviBar = () => {
-    const {currentUser} = useAuth(); // Get currentUser from useAuth
+    const { currentUser } = useAuth(); // Get currentUser from useAuth
     const [isOpen, setIsOpen] = useState(false); // State for menu toggle
     const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
 

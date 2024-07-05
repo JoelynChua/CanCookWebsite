@@ -40,8 +40,6 @@
 //   //     setRecipe(data);
 //   //   };
 
-
-
 //   return (
 //     <div className="flex flex-col justify-center items-center w-full h-screen">
 //       {/* filters */}
@@ -67,10 +65,8 @@ import SearchBar from "../components/searchbar";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function HomePage() {
-
     const { currentUser } = useAuth();
     const [recipeList, setRecipeList] = useState([]);
-
 
     useEffect(() => {
         getRecipes();
@@ -88,7 +84,7 @@ export default function HomePage() {
 
     return (
         <div className="flex flex-col justify-center items-center w-full h-screen bg-beige_main">
-            <div className="text-center text-2xl mb-4">
+            <div className="text-center text-2xl mb-4 font-baloo">
                 {currentUser
                     ? `Hello, ${currentUser.email}!`
                     : "Welcome to CanCook!"}
