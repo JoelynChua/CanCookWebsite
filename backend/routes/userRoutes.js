@@ -9,9 +9,10 @@ router.get('/users', userController.getUsers);
 router.post('/users', userController.addUser);
 
 router.get('/wishlists', wishlistController.getAllWishlists);
-router.get('/wishlists/:userid', wishlistController.getWishlistByUserID);
+router.get('/wishlists/user/:userID', wishlistController.getWishlistByUserID);
 router.post('/wishlists', wishlistController.addWishlist);
 router.delete('/wishlists/:id', wishlistController.deleteWishlist);
+
 router.get('/recipes', recipeController.getAllRecipes);
 router.get('/recipeDetails/:id', recipeController.getRecipeById);
 router.post('/recipes', recipeController.addRecipe);

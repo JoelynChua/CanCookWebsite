@@ -1,9 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 .card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin: 20px;
-    max-width: 300px;
-    font-family: Arial, sans-serif;
-  }
+  display: flex; /* Makes the card a flex container */
+  align-items: center; /* Centers items vertically */
+  justify-content: center; /* Centers items horizontally */
+  min-height: 100vh; /* Sets the minimum height to the full viewport height */
+  
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 20px;
+  max-width: 300px;
+  font-family: Arial, sans-serif;
+}

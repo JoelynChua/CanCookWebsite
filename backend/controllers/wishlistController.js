@@ -12,7 +12,7 @@ exports.getAllWishlists = async (req, res) => {
 
 exports.getWishlistByUserID = async (req, res) => {
   try {
-    const { userID } = req.params.userID;
+    const { userID } = req.params;
     const wishlists = await WishlistService.getWishlistByUserID(userID);
     res.status(200).json(wishlists);
   } catch (error) {
@@ -25,7 +25,7 @@ exports.getWishlistByUserID = async (req, res) => {
 exports.addWishlist = async (req, res) => {
   try {
     const newWishlist= req.body;
-    const wishlist = await WishlistService.addWishlist(newWishlist); // issue
+    const wishlist = await WishlistService.addWishlist(newWishlist); 
     res.json(wishlist);
   } catch (err) {
     res.status(500).send(err.message);
