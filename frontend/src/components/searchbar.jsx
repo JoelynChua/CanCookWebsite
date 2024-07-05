@@ -72,11 +72,13 @@ const SearchBar = () => {
             {error && <p>{error}</p>}
             <div className='searchBack mt-4 w-full max-w-md'>
                 {result.map((recipe, index) => (
-                    <a key={index} className='block mb-2'>
-                        <div className='bg-gray-100 border border-gray-300 rounded-lg px-4 py-2' onClick={() => viewRecipeDetails(recipe.id)} >
+                    // key={index} helps to identify each item
+                    <div key={index} className='block mb-2'>
+                        <div className='bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 cursor-pointer select-none' 
+                            onClick={() => viewRecipeDetails(recipe.id)} >
                             {recipe.recipeName}
                         </div>
-                    </a>
+                    </div>
                 ))}
             </div>
         </div>

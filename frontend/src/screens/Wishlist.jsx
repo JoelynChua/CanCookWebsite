@@ -1,3 +1,4 @@
+import React from 'react'
 
 import React, { useState, useEffect } from 'react';
 import {getAllWishlists, getWishlistByUserID, deleteWishlist, addWishlist} from '../services/wishlistService';
@@ -58,10 +59,8 @@ const Wishlist = () => {
         </div>
       ))}
     </div>
-  );
-};
-
-export default Wishlist;
+  )
+}
 
 // const handleCreate = async (newWish) => {
 //   newWish.preventDefault();
@@ -72,3 +71,4 @@ export default Wishlist;
 //     console.error('Failed to create wishlist:', error);
 //   }
 // };
+export default Wishlist
