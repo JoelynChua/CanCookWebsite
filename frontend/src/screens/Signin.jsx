@@ -1,36 +1,45 @@
-import React,{useRef,useState} from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { auth } from "../firebase";
 
 const SignIn = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login } = useAuth();
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
-// debugger
+        // debugger;
         try {
             setError("");
             setLoading(true);
-            const isSuccessful = await login(
-                emailRef.current.value,
-                passwordRef.current.value
-            );
-            if (isSuccessful) {
-                history("/");
-            } else {
-                alert("Incorrect email or password ");
-            }
+
+            const email = emailRef.current.value;
+            const password = passwordRef.current.value;
+
+            await signInWithEmailAndPassword(auth, email, password);
+            console.log(auth);
+            console.log(auth.currentUser.uid);
+            
+            console.log(`User ${email} logged in successfully`);
+
+
+            navigate("/");
         } catch {
-            // setError("Failed to log in");
-            console.log(error)
+            alert("Incorrect email or password ");
+            console.log(error);
         }
 
         setLoading(false);
+    }
+
+    // Redirect to home if already logged in
+    if (auth.currentUser) {
+        navigate("/");
     }
 
     return (
@@ -52,7 +61,7 @@ const SignIn = () => {
                 </div>
 
                 <div className="flex flex-col justify-center items-center w-full p-10 md:p-20 md:rounded-r-3xl">
-                    <h2 className="text-4xl font-overlock text-textcolor font-bold mb-5">
+                    <h2 className="text-3xl font-overlock text-textcolor font-bold mb-5">
                         WELCOME BACK
                     </h2>
                     {error && <p className="text-red-500">{error}</p>}{" "}
@@ -85,11 +94,11 @@ const SignIn = () => {
                                 type="password"
                             />
                         </div>
+
                         <div className="flex justify-end font-overlock underline decoration-sky-500/80 mb-6">
-                            <Link to = "/ForgotPassword">
-                            Forgot password?
-                            </Link>
+                            <Link to="/ForgotPassword">Forgot password?</Link>
                         </div>
+
                         <div className="flex items-center justify-center">
                             <button
                                 className=" bg-orange_main hover:bg-orange-400 text-textcolor hover:text-green-900 py-2 px-4 rounded-3xl font-bold font-overlock"
@@ -100,35 +109,19 @@ const SignIn = () => {
                             </button>
                         </div>
                     </form>
-                    <div className="my-4 w-full flex justify-between items-center">
-                        <hr className="w-2/5 bg-blue_main" />
-                        <span className="text-textcolor">or</span>
-                        <hr className="w-2/5  bg-blue_main" />
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <div className="flex items-center">
-                            <img
-                                src="/googlelogo.png"
-                                alt="Google"
-                                className="w-10 h-9"
-                            />
-                            <div className=" text-textcolor font-bold underline decoration-sky-500/80 font-overlock">
-                                Sign in with Google
-                            </div>
-                        </div>
-                        <p className="mt-4 text-textcolor font-bold font-overlock">
-                            Are you new here?{" "}
-                            <Link
-                                to="/Signup"
-                                className=" text-orange_main font-overlock font-bold underline decoration-sky-500/80"
-                            >
-                                Register
-                            </Link>
-                        </p>
-                    </div>
+                    <p className="mt-4 text-textcolor font-bold font-overlock">
+                        Are you new here?{" "}
+                        <Link
+                            to="/Signup"
+                            className=" text-orange_main font-overlock font-bold underline decoration-sky-500/80"
+                        >
+                            Register
+                        </Link>
+                    </p>
                 </div>
             </div>
         </div>
+        // </div>
     );
 };
 
