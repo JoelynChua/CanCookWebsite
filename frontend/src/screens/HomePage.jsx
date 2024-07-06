@@ -103,7 +103,7 @@ export default function HomePage() {
             {/* Conditional rendering based on user login status */}
             {currentUser ? (
                 <div className="w-full flex flex-col items-center">
-                    <h2 className="text-xl mb-2">Your Wishlist</h2>
+                    <h2 className="text-xl mb-2 font-">Your Wishlist</h2>
                     {/* Render the wishlist or other user-specific content here */}
                     {/* Example wishlist rendering: */}
                     <ul>
