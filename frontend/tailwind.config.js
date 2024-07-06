@@ -22,8 +22,8 @@ module.exports = {
             },
         },
         fontFamily: {
-            overlock: ["Overlock", "sans-serif"],
-            baloo: ["Baloo", "sans-serif"],
+            overlock: ["Overlock"],
+            baloo: ["Baloo"],
         },
         screens: {
             sm: "640px",
