@@ -23,6 +23,7 @@ export default function FilteredResults() {
                 .then((response) => {
                     console.log("Fetched recipes by cuisine:", response);
                     setRecipeList(response);
+                    console.log(25, response);
                 })
                 .catch((error) =>
                     console.error("Error fetching recipes by cuisine:", error)
