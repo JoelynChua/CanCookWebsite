@@ -44,8 +44,8 @@ export default function RecipeDetails() {
 
     const toggleFavorite = () => {
         setIsFavorite(!isFavorite);
-        if (isFavorite) {
-            handleCreate(userID, recipe.recipeID);
+        if (!isFavorite) {
+            handleCreate(userID, id);
         }
     }
 
