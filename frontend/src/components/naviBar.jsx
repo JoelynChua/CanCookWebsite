@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
-import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import logo from '../assets/logo.png';
+import React, { useState } from "react";
+import { Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext"; // Import useAuth
+import { auth } from "../firebase";
 
 const NaviBar = () => {
-  let Links = [
-    { name: 'Home', link: '/' },
-    { name: 'Wishlist', link: '/Wishlist' }
-  ]
+    const { currentUser } = useAuth(); // Get currentUser from useAuth
+    const [isOpen, setIsOpen] = useState(false); // State for menu toggle
+    const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
 
-  //set the state for switch between X icon and menu bar icon
-  let [isOpen, setisOpen] = useState(false)
+    let Links = [
+        { name: "All recipes", link: "/all-recipes" },
+        { name: "About Us", link: "/about-us" },
+    ];
 
-  return (
-    <div className='md:px-10 py-4 px-7 md:flex md:justify-between md:items-center bg-pink-200'>
+    // Add wishlist link if user is logged in
+    if (currentUser) {
+        Links.push({ name: "Wishlist", link: "/wishlist" });
+    }
 
+    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
@@ -123,34 +130,7 @@ const NaviBar = () => {
                 </div>
             </div>
         </div>
+    );
+};
 
-        {/* App name and headline */}
-        <div className="text-center md:text-left">
-          <h1 className='text-3xl font-black'>CanCook?</h1>
-          <p className="text-sm">Effortless recipe for every ingredient</p>
-        </div>
-      </div>
-
-      {/* Menu bar -- responsive navbar */}
-      <div onClick={() => setisOpen(!isOpen)} className='w-7 h-7 absolute right-8 top-6 cursor-pointer items-center md:hidden'>
-        {isOpen ? <XMarkIcon /> : <Bars3BottomRightIcon />}
-      </div>
-
-      {/* Navigation links */}
-      <ul className='md:flex md:items-center md:gap-8 md:ml-auto md:mr-auto'>
-        {Links.map((link, index) => (
-          <li key={index} className='font-semibold my-3 md:my-0'>
-            <a href={link.link}>{link.name}</a>
-          </li>
-        ))}
-        <li className="my-3 md:my-0">
-          <button className='btn bg-pink-500 text-white py-1 px-3 rounded md:static'>Sign in</button>
-        </li>
-      </ul>
-
-    </div>
-  )
-}
-
-export default NaviBar
-
+export default NaviBar;
