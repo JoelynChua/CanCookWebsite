@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import Carousel from "../components/carousel";
-import SearchBar from "../components/searchbar";
-import Filter from "../components/filter";
+// import React, { useEffect, useState } from "react";
+// import { collection, getDocs } from "firebase/firestore";
+// import Carousel from "../components/carousel";
+// import SearchBar from "../components/searchbar";
+// import Filter from "../components/filter";
 //import { db } from '../../../backend/config/firebase';
 // import React, { useEffect, useState } from 'react';
 // import { collection, getDocs } from 'firebase/firestore';
