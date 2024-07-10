@@ -15,12 +15,9 @@
     ],
     "routes": [
         {
-            "src": "/backend/(.*)",
-            "dest": "/backend/index.js"
-        },
-        {
-            "src": "^/static/(.*)",
-            "dest": "/frontend/static/$1"
+            "src": "/[^.]+",
+            "dest": "/",
+            "status": 200
         }
     ]
 }
