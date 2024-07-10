@@ -1,49 +1,135 @@
-import React, { useState } from 'react';
-import { Bars3BottomRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Bars3BottomRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext"; // Import useAuth
+import { auth } from "../firebase";
 
 const NaviBar = () => {
-  let Links = [
-    {name: 'Home', link: '/'},
-    {name: 'Wishlist', link: '/Wishlist'}
-  ]
+    const { currentUser, logout } = useAuth(); // Get currentUser from useAuth
+    const [isOpen, setIsOpen] = useState(false); // State for menu toggle
+    const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
 
-  //set the state for switch between X icon and menu bar icon
-  let [isOpen, setisOpen] = useState(false)
-  const navigate = useNavigate();
+    let Links = [
+        { name: "All recipes", link: "/" },
+        { name: "About Us", link: "/about-us" },
+    ];
 
-  return (
-    // <div>naviBar</div>
-    // <div className = 'bg-[#e7e7e7d1]'>
-      <div className='md:px-10 py-4 px-7 md:flex justify-between items-center bg-pink-300'>
+    // Add wishlist link if user is logged in
+    if (currentUser) {
+        Links.push({ name: "Wishlist", link: "/wishlist" });
+    }
 
-        {/* App name + logo */}
-        <h1>CanCook?</h1>
-    
-      {/* Menu bar -- responsive navbar*/}
-      <div onClick={() => setisOpen(!isOpen)} className='w-7 h-7 absolute right-8 top 6 cursor-pointer items-center md:hidden'>
-        {
-          isOpen ? <XMarkIcon/> : <Bars3BottomRightIcon/>
-        }
-   
-      </div>
+    const navigate = useNavigate();
 
-        {/* Navigation links */}
-        <ul className = 'md:flex pl-9 md:pl-0 md:items-center md:pb-0 pb-12'>
-          {
-            Links.map(link => (
-              <li className = 'font-semibold my-7 md:my-0 md:m1-8'>
-                <a href= {link.link}>{link.name}</a>
-              </li>
-            ))
-          }
-        <button className='btn bg-pink text-white py-1 px-3 md:m1-8 rouded md:static'onClick={() => navigate('/Signup')}
-        >Sign up</button>
-        </ul>
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
 
-    </div>
-  )
-}
+    const handleLogout = () => {
+        auth.signOut();
+    };
 
-export default NaviBar
+    return (
+        <div>
+            <div className="bg-pink_main flex flex-col items-center py-3">
+                <div className="flex items-center">
+                    <img src={logo} alt="logo" className="w-20 h-30" />
+                    <div>
+                        <h1 className="text-3xl font-baloo text-textcolor">
+                            CanCook??
+                        </h1>
+                        <p className="text-sm font-overlock font-bold text-textcolor">
+                            Effortless Recipes for Every Ingredient
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="bg-purple-200 px-2">
+                <div className="flex justify-center">
+                    <div className="flex justify-center flex-grow">
+                        {/* Navigation links */}
+                        {currentUser ? (
+                            <div className="w-40"></div> // Render this when currentUser is true
+                        ) : (
+                            <div className="w-10"></div> // Render this when currentUser is false
+                        )}
+<ul
+                            className={`md:flex md:items-center ${
+                                isOpen ? "block" : "hidden"
+                            } md:block`}
+                        >
+                            {Links.map((link, index) => (
+                                <li
+                                    key={index}
+                                    className="font-overlock font-bold text-textcolor mx-4"
+                                >
+                                    <a href={link.link}>{link.name}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="flex items-center ml-3">
+                        {currentUser ? (
+                            <div className="relative">
+                                <div
+                                    className="flex cursor-pointer"
+                                    onClick={toggleDropdown}
+                                >
+                                    <img
+                                        src="/userlogo.png"
+                                        alt="User Icon"
+                                        className="w-8 h-8 rounded-full"
+                                    />
+                                    <span className="text-textcolor ml-3">
+                                        {currentUser.email}
+                                    </span>
+                                </div>
+                                {/* Dropdown menu */}
+                                {showDropdown && (
+                                    <div className="absolute right-0 left-1 mt-1 w-40 bg-beige_main rounded-md shadow-lg">
+                                        <a
+                                            href="/manage-account"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        >
+                                            Manage Account
+                                        </a>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <button
+                                className="bg-orange_main font-overlock font-bold text-textcolor py-2 px-4 rounded-3xl"
+                                onClick={() => navigate("/signup")}
+                            >
+                                Signup
+                            </button>
+                        )}
 
+                        {/* Menu bar -- responsive navbar */}
+                        <div className="md:hidden flex items-center p-3">
+                            <div
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="cursor-pointer"
+                            >
+                                {isOpen ? (
+                                    <XMarkIcon className="w-7 h-7" />
+                                ) : (
+                                    <Bars3BottomRightIcon className="w-7 h-7" />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default NaviBar;
