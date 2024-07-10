@@ -6,6 +6,9 @@ import {
 import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
 
+
+
+
 const SignUp = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
