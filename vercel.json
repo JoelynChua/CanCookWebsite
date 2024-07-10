@@ -10,12 +10,6 @@
             "use": "@now/static"
         }
     ],
-    "routes": [
-        {
-            "src": "/[^.]+",
-            "dest": "/"
-        }
-    ],
     "rewrites": [
         {
             "source": "/((?!api/.*).*)",
