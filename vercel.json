@@ -1,19 +1,25 @@
 {
     "version": 2,
-    "builds":[
+    "builds": [
         {
-            "src": "/backend", 
-            "use": "@vercel/node" 
+            "src": "/backend",
+            "use": "@vercel/node"
         },
         {
-            "src": "/frontend", 
-            "use": "@vercel/node" 
+            "src": "/frontend",
+            "use": "@now/static"
         }
-
     ],
-    "routes":[
-        {"src": "/(.*)", "dest": "/backend/routes/userRoutes.js", "methods": ["GET"]}
-]
-    
-    
+    "routes": [
+        {
+            "src": "/[^.]+",
+            "dest": "/"
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/((?!api/.*).*)",
+            "destination": "/index.html"
+        }
+    ]
 }
