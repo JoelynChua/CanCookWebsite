@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 const SignUp = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { signup } = useAuth();
+    const { signup, googleLogin, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -34,6 +34,22 @@ const SignUp = () => {
 
         setLoading(false);
     }
+    async function handleGoogleLogin(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await googleLogin();
+        } catch (error) {
+            setError(error?.message || "Failed to sign in with Google");
+        }
+        //Hello
+        setLoading(false);
+    }
+
+    // Redirect to home if already logged in
+    if (currentUser) {
+        navigate("/");
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-purple_main">
@@ -50,7 +66,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="flex flex-col justify-center items-center w-full p-10 md:p-20 md:rounded-r-3xl">
-                    <h2 className="text-4xl font-overlock text-textcolor font-bold mb-5">
+                    <h2 className="text-3xl font-overlock text-textcolor font-bold mb-5">
                         WELCOME
                     </h2>
                     {error && <p className="text-red-500">{error}</p>}{" "}
@@ -84,7 +100,7 @@ const SignUp = () => {
                             />
                         </div>
                         <div className="flex justify-end font-overlock underline decoration-sky-500/80 mb-6">
-                            <Link to="/ForgotPassword">Forgot password?</Link>
+                            Forgot password?
                         </div>
                         <div className="flex items-center justify-center">
                             <button
@@ -101,7 +117,10 @@ const SignUp = () => {
                         <span className="text-textcolor">or</span>
                         <hr className="w-2/5  bg-blue_main" />
                     </div>
-                    <div className="flex items-center">
+                    <div
+                        onClick={handleGoogleLogin}
+                        className="flex items-center hover:bg-blue_main"
+                    >
                         <img
                             src="/googlelogo.png"
                             alt="Google"
