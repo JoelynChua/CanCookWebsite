@@ -16,7 +16,7 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "frontend/src/app.js"
+            "destination": "/backend"
         }
     ]
 }
