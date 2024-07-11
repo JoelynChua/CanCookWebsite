@@ -13,10 +13,10 @@
             }
         }
     ],
-    "routes": [
+    "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/"
+            "destination": "frontend/src/app.js"
         }
     ]
 }
