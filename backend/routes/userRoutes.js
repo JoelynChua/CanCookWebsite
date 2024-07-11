@@ -4,8 +4,8 @@ const recipeController = require('../controllers/recipeController');
 
 const router = express.Router();
 
-// router.get('/users', userController.getUsers);
-// router.post('/users', userController.addUser);
+router.get('/users', userController.getUsers);
+router.post('/users', userController.addUser);
 
 router.get('/recipes', recipeController.getAllRecipes);
 router.get('/recipeDetails/:id', recipeController.getRecipeById);
