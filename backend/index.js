@@ -11,14 +11,7 @@ const YOUR_VERCEL_FRONTEND_URL = "https://can-cook-website-frontend-368k499vc-jo
 const cors = require('cors')
 app.use(cors(
   {
-    origin: [
-      `http://localhost:3000`,
-      `${YOUR_VERCEL_FRONTEND_URL}`
-    ], 
-    methods: "GET,PUT,POST,DELETE",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    default: `${YOUR_VERCEL_FRONTEND_URL}`,
-
+    origin: "*"
     // Fastest method, but prone to cyber-attacks
     // origin: "*",
     // methods: "GET,PUT,POST,DELETE",
