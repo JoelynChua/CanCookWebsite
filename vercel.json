@@ -13,13 +13,13 @@
             }
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-            "src": "/backend/(.*)",
-            "dest": "/backend/index.js"
+            "source": "/backend/(.*)",
+            "destination": "/backend/index.js"
         },
         {
-            "src": "/(.*)",
+            "source": "/(.*)",
             "destination": "/frontend/package.json"
         }
     ]
