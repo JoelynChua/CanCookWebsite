@@ -15,6 +15,7 @@ app.use(cors(
       `http://localhost:3000`,
       `${YOUR_VERCEL_FRONTEND_URL}`
     ],
+    methods: "GET,PUT,POST,DELETE",
     default: `${YOUR_VERCEL_FRONTEND_URL}`,
 
     // Fastest method, but prone to cyber-attacks
