@@ -9,7 +9,7 @@ async function getAllRecipes() {
     //Send a request to the backend
     const res = await axiosInstance({
         method: "get",
-        url: `${finalURL}api/recipes`
+        url: `${finalURL}/api/recipes`
     });
 
     //Return the list of to-do tasks
