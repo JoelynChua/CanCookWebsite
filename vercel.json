@@ -13,15 +13,24 @@
             }
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-          "src": "/(.*)",
-          "dest": "/backend",
-          "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-          "headers": {
-            "Access-Control-Allow-Origin": "*"
-          }
+            "source": "/(.*)",
+            "destination": "/backend"
         }
-      ]
-  
+    ],
+    "headers": [
+        {
+          "source": "/(.*)",
+          "headers": [
+            { "key": "Access-Control-Allow-Origin", "value": "*" }
+          ]
+        },
+        {
+          "source": "/https://can-cook-website-frontend-gtodfshzd-joelynchuas-projects.vercel.app/(.*)",
+          "headers": [
+            { "key": "Access-Control-Allow-Origin", "value": "*" }
+          ]
+        }  
+    ]
 }
