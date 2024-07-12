@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/LeaveReview.css';
 import { addReview } from '../services/reviewService';
 import { FaStar } from 'react-icons/fa';
-
+import { useAuth } from '../contexts/AuthContext'; // Import useAuth hook for authentication
 const comments = {
     1: "Distraught. Way below my expectations.",
     2: "Disappointed. I’d expected more.",
@@ -12,6 +12,7 @@ const comments = {
 };
 
 const LeaveReview = ({ userID, recipeID, reviewCount, onAddReview }) => {
+    console.log("userID:" + userID);
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [comment, setComment] = useState('');
@@ -30,12 +31,18 @@ const LeaveReview = ({ userID, recipeID, reviewCount, onAddReview }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(123)
+        if (userID){
+            
+        }
         const newReview = {
             user: userID,
             recipe: recipeID,
             rating,
-            comments: comment
+            comments: comment,
+
         };
+        console.log(newReview)
         addReview(newReview)
             .then(addedReview => {
                 onAddReview(addedReview);
@@ -45,6 +52,7 @@ const LeaveReview = ({ userID, recipeID, reviewCount, onAddReview }) => {
                 setError(null);
             })
             .catch(error => {
+                console.log(321)
                 setError(error.message);
             });
     };
