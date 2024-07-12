@@ -10,10 +10,10 @@ exports.getAllWishlists = async () => {
 
 exports.getWishlistByUserID = async (userID) => {
   try {
-    console.log(userID)
+    // console.log(userID)
     const snapshot = await db.ref('wishlist').orderByChild('UserID').equalTo(userID).once('value');    
     const wishlists = snapshot.val();
-    console.log(wishlists)
+    // console.log(wishlists)
 
     if (wishlists) {
       return Object.keys(wishlists).map(key => new wishlist(key, wishlists[key].UserID, wishlists[key].RecipeID));
@@ -43,6 +43,7 @@ exports.addWishlist = async (newWishlist) => {
 //   return `${id} deleted successfully.`;
 // }; 
 
+// delete by wishlist ID
 exports.deleteWishlist = async (id) => {
   const wishlistRef = db.ref(`wishlist/${id}`);
   const snapshot = await wishlistRef.once('value');
@@ -53,3 +54,5 @@ exports.deleteWishlist = async (id) => {
     return null;
   }
 };
+
+// delete by recipe ID

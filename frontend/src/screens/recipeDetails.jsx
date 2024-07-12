@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRecipeById } from "../services/recipeService";
-import {addWishlist} from '../services/wishlistService';
-import { useAuth } from "../contexts/AuthContext";
+import {addWishlist, deleteWishlist} from '../services/wishlistService';
+// import { useAuth } from "../contexts/AuthContext";
 import {auth} from "../firebase";
 import '../styles/heart.css';
 
@@ -12,7 +12,7 @@ export default function RecipeDetails() {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
-    const userID = 1;
+    const userID = auth.currentUser.uid;
 
     useEffect(() => {
         if (id) {
@@ -37,15 +37,29 @@ export default function RecipeDetails() {
     const handleCreate = async (userID, recipeID) => {
         try {
             const newWishlist = await addWishlist(userID, recipeID);
+            console.log(newWishlist)
         } catch (error) {
             console.error('failed', error);
         }
     };
 
+    const handleDelete = async (id) => {
+        try {
+            const response = await deleteWishlist(id);
+            console.log(response);
+        }catch (error) {
+            console.error('failed delete', error)
+        }
+    }
+
     const toggleFavorite = () => {
         setIsFavorite(!isFavorite);
         if (!isFavorite) {
             handleCreate(userID, id);
+            console.log(id);
+        }
+        if (isFavorite) {
+            handleDelete(id);
         }
     }
 
