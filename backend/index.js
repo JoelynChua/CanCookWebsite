@@ -9,7 +9,19 @@ const port = process.env.PORT || 3000;
 
 const YOUR_VERCEL_FRONTEND_URL = "https://can-cook-website-frontend-368k499vc-joelynchuas-projects.vercel.app"
 const cors = require('cors')
-app.use(cors());
+app.use(cors(
+  {
+    origin: [
+      `http://localhost:3000`,
+      `${YOUR_VERCEL_FRONTEND_URL}`
+    ],
+    default: `${YOUR_VERCEL_FRONTEND_URL}`,
+
+    // Fastest method, but prone to cyber-attacks
+    // origin: "*",
+    // methods: "GET,PUT,POST,DELETE",
+  }
+));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
