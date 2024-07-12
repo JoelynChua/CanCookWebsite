@@ -1,7 +1,7 @@
 //create functions to make use of axiosInstance to send data into backend
 
 import axiosInstance from "../utils/axiosInstance";
-const cloudURL = "https://can-cook-website-bw1l-qsf88me6g-joelynchuas-projects.vercel.app/";
+const cloudURL = "https://can-cook-website-bw1l-qsf88me6g-joelynchuas-projects.vercel.app";
 const localURL =  "http://localhost:5000/";
 const finalURL = cloudURL 
 
