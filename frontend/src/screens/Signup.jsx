@@ -1,67 +1,61 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
 
-
-
-
 const SignUp = () => {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const usernameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const usernameRef = useRef();
 
-  function signup(email, password) {
-    // return auth.createUserWithEmailAndPassword(email, password)
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-        console.log("Signed up user:", user);
-        return userCredential;
-      })
-      .catch((error) => {
-        console.log("Error signing up:", error);
-        return error;
-      });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const username = usernameRef.current.value;
-
-    try {
-      // Create user with email and password
-      const userCredential = await signup(email, password);
-      if (userCredential && userCredential.user) {
-        const user = userCredential.user;
-        await set(ref(db, "users/" + user.uid), {
-          username,
-          email,
-        });
-        navigate("/Signin");
-      }
-    } catch (error) {
-      console.error("Signup Error:", error);
-      setError(error.message || "Failed to create an account");
+    function signup(email, password) {
+        // return auth.createUserWithEmailAndPassword(email, password)
+        return createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up
+                const user = userCredential.user;
+                // ...
+                console.log("Signed up user:", user);
+                return userCredential;
+            })
+            .catch((error) => {
+                console.log("Error signing up:", error);
+                return error;
+            });
     }
 
-    setLoading(false);
-  }
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setError("");
+        setLoading(true);
 
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        const username = usernameRef.current.value;
+
+        try {
+            // Create user with email and password
+            const userCredential = await signup(email, password);
+            if (userCredential && userCredential.user) {
+                const user = userCredential.user;
+                await set(ref(db, "users/" + user.uid), {
+                    username,
+                    email,
+                });
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Signup Error:", error);
+            setError(error.message || "Failed to create an account");
+        }
+
+        setLoading(false);
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-purple_main">
@@ -134,6 +128,7 @@ const SignUp = () => {
                                 className="bg-orange_main hover:bg-orange-400 text-textcolor hover:text-green-900 py-2 px-4 rounded-3xl font-bold font-overlock"
                                 type="submit"
                                 disabled={loading}
+                                onClick={handleSubmit}
                             >
                                 Sign up
                             </button>

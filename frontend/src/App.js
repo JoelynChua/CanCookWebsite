@@ -9,6 +9,7 @@ import Signin from "./screens/Signin";
 import ForgotPassword from "./screens/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
+import ManageAcc from "./screens/ManageAcc";
 
 const AppContent = () => {
     const location = useLocation();
@@ -28,8 +29,8 @@ const AppContent = () => {
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/Signin" element={<Signin />} />
                 <Route path="/ForgotPassword" element={<ForgotPassword />} />
-                <Route path="/" element={<HomePage />} />
-                <Route path="/Wishlist" element={<Wishlist />} />
+                <Route path="/ManageAcc" element={<ManageAcc />} />
+
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
                 <Route

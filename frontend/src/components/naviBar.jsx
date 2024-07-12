@@ -90,7 +90,7 @@ const NaviBar = () => {
                                 {showDropdown && (
                                     <div className="absolute right-0 left-1 mt-1 w-40 bg-beige_main rounded-md shadow-lg">
                                         <a
-                                            href="/manage-account"
+                                            href="/ManageAcc"
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         >
                                             Manage Account
