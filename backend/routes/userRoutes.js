@@ -7,6 +7,8 @@ const reviewController = require('../controllers/reviewsController');
 const wishlistController = require('../controllers/wishlistController');
 
 
+
+
 const app = express();
 const router = express.Router();
 app.use(cors());
@@ -25,6 +27,11 @@ router.get('/wishlists', wishlistController.getAllWishlists);
 router.get('/wishlists/:id', wishlistController.getWishlistByID);
 router.post('/wishlists', wishlistController.addWishlist);
 router.delete('/wishlists/:id', wishlistController.deleteWishlist);
+
+
+router.get('/recipes', recipeController.getAllRecipes);
+router.get('/recipeDetails/:id', recipeController.getRecipeById);
+router.post('/recipes', recipeController.addRecipe);
 
 
 module.exports = router;
