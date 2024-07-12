@@ -7,7 +7,7 @@ const { handleError } = require('./utils/errorHandler');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const YOUR_VERCEL_FRONTEND_URL = "https://can-cook-website-frontend-368k499vc-joelynchuas-projects.vercel.app"
+const YOUR_VERCEL_FRONTEND_URL = "https://can-cook-website-frontend.vercel.app"
 const cors = require('cors')
 app.use(cors(
   {
