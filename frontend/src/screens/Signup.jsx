@@ -1,75 +1,71 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
-import { setDoc, doc } from "firebase/firestore";
 
 const SignUp = () => {
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
     const emailRef = useRef();
     const passwordRef = useRef();
     const usernameRef = useRef();
 
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    function signup(email, password) {
+        // return auth.createUserWithEmailAndPassword(email, password)
+        return createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up
+                const user = userCredential.user;
+                // ...
+                console.log("Signed up user:", user);
+                return userCredential;
+            })
+            .catch((error) => {
+                console.log("Error signing up:", error);
+                return error;
+            });
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
         setError("");
         setLoading(true);
-        debugger;
+
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        const username = usernameRef.current.value;
+
         try {
-            const email = emailRef.current.value;
-            const password = passwordRef.current.value;
-            const username = usernameRef.current.value;
-
-            console.log(
-                "Attempting to sign up with:",
-                email,
-                password,
-                username
-            );
-
-            const userCredential = await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-            const user = userCredential.user;
-
-            console.log("Signed up user:", user);
-
-            setLoading(false);
-
-            if (user) {
-                console.log("Creating user document in Firestore");
-                await setDoc(doc(db, "Users", user.uid), {
-                    email: email,
-                    password: password,
-                    username: username,
+            // Create user with email and password
+            const userCredential = await signup(email, password);
+            if (userCredential && userCredential.user) {
+                const user = userCredential.user;
+                await set(ref(db, "users/" + user.uid), {
+                    username,
+                    email,
                 });
-
-                console.log("User document created successfully");
-            } else {
-                alert("Email is already taken");
+                navigate("/");
             }
-            // Redirect to home or another page after sign-up
-        } catch {
-            console.log(error);
+        } catch (error) {
+            console.error("Signup Error:", error);
+            setError(error.message || "Failed to create an account");
         }
 
         setLoading(false);
-    }
-
-    if (auth.currentUser) {
-        navigate("/");
     }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-purple_main">
             <div className="flex flex-col md:flex-row rounded-3xl shadow-lg max-w-6xl p-5 md:p-0 bg-beige_main">
                 <div className="flex flex-col justify-center items-center p-10 md:rounded-l-3xl bg-pink_main">
-                    <img src="/icon.png" alt="CanCook?" className="w-25 h-25" />
+                    <img
+                        src="/authicon.png"
+                        alt="CanCook?"
+                        className="w-25 h-25"
+                    />
                     <h1 className="text-6xl text-textcolor font-baloo">
                         CanCook?
                     </h1>
@@ -136,6 +132,7 @@ const SignUp = () => {
                                 className="bg-orange_main hover:bg-orange-400 text-textcolor hover:text-green-900 py-2 px-4 rounded-3xl font-bold font-overlock"
                                 type="submit"
                                 disabled={loading}
+                                onClick={handleSubmit}
                             >
                                 Sign up
                             </button>
