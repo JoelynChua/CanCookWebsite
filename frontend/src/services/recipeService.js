@@ -1,12 +1,15 @@
 //create functions to make use of axiosInstance to send data into backend
 
 import axiosInstance from "../utils/axiosInstance";
+const cloudURL = "https://can-cook-website-bw1l.vercel.app";
+const localURL =  "http://localhost:5000/";
+const finalURL = cloudURL 
 
 async function getAllRecipes() {
     //Send a request to the backend
     const res = await axiosInstance({
         method: "get",
-        url: "http://localhost:5000/api/recipes"
+        url: `${finalURL}/api/recipes`
     });
 
     //Return the list of to-do tasks
@@ -29,7 +32,8 @@ async function getRecipesByCuisine(cuisine) {
     //Send a request to the backend
     const res = await axiosInstance({
         method: "get",
-        url: `http://localhost:5000/api/filteredResults/cuisine/${cuisine}`
+        url: `${finalURL}/api/filteredResults/cuisine/${cuisine}`
+       
     });
 
     //Return the list of to-do tasks
