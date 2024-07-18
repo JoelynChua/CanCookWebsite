@@ -24,8 +24,9 @@ const SignIn = () => {
             await signInWithEmailAndPassword(auth, email, password);
             console.log(auth);
             console.log(auth.currentUser.uid);
-
+            
             console.log(`User ${email} logged in successfully`);
+
 
             navigate("/");
         } catch {
@@ -46,7 +47,7 @@ const SignIn = () => {
             <div className="flex flex-col md:flex-row rounded-3xl shadow-lg max-w-6xl max-h-6xl p-5 md:p-0 bg-beige_main h-full">
                 <div className=" flex flex-col justify-center items-center p-10  md:rounded-l-3xl bg-pink_main">
                     <img
-                        src="/authicon.png"
+                        src="/icon.png"
                         alt="CanCook?"
                         className="w-25 h-25 "
                     />

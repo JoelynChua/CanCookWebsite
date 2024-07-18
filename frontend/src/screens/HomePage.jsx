@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
 import Carousel from "../components/carousel";
-import SearchBar from "../components/searchbar";
-import Filter from "../components/filter";
+import SearchBar from '../components/searchbar';
+import Filter from '../components/filter';
 //import { db } from '../../../backend/config/firebase';
 
 // import { ref, onValue } from "firebase/database";
@@ -11,35 +11,26 @@ import Filter from "../components/filter";
 import { getAllRecipes } from "../services/recipeService";
 
 export default function HomePage() {
-    {
-        /* Working on the display of recipe details */
-    }
-    // Source: https://www.youtube.com/watch?v=F7t-n5c7JsE&list=PLzKiusGbAW3gDkFz9nlohhxEaWhMxnGHX&index=8
-    const [recipeList, setrecipeList] = useState([]);
 
-    useEffect(() => {
-        getRecipes();
-    }, []);
+  {/* Working on the display of recipe details */ }
+  // Source: https://www.youtube.com/watch?v=F7t-n5c7JsE&list=PLzKiusGbAW3gDkFz9nlohhxEaWhMxnGHX&index=8
+  const [recipeList, setrecipeList] = useState([]);
 
-    // Helper function
-    function getRecipes() {
-        getAllRecipes()
-            .then((response) => {
-                console.log(response);
-                // set the list of receipes
-                setrecipeList(response);
-            })
-            .catch((error) => console.log(error.message));
-    }
+  useEffect(() => {
+    getRecipes()
+  }, [])
 
-    // Search
-    // const RecipeSearchApp = () => {
-    //   const [recipe, setRecipe] = useState(null);
+  // Helper function
+  function getRecipes() {
+    getAllRecipes()
+      .then((response) => {
+        console.log(response)
+        // set the list of receipes
+        setrecipeList(response)
 
-    //   const handleSearch = (data) => {
-    //     setRecipe(data);
-    //   };
+      }).catch(error => console.log(error.message))
 
+<<<<<<< HEAD
     return (
         <div className="flex flex-col justify-center items-center w-screen min-h-full bg-beige_main p-0 mt-0">
             {/* filters */}
@@ -53,4 +44,34 @@ export default function HomePage() {
             </div>
         </div>
     );
+=======
+  }
+
+  // Search
+  // const RecipeSearchApp = () => {
+  //   const [recipe, setRecipe] = useState(null);
+
+  //   const handleSearch = (data) => {
+  //     setRecipe(data);
+  //   };
+
+
+
+  return (
+    <div className="flex flex-col justify-center items-center w-full h-screen">
+      {/* filters */}
+      <Filter />
+      {/* Container for the search bar */}
+      <div className="w-full flex justify-center">
+        <SearchBar />
+      </div>
+      {/* Container for the carousel */}
+      {/* <div className="w-full flex justify-center mt-4">
+        <Carousel />
+      </div> */}
+    </div>
+
+  )
+
+>>>>>>> parent of bd481be (logos and navi bar updates)
 }

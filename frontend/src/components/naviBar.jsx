@@ -54,7 +54,7 @@ const NaviBar = () => {
                         ) : (
                             <div className="w-10"></div> // Render this when currentUser is false
                         )}
-                        <ul
+<ul
                             className={`md:flex md:items-center ${
                                 isOpen ? "block" : "hidden"
                             } md:block`}
@@ -79,9 +79,9 @@ const NaviBar = () => {
                                     <img
                                         src="/userlogo.png"
                                         alt="User Icon"
-                                        className="w-10 h-8 rounded-full"
+                                        className="w-8 h-8 rounded-full"
                                     />
-                                    <span className="text-textcolor ml-1">
+                                    <span className="text-textcolor ml-3">
                                         {currentUser.email}
                                     </span>
                                 </div>
