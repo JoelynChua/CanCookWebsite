@@ -1,73 +1,113 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import FilterCard from "../components/filteredCard";
-import { getRecipesByCuisine, getRecipesByIngredients, getRecipesByCalories, getRecipesByCaloriesIngredients } from "../services/recipeService";
-import { useParams } from 'react-router-dom';
+import {
+    getRecipesByCuisine,
+    getRecipesByIngredients,
+    getRecipesByCalories,
+    getRecipesByCaloriesIngredients,
+} from "../services/recipeService";
+import { useParams } from "react-router-dom";
 
 export default function FilteredResults() {
     const [recipeList, setRecipeList] = useState([]);
     const { cuisine } = useParams();
-    const ingredients = sessionStorage.getItem('selectedIngredients');
-    const minCalories = sessionStorage.getItem('selectedMinCalories');
-    const maxCalories = sessionStorage.getItem('selectedMaxCalories');
-    console.log(ingredients, minCalories, maxCalories)
+    const ingredients = sessionStorage.getItem("selectedIngredients");
+    const minCalories = sessionStorage.getItem("selectedMinCalories");
+    const maxCalories = sessionStorage.getItem("selectedMaxCalories");
+    console.log(ingredients, minCalories, maxCalories);
 
     useEffect(() => {
         if (cuisine) {
             console.log(cuisine);
             getRecipesByCuisine(cuisine)
-                .then(response => {
+                .then((response) => {
                     console.log("Fetched recipes by cuisine:", response);
                     setRecipeList(response);
                 })
-                .catch(error => console.error("Error fetching recipes by cuisine:", error));
-        }   
-        
-        
+                .catch((error) =>
+                    console.error("Error fetching recipes by cuisine:", error)
+                );
+        }
+
         // Only ingredients given
-        else if (ingredients.length > 0 && (minCalories === "null" || maxCalories === "null")) {
+        else if (
+            ingredients.length > 0 &&
+            (minCalories === "null" || maxCalories === "null")
+        ) {
             console.log("Fetching recipes by ingredients:", ingredients);
-    
+
             getRecipesByIngredients(ingredients)
-                .then(response => {
+                .then((response) => {
                     console.log("Fetched recipes by ingredients:", response);
                     setRecipeList(response);
                 })
-                .catch(error => console.error("Error fetching recipes by ingredients:", error));
-        } 
-        
+                .catch((error) =>
+                    console.error(
+                        "Error fetching recipes by ingredients:",
+                        error
+                    )
+                );
+        }
+
         // Only calories given
         else if (ingredients.length === 2 && minCalories && maxCalories) {
-            console.log("Fetching recipes by calories:", minCalories, maxCalories);
-    
+            console.log(
+                "Fetching recipes by calories:",
+                minCalories,
+                maxCalories
+            );
+
             getRecipesByCalories(minCalories, maxCalories)
-                .then(response => {
+                .then((response) => {
                     console.log("Fetched recipes by calories:", response);
                     setRecipeList(response);
                 })
-                .catch(error => console.error("Error fetching recipes by calories:", error));
-        } 
+                .catch((error) =>
+                    console.error("Error fetching recipes by calories:", error)
+                );
+        }
 
-        // Filter by ingredients and calories    
-        else if (ingredients.length > 0 && minCalories !== null && maxCalories !== null) {
-            console.log(minCalories)
-            console.log(maxCalories)
-            console.log(ingredients.length)
-            console.log(ingredients)
-            console.log("Fetching recipes by ingredients and calories:", ingredients, minCalories, maxCalories);
-    
-            getRecipesByCaloriesIngredients(ingredients, minCalories, maxCalories)
-                .then(response => {
-                    console.log("Fetched recipes by ingredients and calories:", response);
+        // Filter by ingredients and calories
+        else if (
+            ingredients.length > 0 &&
+            minCalories !== null &&
+            maxCalories !== null
+        ) {
+            console.log(minCalories);
+            console.log(maxCalories);
+            console.log(ingredients.length);
+            console.log(ingredients);
+            console.log(
+                "Fetching recipes by ingredients and calories:",
+                ingredients,
+                minCalories,
+                maxCalories
+            );
+
+            getRecipesByCaloriesIngredients(
+                ingredients,
+                minCalories,
+                maxCalories
+            )
+                .then((response) => {
+                    console.log(
+                        "Fetched recipes by ingredients and calories:",
+                        response
+                    );
                     setRecipeList(response);
                 })
-                .catch(error => console.error("Error fetching recipes by ingredients and calories:", error));
-        } 
-        
-        else {
-            console.error("No selected ingredients or calorie range found in sessionStorage.");
+                .catch((error) =>
+                    console.error(
+                        "Error fetching recipes by ingredients and calories:",
+                        error
+                    )
+                );
+        } else {
+            console.error(
+                "No selected ingredients or calorie range found in sessionStorage."
+            );
         }
     }, [cuisine, ingredients, minCalories, maxCalories]);
-
 
     // const getRecipes = () => {
     //     getRecipesByCuisine(cuisine) // Fetch recipes by cuisine
@@ -90,15 +130,12 @@ export default function FilteredResults() {
     //         .catch(error => console.error("Error fetching recipes:", error));
     // };
 
-
     return (
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap w-screen h-screen justify-center bg-beige_main">
             {recipeList.length > 0 ? (
                 recipeList.map((recipe) => (
                     <div key={recipe.id}>
-                        <FilterCard
-                            recipe={recipe}
-                        />
+                        <FilterCard recipe={recipe} />
                     </div>
                 ))
             ) : (
