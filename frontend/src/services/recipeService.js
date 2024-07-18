@@ -2,7 +2,7 @@
 
 import axiosInstance from "../utils/axiosInstance";
 const cloudURL = "https://can-cook-website-bw1l.vercel.app";
-const localURL = "http://localhost:5001/";
+const localURL = "http://localhost:5000/";
 const finalURL = cloudURL;
 
 async function getAllRecipes() {
@@ -10,7 +10,7 @@ async function getAllRecipes() {
     const res = await axiosInstance({
         method: "get",
 
-        url: "http://localhost:5001/api/recipes",
+        url: "http://localhost:5000/api/recipes",
     });
 
     //Return the list of to-do tasks
@@ -21,7 +21,7 @@ async function getRecipeById(id) {
     //Send a request to the backend
     const res = await axiosInstance({
         method: "get",
-        url: `http://localhost:5001/api/recipeDetails/${id}`,
+        url: `http://localhost:5000/api/recipeDetails/${id}`,
     });
 
     //Return the list of to-do tasks
@@ -33,7 +33,7 @@ async function getRecipesByCuisine(cuisine) {
     //Send a request to the backend
     const res = await axiosInstance({
         method: "get",
-        url: `http://localhost:5001/api/filteredResults/cuisine/${cuisine}`,
+        url: `http://localhost:5000/api/filteredResults/cuisine/${cuisine}`,
     });
 
     //Return the list of to-do tasks
@@ -51,7 +51,7 @@ async function getRecipesByIngredients(ingredients) {
 
     const res = await axiosInstance({
         method: "post",
-        url: `http://localhost:5001/api/filteredResults/ingredients`,
+        url: `http://localhost:5000/api/filteredResults/ingredients`,
         // Get the data by response body
         data: { ingredients: ingredients },
     });
@@ -71,7 +71,7 @@ async function getRecipesByCalories(minCalories, maxCalories) {
 
     const res = await axiosInstance({
         method: "post",
-        url: `http://localhost:5001/api/filteredResults/calories`,
+        url: `http://localhost:5000/api/filteredResults/calories`,
         // Get the data by response body
         data: data,
     });
@@ -101,7 +101,7 @@ async function getRecipesByCaloriesIngredients(
     try {
         const res = await axiosInstance({
             method: "post",
-            url: `http://localhost:5001/api/filteredResults/caloriesIngredients`,
+            url: `http://localhost:5000/api/filteredResults/caloriesIngredients`,
             data: data,
         });
 
