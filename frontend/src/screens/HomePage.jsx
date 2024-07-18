@@ -41,16 +41,17 @@ export default function HomePage() {
     //   };
 
     return (
-        <div className="flex flex-col justify-center items-center w-screen min-h-full bg-beige_main p-0 mt-0">
+        <div className="flex flex-col justify-center items-center w-full h-screen bg-beige_main">
             {/* filters */}
-            <div className="mt-10 h-screen">
-                <Filter />
-                {/* Container for the search bar */}
-
+            <Filter />
+            {/* Container for the search bar */}
+            <div className="w-full flex justify-center">
                 <SearchBar />
-
-                <Carousel />
             </div>
+            {/* Container for the carousel */}
+            {/* <div className="w-full flex justify-center mt-4">
+        <Carousel />
+      </div> */}
         </div>
     );
 }
