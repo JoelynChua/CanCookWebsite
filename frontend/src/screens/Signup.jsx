@@ -1,11 +1,8 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 
 import { ref, set } from "firebase/database";
-=======
->>>>>>> parent of bd481be (logos and navi bar updates)
 import { auth, db } from "../firebase";
 import { setDoc, doc } from "firebase/firestore";
 

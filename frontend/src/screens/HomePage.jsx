@@ -29,49 +29,19 @@ export default function HomePage() {
         setrecipeList(response)
 
       }).catch(error => console.log(error.message))
-
-<<<<<<< HEAD
-    return (
-        <div className="flex flex-col justify-center items-center w-screen min-h-full bg-beige_main p-0 mt-0">
-            {/* filters */}
-            <div className="mt-10 h-screen">
-                <Filter />
-                {/* Container for the search bar */}
-
-                <SearchBar />
-
-                <Carousel />
-            </div>
-        </div>
-    );
-=======
   }
 
-  // Search
-  // const RecipeSearchApp = () => {
-  //   const [recipe, setRecipe] = useState(null);
-
-  //   const handleSearch = (data) => {
-  //     setRecipe(data);
-  //   };
-
-
-
   return (
-    <div className="flex flex-col justify-center items-center w-full h-screen">
+    <div className="flex flex-col justify-center items-center w-screen min-h-full bg-beige_main p-0 mt-0">
       {/* filters */}
-      <Filter />
-      {/* Container for the search bar */}
-      <div className="w-full flex justify-center">
+      <div className="mt-10 h-screen">
+        <Filter />
+        {/* Container for the search bar */}
+
         <SearchBar />
-      </div>
-      {/* Container for the carousel */}
-      {/* <div className="w-full flex justify-center mt-4">
+
         <Carousel />
-      </div> */}
+      </div>
     </div>
-
-  )
-
->>>>>>> parent of bd481be (logos and navi bar updates)
+  );
 }

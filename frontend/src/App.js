@@ -49,7 +49,7 @@ const AppContent = () => {
                     element={<FilteredResults />}
                 />
                 <Route
-                    path="/all-recipes"
+                    path="/"
                     element={
                         <PrivateRoute>
                             {" "}
