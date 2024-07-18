@@ -29,7 +29,7 @@ const AppContent = () => {
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/Signin" element={<Signin />} />
                 <Route path="/ForgotPassword" element={<ForgotPassword />} />
-                <Route path="/" element={<HomePage />} />
+                {/* <Route path="/" element={<HomePage />} /> */}
                 <Route path="/Wishlist" element={<Wishlist />} />
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
                 <Route
@@ -49,7 +49,7 @@ const AppContent = () => {
                     element={<FilteredResults />}
                 />
                 <Route
-                    path="/"
+                    path="/all-recipes"
                     element={
                         <PrivateRoute>
                             {" "}

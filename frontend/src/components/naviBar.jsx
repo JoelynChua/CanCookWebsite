@@ -11,7 +11,7 @@ const NaviBar = () => {
     const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
 
     let Links = [
-        { name: "All recipes", link: "/" },
+        { name: "All recipes", link: "/all-recipes" },
         { name: "About Us", link: "/about-us" },
     ];
 
