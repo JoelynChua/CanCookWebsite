@@ -48,8 +48,10 @@ exports.deleteWishlist = async (req, res) => {
 
 exports.GetWishlistID = async (req, res) => {
   try {
-    const { userID, recipeID } = req.params;
-    const wishlistID = await GetWishlistID(userID, recipeID);
+    const userID = req.params.userID;
+    const recipeID = req.params.recipeID;
+    // console.log(userID,recipeID);
+    const wishlistID = await WishlistService.GetWishlistID(userID, recipeID);
     if (wishlistID) {
       res.status(200).json({ wishlistID });
     } else {

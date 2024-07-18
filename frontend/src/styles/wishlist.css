@@ -76,37 +76,36 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
-  width: 100%;
-  max-width: 600px;
-  margin: 16px 0;
+  width:max-content;
+  margin-left: 40%;
 }
 
 .image {
-  width: 150px;
+  width: 300px;
   height: auto;
   object-fit: cover;
-  align-items: center;
+  align-items: left;
   border-radius: 5px 0 0 5px;
 }
 
 .recipe-details {
-  padding: 2px 16px;
-  display: flex;
+  margin: 10px;
+  display: inline-block;
   flex-direction: column;
   justify-content: right;
+  align-items: right;
 }
 
 .recipe-details .recipe-name {
   font-size: 20px;
   margin: 0 0 8px;
-  align-items: inherit;
+  align-items: right;
 }
 
 .recipe-details .recipe-description {
   margin: 0;
   font-size: 16px;
   color: #666;
-  align-items: inherit;
 }
 
 .button {

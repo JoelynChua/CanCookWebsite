@@ -55,9 +55,12 @@ exports.GetWishlistID = async (userID, recipeID) => {
     .equalTo(userID)
     .once('value');
 
-  let wishlistID = null;
+    let wishlistID = null;
+    console.log(wishlistID)
 
   snapshot.forEach(childSnapshot => {
+    console.log("hi")
+    console.log(childSnapshot.val().RecipeID)
     if (childSnapshot.val().RecipeID === recipeID) {
       wishlistID = childSnapshot.key;
     }
