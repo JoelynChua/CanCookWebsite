@@ -30,6 +30,7 @@ router.get('/wishlists', wishlistController.getAllWishlists);
 router.get('/wishlists/user/:userID', wishlistController.getWishlistByUserID);
 router.post('/wishlists', wishlistController.addWishlist);
 router.delete('/wishlists/:id', wishlistController.deleteWishlist);
+router.get('/wishlists/:userID/:recipeID', wishlistController.GetWishlistID);
 
 router.get('/recipes', recipeController.getAllRecipes);
 router.get('/recipeDetails/:id', recipeController.getRecipeById);

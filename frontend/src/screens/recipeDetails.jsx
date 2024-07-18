@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRecipeById } from "../services/recipeService";
-import {addWishlist, deleteWishlist} from '../services/wishlistService';
+import {addWishlist, deleteWishlist, getWishlistByUserID} from '../services/wishlistService';
 // import { useAuth } from "../contexts/AuthContext";
 import {auth} from "../firebase";
 import '../styles/heart.css';
@@ -13,11 +13,14 @@ export default function RecipeDetails() {
     const [recipe, setRecipe] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const userID = auth.currentUser.uid;
+    const wishlist = getWishlistByUserID(userID);
+
 
     useEffect(() => {
         if (id) {
             getRecipeDetails(id);
         }
+
     }, [id]);
 
 
@@ -53,13 +56,13 @@ export default function RecipeDetails() {
     }
 
     const toggleFavorite = () => {
-        setIsFavorite(!isFavorite);
         if (!isFavorite) {
             handleCreate(userID, id);
-            console.log(id);
+            setIsFavorite(!isFavorite);
         }
         if (isFavorite) {
             handleDelete(id);
+            setIsFavorite(isFavorite);
         }
     }
 

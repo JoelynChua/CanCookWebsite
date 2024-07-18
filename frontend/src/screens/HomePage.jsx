@@ -66,6 +66,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getAllRecipes } from "../services/recipeService";
+import { getWishlistByUserID } from "../services/wishlistService";
 import Carousel from "../components/carousel";
 import SearchBar from "../components/searchbar";
 import { useAuth } from "../contexts/AuthContext";
@@ -73,6 +74,7 @@ import { useAuth } from "../contexts/AuthContext";
 export default function HomePage() {
     const { currentUser } = useAuth();
     const [recipeList, setRecipeList] = useState([]);
+    const [wishlist, setWishlist] = useState([]);
 
     useEffect(() => {
         getRecipes();
@@ -87,6 +89,15 @@ export default function HomePage() {
             console.log(error.message);
         }
     };
+ 
+    const getWishlists = async (userID) => {
+        try {
+            const response = await getWishlistByUserID(userID);
+            setWishlist(response);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <div className="flex flex-col justify-center items-center w-full h-screen bg-beige_main">

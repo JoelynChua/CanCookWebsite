@@ -34,14 +34,6 @@ exports.addWishlist = async (newWishlist) => {
   return new wishlist(WishlistRef.key, newWishlist.UserID, newWishlist.RecipeID);
 };
 
-// DELETE
-// exports.deleteWishlist = async (id) => {
-//  // const wishlistRef = db.ref(`wishlist`);
-//   const wishlistRef = db.ref(`wishlists/${id}`);
-//   console.log(id);
-//   await wishlistRef.remove();
-//   return `${id} deleted successfully.`;
-// }; 
 
 // delete by wishlist ID
 exports.deleteWishlist = async (id) => {
@@ -55,4 +47,21 @@ exports.deleteWishlist = async (id) => {
   }
 };
 
-// delete by recipe ID
+// get WishlistID
+exports.GetWishlistID = async (userID, recipeID) => {
+  const wishlistRef = db.ref('wishlist');
+  const snapshot = await wishlistRef
+    .orderByChild('UserID')
+    .equalTo(userID)
+    .once('value');
+
+  let wishlistID = null;
+
+  snapshot.forEach(childSnapshot => {
+    if (childSnapshot.val().RecipeID === recipeID) {
+      wishlistID = childSnapshot.key;
+    }
+  });
+
+  return wishlistID;
+};

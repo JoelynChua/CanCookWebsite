@@ -20,5 +20,5 @@ export const addWishlist = async (userID, recipeID) => {
 };
 
 export const deleteWishlist = async (wishlistID) => {
-  const response = await axios.delete(`${API_URL}/wishlists`, wishlistID)
+  const response = await axios.delete(`${API_URL}/wishlists/${wishlistID}`)
 }
