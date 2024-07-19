@@ -14,7 +14,11 @@ const getReviewsByRecipeID = async (req, res) => {
 
 // Endpoint to post reviews 
 const postReview = async (req, res) => {
+    console.log("req123", req.body)
+    // console.log("res", res)
+    
     const { user, recipeID, rating, comments } = req.body;
+
 
     // Check if user is logged in 
     if (!user) {
@@ -22,21 +26,25 @@ const postReview = async (req, res) => {
     }
 
     // Check all fields are filled 
-    if (!recipeID || !rating || !comments) {
-        return res.status(400).json({ message: 'All fields (recipeID, rating, comments) are required.' });
+    if (!rating || !comments) {
+        console.log(123)
+        return res.status(400).json({ message: 'All fields (rating, comments) are required.' });
+
     }
 
     try {
         // Ensure rating is a number and within a valid range (if applicable)
         const parsedRating = parseInt(rating);
         if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
-            return res.status(400).json({ message: 'Rating must be a number between 1 and 5.' });
+            return res.status(400).json({ message: 'Rating must be a number between 0 and 5.' });
         }
 
         const newReview = await reviewService.postReview(user, recipeID, parsedRating, comments);
+        console.log("Posted");
         return res.status(201).json(newReview);
     } catch (error) {
         console.error('Error adding review:', error);
+        console.log("here");
 
         let statusCode = 500;
         let errorMessage = 'Internal Server Error';
@@ -73,7 +81,7 @@ const editReview = async (req, res) => {
     } catch (error) {
         console.error('Error editing review:', error);
         if (error.message === 'Unauthorized: You are not allowed to edit this review') {
-            return res.status(403).json({ error: 'Unauthorized: You are not allowed to edit this review' });
+            return res.status(403).json({ message: 'Unauthorized: You are not allowed to edit this review' });
         }
         res.status(500).json({ error: 'Internal Server Error' });
     }
