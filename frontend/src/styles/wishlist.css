@@ -85,3 +85,9 @@
 .card .button:hover {
   background-color: pink; /* Background color on hover */
 }
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

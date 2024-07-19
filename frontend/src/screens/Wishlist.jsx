@@ -30,14 +30,23 @@ const Wishlist = () => {
   const fetchUserWishlist = async (userID) => {
     try {
       const wishlists = await getWishlistByUserID(userID);
-      setUserWishlist(wishlists); //UserWishlist is not updated at this point yet
-
+      
+      if (wishlists) {
+        setUserWishlist(wishlists); //UserWishlist is not updated at this point yet
+      }else{
+        setUserWishlist("");
+        setRecipes("");
+      }
+      console.log("hi",UserWishlist)
       const recipeDetails = {};
+      if (wishlists){
       for (let wishlist of wishlists) {
         const recipeID = wishlist.RecipeID;
         recipeDetails[recipeID] = await getRecipeDetails(wishlist.RecipeID);
       }
       setRecipes(recipeDetails);
+    }
+
     } catch (error) {
       console.error('Failed to fetch wishlists:', error);
     }
@@ -83,7 +92,10 @@ const Wishlist = () => {
     
     <div className='title'> <h2>Wishlists</h2> </div> 
       
-      {UserWishlist.map((wishlist) => (
+      {UserWishlist.length !== 0 ? (
+        <p className='error'>Your wishlist is empty. Add some recipes to your wishlist! </p>
+  ) : (
+      UserWishlist.map((wishlist) => (
         <div className='card' key={wishlist.id}>
           {/* {wishlist.UserID} - {wishlist.RecipeID} */}
           {/* {JSON.stringify(wishlist)} */}
@@ -106,7 +118,7 @@ const Wishlist = () => {
           )}
           </div> // for card
   
-      ))}
+      )))}
   </div>
   )
 }

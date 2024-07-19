@@ -22,6 +22,11 @@ export default function RecipeDetails() {
             getRecipeDetails(id);
         }
 
+        const favoriteState = sessionStorage.getItem(`favorite-${id}`);
+        if (favoriteState === 'true') {
+            setIsFavorite(true);
+        }
+
     }, [id]);
 
 
@@ -59,13 +64,14 @@ export default function RecipeDetails() {
     const toggleFavorite = () => {
         if (!isFavorite) {
             handleCreate(userID, id);
-            setIsFavorite(!isFavorite);
-        }
-        if (isFavorite) {
+            setIsFavorite(true);
+            sessionStorage.setItem(`favorite-${id}`, 'true');
+        } else {
             handleDelete(id);
-            setIsFavorite(isFavorite);
+            setIsFavorite(false);
+            sessionStorage.setItem(`favorite-${id}`, 'false');
         }
-    }
+    };
 
     return (
         <div className="flex items-center justify-center min-h-screen">
