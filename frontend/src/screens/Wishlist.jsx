@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {getWishlistByUserID, deleteWishlist} from '../services/wishlistService';
+import { getWishlistByUserID, deleteWishlist } from '../services/wishlistService';
 import '../styles/wishlist.css';
 import '../styles/button.css';
-import {auth} from "../firebase";
+import { auth } from "../firebase";
 import { getRecipeById } from "../services/recipeService";
 import { useNavigate } from 'react-router-dom';
-
+import SpintheWheel from '../components/spinTheWheel';
 
 
 
@@ -18,13 +18,13 @@ const Wishlist = () => {
   const navigate = useNavigate();
 
   const viewRecipeDetails = (id) => {
-      navigate(`/recipeDetails/${id}`);
+    navigate(`/recipeDetails/${id}`);
   }
 
   useEffect(() => {
-        fetchUserWishlist(userID);
-        getRecipeDetails(UserWishlist.recipeID);
-      }, [userID]);
+    fetchUserWishlist(userID);
+    getRecipeDetails(UserWishlist.recipeID);
+  }, [userID]);
 
 
   const fetchUserWishlist = async (userID) => {
@@ -50,11 +50,11 @@ const Wishlist = () => {
       const response = await getRecipeById(RecipeID);
       return response;
     } catch (error) {
-        console.log(error.message); 
+      console.log(error.message);
     }
   };
   if (!recipes) {
-      return <div>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   const handleDelete = async (wishlistID) => {
@@ -76,25 +76,31 @@ const Wishlist = () => {
 
 
   return (
-  <div>
     <div>
-      <h2 className='title'>What do you want to cook today?</h2>
+      <div>
+        <h2 className='title'>What do you want to cook today?</h2>
 
-      <div className="spinWheel">
-        <div className="spinWheel_btn"> Spin </div>
-        <div className="wheel">
-          {UserWishlist.map((wishlist) => (
-            <div key={wishlist.id} className="slice">
-              <span>{recipes[wishlist.RecipeID].recipeName}</span>
-            </div>
-          ))}
+        {/* Spin the wheel */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <SpintheWheel />
+        </div>
+
+        {/* <div className="spinWheel">
+          <div className="spinWheel_btn"> Spin </div>
+          <div className="wheel">
+            {UserWishlist.map((wishlist) => (
+              <div key={wishlist.id} className="slice">
+                <span>{recipes[wishlist.RecipeID].recipeName}</span>
+              </div>
+            ))}
+          </div>
+        </div> */}
+
       </div>
-    </div>
-    </div>
 
-    
-    <div className='title'> <h2>Wishlists</h2> </div> 
-      
+
+      <div className='title'> <h2>Wishlists</h2> </div>
+
       {UserWishlist.map((wishlist) => (
         <div className='card' key={wishlist.id}>
           {/* {wishlist.UserID} - {wishlist.RecipeID} */}
@@ -103,23 +109,23 @@ const Wishlist = () => {
           <button className='button' onClick={() => handleDelete(wishlist.WishlistID)}> X </button>
           {recipes[wishlist.RecipeID] && (
             <div onClick={() => viewRecipeDetails(wishlist.RecipeID)}>
-              
+
               <div className='column left'>
-              {<img className='image' src={recipes[wishlist.RecipeID].image}/>}
+                {<img className='image' src={recipes[wishlist.RecipeID].image} />}
               </div>
 
               <div className='column right'>
-              <h3 className='recipe-name'>{recipes[wishlist.RecipeID].recipeName} </h3>
-              <p className='recipe-description'>Calories: {recipes[wishlist.RecipeID].calories}</p>
-              <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
+                <h3 className='recipe-name'>{recipes[wishlist.RecipeID].recipeName} </h3>
+                <p className='recipe-description'>Calories: {recipes[wishlist.RecipeID].calories}</p>
+                <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
               </div> {/* for recipe details */}
-              
+
             </div> // for on click
           )}
-          </div> // for card
-  
+        </div> // for card
+
       ))}
-  </div>
+    </div>
   )
 }
 

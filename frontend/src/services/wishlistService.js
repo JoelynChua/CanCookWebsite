@@ -9,6 +9,7 @@ export const getAllWishlists = async () => {
 
 export const getWishlistByUserID = async (userID) => {
   const response = await axios.get(`${API_URL}/wishlists/user/${userID}`)
+  console.log(response.data);
   return response.data;
   };
 

@@ -13,69 +13,69 @@ export default function Filter() {
     const [selectedMaxCalories, setSelectedMaxCalories] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(
-                    "https://cancook-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json"
-                );
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                const data = await response.json();
-                const cuisineSet = new Set();
-                const ingredientSet = new Set();
-                let minCalories = Infinity;
-                let maxCalories = -Infinity;
-
-                Object.keys(data).forEach((key) => {
-                    const recipe = data[key];
-                    if (recipe.cuisine) {
-                        cuisineSet.add(recipe.cuisine);
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(
+                        "https://cancook-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json"
+                    );
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
                     }
+                    const data = await response.json();
+                    const cuisineSet = new Set();
+                    const ingredientSet = new Set();
+                    let minCalories = Infinity;
+                    let maxCalories = -Infinity;
 
-                    if (
-                        recipe.ingredients &&
-                        Array.isArray(recipe.ingredients)
+                    Object.keys(data).forEach((key) => {
+                        const recipe = data[key];
+                        if (recipe.cuisine) {
+                            cuisineSet.add(recipe.cuisine);
+                        }
+
+                        if (
+                            recipe.ingredients &&
+                            Array.isArray(recipe.ingredients)
+                        ) {
+                            recipe.ingredients.forEach((ingredient) => {
+                                const wordsAfterOf = ingredient
+                                    .toLowerCase()
+                                    .replace(/^.*\bof\b\s*/, "");
+                                if (wordsAfterOf) {
+                                    ingredientSet.add(wordsAfterOf);
+                                }
+                            });
+                        }
+
+                        if (recipe.calories) {
+                            minCalories = Math.min(minCalories, recipe.calories);
+                            maxCalories = Math.max(maxCalories, recipe.calories);
+                        }
+                    });
+
+                    setCuisines([...cuisineSet]);
+                    setIngredients([...ingredientSet]);
+
+                    const range = [];
+                    for (
+                        let i = Math.floor(minCalories / 100) * 100;
+                        i <= Math.ceil(maxCalories / 100) * 100;
+                        i += 100
                     ) {
-                        recipe.ingredients.forEach((ingredient) => {
-                            const wordsAfterOf = ingredient
-                                .toLowerCase()
-                                .replace(/^.*\bof\b\s*/, "");
-                            if (wordsAfterOf) {
-                                ingredientSet.add(wordsAfterOf);
-                            }
-                        });
+                        range.push(i);
                     }
-
-                    if (recipe.calories) {
-                        minCalories = Math.min(minCalories, recipe.calories);
-                        maxCalories = Math.max(maxCalories, recipe.calories);
-                    }
-                });
-
-                setCuisines([...cuisineSet]);
-                setIngredients([...ingredientSet]);
-
-                const range = [];
-                for (
-                    let i = Math.floor(minCalories / 100) * 100;
-                    i <= Math.ceil(maxCalories / 100) * 100;
-                    i += 100
-                ) {
-                    range.push(i);
+                    setCaloriesRange(range);
+                } catch (err) {
+                    setError("Failed to fetch data");
+                    console.error(err);
+                } finally {
+                    setLoading(false);
                 }
-                setCaloriesRange(range);
-            } catch (err) {
-                setError("Failed to fetch data");
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+            };
 
-        fetchData();
-    }, []);
+            fetchData();
+        }, []);
 
     const handleItemClick = (item) => {
         setPopupContent(item);
