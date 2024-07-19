@@ -77,21 +77,9 @@ const Wishlist = () => {
 
   return (
   <div>
-    <div>
-      <h2 className='title'>What do you want to cook today?</h2>
-
-      <div className="spinWheel">
-        <div className="spinWheel_btn"> Spin </div>
-        <div className="wheel">
-          {UserWishlist.map((wishlist) => (
-            <div key={wishlist.id} className="slice">
-              <span>{recipes[wishlist.RecipeID].recipeName}</span>
-            </div>
-          ))}
-      </div>
-    </div>
-    </div>
-
+    
+    <h2 className='title'>What do you want to cook today?</h2>
+  
     
     <div className='title'> <h2>Wishlists</h2> </div> 
       
