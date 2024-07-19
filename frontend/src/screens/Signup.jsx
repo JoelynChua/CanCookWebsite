@@ -1,60 +1,70 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
+import { setDoc, doc } from "firebase/firestore";
 
 const SignUp = () => {
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-
     const emailRef = useRef();
     const passwordRef = useRef();
     const usernameRef = useRef();
 
-    function signup(email, password) {
-        // return auth.createUserWithEmailAndPassword(email, password)
-        return createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up
-                const user = userCredential.user;
-                // ...
-                console.log("Signed up user:", user);
-                return userCredential;
-            })
-            .catch((error) => {
-                console.log("Error signing up:", error);
-                return error;
-            });
-    }
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
         setError("");
         setLoading(true);
-
-        const email = emailRef.current.value;
-        const password = passwordRef.current.value;
-        const username = usernameRef.current.value;
-
+        debugger;
         try {
-            // Create user with email and password
-            const userCredential = await signup(email, password);
-            if (userCredential && userCredential.user) {
-                const user = userCredential.user;
-                await set(ref(db, "users/" + user.uid), {
-                    username,
-                    email,
+            const email = emailRef.current.value;
+            const password = passwordRef.current.value;
+            const username = usernameRef.current.value;
+
+            console.log(
+                "Attempting to sign up with:",
+                email,
+                password,
+                username
+            );
+
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+            const user = userCredential.user;
+
+            console.log("Signed up user:", user);
+
+            setLoading(false);
+
+            if (user) {
+                console.log("Creating user document in Firestore");
+                await setDoc(doc(db, "Users", user.uid), {
+                    email: email,
+                    password: password,
+                    username: username,
                 });
-                navigate("/");
+
+                console.log("User document created successfully");
+            } else {
+                alert("Email is already taken");
             }
-        } catch (error) {
-            console.error("Signup Error:", error);
-            setError(error.message || "Failed to create an account");
+            // Redirect to home or another page after sign-up
+        } catch {
+            console.log(error);
         }
 
         setLoading(false);
+    }
+
+    if (auth.currentUser) {
+        navigate("/");
     }
 
     return (
