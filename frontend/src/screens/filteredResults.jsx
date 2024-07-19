@@ -132,7 +132,7 @@ export default function FilteredResults() {
     // };
 
     return (
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap w-screen h-screen justify-center bg-beige_main">
             {recipeList.length > 0 ? (
                 recipeList.map((recipe) => (
                     <div key={recipe.id}>

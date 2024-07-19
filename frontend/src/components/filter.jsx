@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-// This file is to get filter (cuisine, ingredients) based on its available category in DB
 export default function Filter() {
     const [cuisines, setCuisines] = useState([]);
     const [ingredients, setIngredients] = useState([]);
@@ -29,7 +28,7 @@ export default function Filter() {
                 let minCalories = Infinity;
                 let maxCalories = -Infinity;
 
-                Object.keys(data).forEach(key => {
+                Object.keys(data).forEach((key) => {
                     const recipe = data[key];
                     if (recipe.cuisine) {
                         cuisineSet.add(recipe.cuisine);
@@ -146,25 +145,26 @@ export default function Filter() {
     }
 
     return (
-        <div className="flex flex-wrap justify-center p-4">
+        <div className="flex justify-center mt-0">
             <button
                 onClick={() => handleItemClick("cuisine")}
-                className="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                className="m-1 p-2 bg-blue-200 text-black rounded-3xl hover:bg-blue-300 border-gray-300"
             >
                 Cuisine
             </button>
             <button
                 onClick={() => handleItemClick("ingredientCalories")}
-                className="m-2 p-2 bg-green-500 text-white rounded hover:bg-green-700"
+                className="m-1 p-2 bg-green-200 text-black rounded-3xl hover:bg-green-300  border-gray-300 hover:text-green-700"
             >
                 Ingredients & Calories
             </button>
 
             {popupContent && (
-                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75">
-                    <div className="bg-white p-4 rounded shadow-lg max-w-lg max-h-full overflow-y-auto">
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-lg font-semibold">
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="fixed inset-0 bg-gray-800 opacity-75"></div>
+                    <div className="relative bg-beige_main p-6 rounded-lg shadow-xl max-w-lg max-h-full overflow-y-auto z-50">
+                        <div className="flex justify-between items-center mb-4 ">
+                            <h2 className="text-xl font-semibold">
                                 {popupContent === "cuisine"
                                     ? "Cuisines"
                                     : "Ingredients & Calories"}
@@ -174,7 +174,7 @@ export default function Filter() {
                                 className="text-gray-500 hover:text-gray-800"
                             >
                                 <svg
-                                    className="w-6 h-6"
+                                    className="w-6 h-6 bg-white hover:bg-gray-200"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -189,14 +189,14 @@ export default function Filter() {
                             </button>
                         </div>
                         {popupContent === "cuisine" && (
-                            <div className="flex flex-wrap">
+                            <div className="flex flex-wrap gap-4">
                                 {cuisines.map((cuisine) => (
                                     <button
                                         key={cuisine}
                                         onClick={() =>
                                             handleCuisineClick(cuisine)
                                         }
-                                        className="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                                        className="px-4 py-2 bg-blue-100 text-black rounded-full border border-blue-300 hover:bg-blue-200 hover:text-black"
                                     >
                                         {cuisine}
                                     </button>
@@ -204,20 +204,19 @@ export default function Filter() {
                             </div>
                         )}
                         {popupContent === "ingredientCalories" && (
-                            <div className="flex flex-wrap">
-                                <div className="flex flex-col w-full">
+                            <div>
+                                <div className="mb-4">
                                     <h3 className="text-lg font-semibold mb-2">
                                         Ingredients
                                     </h3>
-                                    <div className="max-h-64 overflow-y-auto">
+                                    <div className="flex flex-wrap gap-2">
                                         {ingredients.map((ingredient) => (
                                             <label
                                                 key={ingredient}
-                                                className="m-2 p-2 bg-green-500 text-white rounded hover:bg-green-700 cursor-pointer"
+                                                className="flex items-center space-x-2"
                                             >
                                                 <input
                                                     type="checkbox"
-                                                    className="mr-2 cursor-pointer"
                                                     checked={selectedIngredients.includes(
                                                         ingredient
                                                     )}
@@ -226,53 +225,54 @@ export default function Filter() {
                                                             ingredient
                                                         )
                                                     }
+                                                    className="form-checkbox h-5 w-5 text-blue-600"
                                                 />
-                                                {ingredient}
+                                                <span className="text-gray-700">
+                                                    {ingredient}
+                                                </span>
                                             </label>
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex flex-col w-full mt-4">
+                                <div className="mb-4">
                                     <h3 className="text-lg font-semibold mb-2">
                                         Calories
                                     </h3>
-                                    <label className="m-2 p-2 bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer">
-                                        Min Calories:
+                                    <div className="flex space-x-4">
                                         <select
                                             value={selectedMinCalories}
                                             onChange={handleMinCaloriesChange}
-                                            className="ml-2 p-1 rounded"
+                                            className="form-select block w-full mt-1"
                                         >
-                                            <option value="">Any</option>
+                                            <option value="">Min</option>
+
                                             {caloriesRange.map((cal) => (
                                                 <option key={cal} value={cal}>
                                                     {cal}
                                                 </option>
                                             ))}
                                         </select>
-                                    </label>
-                                    <label className="m-2 p-2 bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer">
-                                        Max Calories:
                                         <select
                                             value={selectedMaxCalories}
                                             onChange={handleMaxCaloriesChange}
-                                            className="ml-2 p-1 rounded"
+                                            className="form-select block w-full mt-1"
                                         >
-                                            <option value="">Any</option>
+                                            <option value="">Max</option>
+
                                             {caloriesRange.map((cal) => (
                                                 <option key={cal} value={cal}>
                                                     {cal}
                                                 </option>
                                             ))}
                                         </select>
-                                    </label>
-                                    <button
-                                        onClick={handleApplyFilters}
-                                        className="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                                    >
-                                        Apply Filters
-                                    </button>
+                                    </div>
                                 </div>
+                                <button
+                                    onClick={handleApplyFilters}
+                                    className="w-full bg-green-300 text-black py-2 rounded-full hover:bg-green-400 border-gray-300 hover:text-black"
+                                >
+                                    Apply Filters
+                                </button>
                             </div>
                         )}
                     </div>

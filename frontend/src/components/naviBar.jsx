@@ -6,12 +6,12 @@ import { useAuth } from "../contexts/AuthContext"; // Import useAuth
 import { auth } from "../firebase";
 
 const NaviBar = () => {
-    const { currentUser } = useAuth(); // Get currentUser from useAuth
+    const { currentUser, logout } = useAuth(); // Get currentUser from useAuth
     const [isOpen, setIsOpen] = useState(false); // State for menu toggle
     const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
 
     let Links = [
-        { name: "All recipes", link: "/all-recipes" },
+        { name: "All recipes", link: "/" },
         { name: "About Us", link: "/about-us" },
     ];
 
@@ -37,7 +37,7 @@ const NaviBar = () => {
                     <img src={logo} alt="logo" className="w-20 h-30" />
                     <div>
                         <h1 className="text-3xl font-baloo text-textcolor">
-                            CanCook??
+                            CanCook?
                         </h1>
                         <p className="text-sm font-overlock font-bold text-textcolor">
                             Effortless Recipes for Every Ingredient
@@ -54,8 +54,7 @@ const NaviBar = () => {
                         ) : (
                             <div className="w-10"></div> // Render this when currentUser is false
                         )}
-
-                        <ul
+<ul
                             className={`md:flex md:items-center ${
                                 isOpen ? "block" : "hidden"
                             } md:block`}

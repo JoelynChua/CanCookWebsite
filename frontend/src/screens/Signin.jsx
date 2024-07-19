@@ -24,8 +24,9 @@ const SignIn = () => {
             await signInWithEmailAndPassword(auth, email, password);
             console.log(auth);
             console.log(auth.currentUser.uid);
-
+            
             console.log(`User ${email} logged in successfully`);
+
 
             navigate("/");
         } catch {
