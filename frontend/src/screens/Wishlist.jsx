@@ -92,7 +92,9 @@ const Wishlist = () => {
     </div>
     </div>
 
+    
     <div className='title'> <h2>Wishlists</h2> </div> 
+      
       {UserWishlist.map((wishlist) => (
         <div className='card' key={wishlist.id}>
           {/* {wishlist.UserID} - {wishlist.RecipeID} */}
@@ -102,16 +104,16 @@ const Wishlist = () => {
           {recipes[wishlist.RecipeID] && (
             <div onClick={() => viewRecipeDetails(wishlist.RecipeID)}>
               
-              <div className='image'>
-              {<img src={recipes[wishlist.RecipeID].image}/>}
+              <div className='column left'>
+              {<img className='image' src={recipes[wishlist.RecipeID].image}/>}
               </div>
 
-              <div className='recipe-details'>
+              <div className='column right'>
               <h3 className='recipe-name'>{recipes[wishlist.RecipeID].recipeName} </h3>
               <p className='recipe-description'>Calories: {recipes[wishlist.RecipeID].calories}</p>
               <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
-              
               </div> {/* for recipe details */}
+              
             </div> // for on click
           )}
           </div> // for card
