@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const userController = require('../controllers/userController');
 const recipeController = require('../controllers/recipeController');
+const reviewController = require('../controllers/reviewsController');
+
 
 
 
@@ -15,14 +17,14 @@ router.post('/users', userController.addUser);
 
 //router.get('/reviews', reviewController.getAllReviews);
 //router.get('/reviews/:recipeID', reviewController.getReviewsByRecipeID);
-router.get('/temp/:recipeID/reviews', reviewController.getReviewsByRecipeID);
+router.get('/recipeDetails/:recipeID/reviews', reviewController.getReviewsByRecipeID);
 router.post('/reviews', reviewController.postReview);
 router.put('/reviews/:reviewID', reviewController.editReview);
 
-router.get('/wishlists', wishlistController.getAllWishlists);
-router.get('/wishlists/:id', wishlistController.getWishlistByID);
-router.post('/wishlists', wishlistController.addWishlist);
-router.delete('/wishlists/:id', wishlistController.deleteWishlist);
+// router.get('/wishlists', wishlistController.getAllWishlists);
+// router.get('/wishlists/:id', wishlistController.getWishlistByID);
+// router.post('/wishlists', wishlistController.addWishlist);
+// router.delete('/wishlists/:id', wishlistController.deleteWishlist);
 
 
 router.get('/recipes', recipeController.getAllRecipes);
