@@ -1,6 +1,7 @@
 // src/ManageAcc.jsx
 
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ManageAcc = () => {
     return (
@@ -60,11 +61,14 @@ const ManageAcc = () => {
                         <div className="bg-gray-100 p-2 rounded-md mt-2 text-lg">
                             johndoe@gmail.com
                         </div>
-                    </div>
+                    </div>  
                     <div className="mt-6">
-                        <button className="w-full bg-transparent border border-black text-black p-2 rounded-md text-lg">
+                        <Link
+                            to="/ForgotPassword" 
+                            className="w-full bg-transparent border border-black text-black p-2 rounded-md text-lg"
+                        >
                             Click here to Change Password
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
