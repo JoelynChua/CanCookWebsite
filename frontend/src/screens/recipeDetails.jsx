@@ -19,11 +19,23 @@ export default function RecipeDetails() {
         if (id) {
             getRecipeDetails(id);
         }
+        
 
-        const favoriteState = sessionStorage.getItem(`favorite-${id}`);
-        if (favoriteState === 'true') {
-            setIsFavorite(true);
-        }
+        // const favoriteState = sessionStorage.getItem(`favorite-${id}`);
+        // if (favoriteState === 'true') {
+        //     setIsFavorite(true);
+        // }
+
+        const checkFavoriteStatus = async () => {
+            const wishlistID = await getWishlistID(userID, id);
+            if (wishlistID.length === 0) {
+                setIsFavorite(false);
+            } else {
+                setIsFavorite(true);
+            }          
+        };
+      
+          checkFavoriteStatus();
 
     }, [id]);
 
@@ -73,7 +85,7 @@ export default function RecipeDetails() {
     const handleDelete = async (WishlistID) => {
         try {
             const response = await deleteWishlist(WishlistID);
-            console.log(response);
+            console.log("delete successful");
         }catch (error) {
             console.error('failed delete', error)
         }
