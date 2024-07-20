@@ -89,7 +89,7 @@ const Wishlist = () => {
   };
 
   return (
-  <div>
+  <div className='w-full h-screen bg-beige_main'>
     
     <h2 className='title'>What do you want to cook today?</h2>
   

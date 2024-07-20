@@ -99,7 +99,7 @@ export default function RecipeDetails() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen w-full h-screen bg-beige_main">
             <div id={recipe._id}>
                 {/* Render = how React components output UI elements */}
                 {/* Render (return statement of the function component) your recipe details here, e.g., recipe name, cuisine, etc. */}

@@ -20,6 +20,7 @@
   overflow: hidden;
   width: 50%;
   margin: 2% auto;
+  background-color: pink;
 }
 
 .column {
@@ -64,7 +65,7 @@
 
 .card .button {
   align-self: flex-end; /* Align the button to the bottom */
-  background-color: pink;
+  background-color: #f49097;
   color: white;
   border: none;
   border-radius: 4px;
