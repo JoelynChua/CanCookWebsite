@@ -46,25 +46,3 @@ exports.deleteWishlist = async (id) => {
     return null;
   }
 };
-
-// get WishlistID
-exports.GetWishlistID = async (userID, recipeID) => {
-  const wishlistRef = db.ref('wishlist');
-  const snapshot = await wishlistRef
-    .orderByChild('UserID')
-    .equalTo(userID)
-    .once('value');
-
-    let wishlistID = null;
-    console.log(wishlistID)
-
-  snapshot.forEach(childSnapshot => {
-    console.log("hi")
-    console.log(childSnapshot.val().RecipeID)
-    if (childSnapshot.val().RecipeID === recipeID) {
-      wishlistID = childSnapshot.key;
-    }
-  });
-
-  return wishlistID;
-};

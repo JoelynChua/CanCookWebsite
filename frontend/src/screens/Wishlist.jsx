@@ -7,9 +7,6 @@ import { getRecipeById } from "../services/recipeService";
 import { useNavigate } from 'react-router-dom';
 import SpintheWheel from '../components/spinTheWheel';
 
-
-
-
 const Wishlist = () => {
   const userID = auth.currentUser.uid
   const [UserWishlist, setUserWishlist] = useState([]);
@@ -22,22 +19,29 @@ const Wishlist = () => {
   }
 
   useEffect(() => {
-    fetchUserWishlist(userID);
-    getRecipeDetails(UserWishlist.recipeID);
-  }, [userID]);
+        fetchUserWishlist(userID);
+        // getRecipeDetails(UserWishlist.recipeID);
+      }, [userID]);
 
 
   const fetchUserWishlist = async (userID) => {
     try {
       const wishlists = await getWishlistByUserID(userID);
-      setUserWishlist(wishlists); //UserWishlist is not updated at this point yet
-
-      const recipeDetails = {};
-      for (let wishlist of wishlists) {
-        const recipeID = wishlist.RecipeID;
-        recipeDetails[recipeID] = await getRecipeDetails(wishlist.RecipeID);
+      console.log(wishlists)
+      if (wishlists !== "error") {
+        setUserWishlist(wishlists); //UserWishlist is not updated at this point yet
+        const recipeDetails = {};
+        
+        for (let wishlist of wishlists) {
+          const recipeID = wishlist.RecipeID;
+          recipeDetails[recipeID] = await getRecipeDetails(wishlist.RecipeID);
+        }
+        setRecipes(recipeDetails);
+      }else{
+        setUserWishlist([]);
+        setRecipes({});
       }
-      setRecipes(recipeDetails);
+
     } catch (error) {
       console.error('Failed to fetch wishlists:', error);
     }
@@ -62,46 +66,40 @@ const Wishlist = () => {
       await deleteWishlist(wishlistID);
       // Refetch wishlist after deletion
       const updatedWishlists = await getWishlistByUserID(userID);
-      setUserWishlist(updatedWishlists);
-      const recipeDetails = {};
-      for (let wishlist of updatedWishlists) {
-        const recipeID = wishlist.RecipeID;
-        recipeDetails[recipeID] = await getRecipeDetails(recipeID);
+
+      if (updatedWishlists !== "error") {
+        setUserWishlist(updatedWishlists); 
+        const recipeDetails = {};
+        for (let wishlist of (updatedWishlists)) {
+          const recipeID = wishlist.RecipeID;
+          recipeDetails[recipeID] = await getRecipeDetails(recipeID);
+        }
+        setRecipes(recipeDetails);
+      }else{
+        setUserWishlist([]);
+        setRecipes({});
       }
-      setRecipes(recipeDetails);
+
     } catch (error) {
       console.error('Failed to delete wishlist:', error);
     }
   };
 
-
   return (
-    <div>
-      <div>
-        <h2 className='title'>What do you want to cook today?</h2>
+  <div className='w-full h-screen bg-beige_main'>
+    
+    <h2 className='title'>What do you want to cook today?</h2>
 
-        {/* Spin the wheel */}
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <SpintheWheel />
-        </div>
-
-        {/* <div className="spinWheel">
-          <div className="spinWheel_btn"> Spin </div>
-          <div className="wheel">
-            {UserWishlist.map((wishlist) => (
-              <div key={wishlist.id} className="slice">
-                <span>{recipes[wishlist.RecipeID].recipeName}</span>
-              </div>
-            ))}
-          </div>
-        </div> */}
-
-      </div>
-
-
-      <div className='title'> <h2>Wishlists</h2> </div>
-
-      {UserWishlist.map((wishlist) => (
+    {/* Spin the wheel */}
+    <SpintheWheel />
+  
+    
+    <div className='title'> <h2>Wishlists</h2> </div> 
+      
+      {UserWishlist.length === 0 ? 
+      (<p className='error'>Your wishlist is empty. Add some recipes to your wishlist!</p> ) 
+      : (
+      UserWishlist.map((wishlist) => (
         <div className='card' key={wishlist.id}>
           {/* {wishlist.UserID} - {wishlist.RecipeID} */}
           {/* {JSON.stringify(wishlist)} */}
@@ -122,11 +120,12 @@ const Wishlist = () => {
 
             </div> // for on click
           )}
-        </div> // for card
-
-      ))}
-    </div>
-  )
+          </div> // for card
+  
+      ))
+    )}
+  </div>
+  );
 }
 
 

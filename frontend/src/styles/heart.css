@@ -1,11 +1,18 @@
 .heart {
-    width: 50px;
-    height: 50px;
-    background: url('../assets/empty_heart.png') no-repeat center center;
-    background-size: contain;
-    cursor: pointer;
-  }
-  
-  .heart.red {
-    filter: invert(20%) sepia(100%) saturate(5000%) hue-rotate(350deg) brightness(90%) contrast(120%);
-  }
+  width: 50px;
+  height: 50px;
+  background-color: pink; 
+  mask: url('../assets/empty_heart.png') no-repeat center center;
+  mask-size: contain;
+  -webkit-mask: url('../assets/empty_heart.png') no-repeat center center;
+  -webkit-mask-size: contain;
+  cursor: pointer;
+}
+
+.heart:hover{
+  background-color: red;
+}
+
+.heart.red {
+  background-color: red; /* Red color when active */
+}

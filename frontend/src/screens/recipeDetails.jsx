@@ -7,21 +7,49 @@ import {auth} from "../firebase";
 import '../styles/heart.css';
 
 
+
 export default function RecipeDetails() {
     //const [recipe, setrecipe] = useState([]);
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const userID = auth.currentUser.uid;
-    const wishlist = getWishlistByUserID(userID);
-
 
     useEffect(() => {
         if (id) {
             getRecipeDetails(id);
         }
 
+        const checkFavoriteStatus = async () => {
+            const wishlistID = await getWishlistID(userID, id);
+            if (wishlistID.length === 0) {
+                setIsFavorite(false);
+            } else {
+                setIsFavorite(true);
+            }          
+        };
+      
+        checkFavoriteStatus();
+
     }, [id]);
+
+   
+
+    const getWishlistID = async (userID, id) => {
+        try {
+          const wishlist = await getWishlistByUserID(userID);
+          if (wishlist !== "error") {
+            for (let indiv_wishlist of wishlist) {
+              if (indiv_wishlist.RecipeID === id) {
+                return indiv_wishlist.WishlistID;
+              }
+            }
+          }
+          return []; 
+        } catch (error) {
+          console.error(`Error fetching wishlist ID for userID ${userID} and recipeID ${id}:`, error.message);
+        }
+      };
 
 
     const getRecipeDetails = async (id) => {
@@ -42,32 +70,36 @@ export default function RecipeDetails() {
             const newWishlist = await addWishlist(userID, recipeID);
             console.log(newWishlist)
         } catch (error) {
+            console.error(`Error creating wishlist for userID ${userID} and recipeID ${recipeID}:`);
             console.error('failed', error);
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (WishlistID) => {
         try {
-            const response = await deleteWishlist(id);
-            console.log(response);
+            const response = await deleteWishlist(WishlistID);
+            console.log("delete successful");
         }catch (error) {
             console.error('failed delete', error)
         }
     }
 
-    const toggleFavorite = () => {
-        if (!isFavorite) {
+    const toggleFavorite = async (userID, id) => {
+        // check if recipe has its wishlistID
+        const wishlistID = await getWishlistID(userID, id);
+        if (wishlistID.length === 0) {
             handleCreate(userID, id);
-            setIsFavorite(!isFavorite);
+            setIsFavorite(true);
+            sessionStorage.setItem(`favorite-${id}`, 'true');
+        } else {
+            handleDelete(wishlistID);
+            setIsFavorite(false);
+            sessionStorage.setItem(`favorite-${id}`, 'false');
         }
-        if (isFavorite) {
-            handleDelete(id);
-            setIsFavorite(isFavorite);
-        }
-    }
+    };
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen w-full h-screen bg-beige_main">
             <div id={recipe._id}>
                 {/* Render = how React components output UI elements */}
                 {/* Render (return statement of the function component) your recipe details here, e.g., recipe name, cuisine, etc. */}
@@ -76,7 +108,7 @@ export default function RecipeDetails() {
                 <img className="size-56 rounded-lg" src={recipe.image} /> 
                 <div 
                     className={`heart ${isFavorite ? 'red' : ''}`}
-                    onClick={toggleFavorite}
+                    onClick={() => toggleFavorite(userID, id)}
                 />
                 <p>Cuisine: {recipe.cuisine}</p>
                 <p>Duration: {recipe.duration}</p>
