@@ -86,7 +86,7 @@ const Wishlist = () => {
   };
 
   return (
-    <div className='w-full h-screen background-color: bg-beige_main'>
+    <div className='background-color: bg-beige_main'>
 
       <h2 className='title'>What do you want to cook today?</h2>
 
@@ -107,7 +107,6 @@ const Wishlist = () => {
               {/* {wishlist.UserID} - {wishlist.RecipeID} */}
               {/* {JSON.stringify(wishlist)} */}
 
-              <button className='button' onClick={() => handleDelete(wishlist.WishlistID)}> X </button>
               {recipes[wishlist.RecipeID] && (
                 <div onClick={() => viewRecipeDetails(wishlist.RecipeID)}>
 
@@ -121,6 +120,12 @@ const Wishlist = () => {
                     <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
                   </div> {/* for recipe details */}
 
+                  <button className='button'
+                    onClick={(e) => {
+                      e.stopPropagation(); // Stop event propagation
+                      handleDelete(wishlist.WishlistID);
+                    }}> X </button>
+                    
                 </div> // for on click
               )}
             </div> // for card

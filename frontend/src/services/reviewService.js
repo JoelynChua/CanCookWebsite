@@ -51,18 +51,18 @@ async function addReview(newReview) {
 }
 
 // Edit an existing review
-async function editReview(reviewID, newComments) {
+async function editReview(userID,reviewID, newComments) {
     try {
-        const user = auth.currentUser;
-        if (!user) {
+        const userAuth = auth.currentUser;
+        if (!userAuth) {
             throw new Error("User not authenticated.");
         }
 
-        const idToken = await user.getIdToken();
+        const user = userID;
         const response = await axiosInstance({
             method: "put",
             url: `http://localhost:5000/api/reviews/${reviewID}`,
-            data: { newComments },
+            data: { user,reviewID,newComments },
         });
         return response.data;
     } catch (error) {

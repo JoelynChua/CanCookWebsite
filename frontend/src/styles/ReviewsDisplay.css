@@ -8,16 +8,16 @@
     margin: auto;
 }
 
-.w-full {
+.w-full-review {
     padding: 20px;
     width: 100%;
 }
 
-.border-black {
+.border-black-review {
     border-color: rgb(173, 171, 171);
 }
 
-.border-t {
+.border-t-review {
     border-top-width: 1px;
     border-style: solid;
     margin-top: 50px;

@@ -1,77 +1,3 @@
-// import React, { useState, useEffect, useCallback } from 'react';
-// import LeaveReview from './leaveReview';
-// import RatingsDisplay from './ratingsDisplay';
-// import ReviewList from './reviewList';
-// import '../styles/ReviewsDisplay.css'; // Ensure correct path to your CSS file
-// import { addReview, editReview, fetchReviews } from '../services/reviewService';
-
-// const ReviewsDisplay = ({ recipeID, userID }) => {
-//     const [reviews, setReviews] = useState([]);
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState(null);
-
-//     const fetchReviewsData = useCallback(async () => {
-//         setLoading(true);
-//         try {
-//             const data = await fetchReviews(recipeID); // Pass recipeID to fetchReviews
-//             setReviews(data);
-//             setError(null);
-//         } catch (error) {
-//             setError(error.message);
-//         } finally {
-//             setLoading(false);
-//         }
-//     }, [recipeID]);
-
-//     useEffect(() => {
-//         fetchReviewsData();
-//     }, [fetchReviewsData]);
-
-//     const handleAddReview = (rating, comment) => {
-//         const newReview = { user: userID, recipe: recipeID, rating: rating, comments: comment };
-//         addReview(newReview)
-//             .then(addedReview => {
-//                 setReviews(prevReviews => [...prevReviews, addedReview]);
-//                 setError(null); // Clear any previous errors
-//                 alert("Your review was posted successfully.");
-//             })
-//             .catch(error => {
-//                 console.error('Error adding review:', error); // Debug log
-//                 console.log("reached here");
-//                 console.error('Error adding review 123:', error); // Debug log
-//                 setError(error.message); //Set error state based on server response
-//                 alert(`Error: ${error.message}`);
-//             });
-//     };
-
-//     const handleEditReview = (reviewID, newComment) => {
-//         editReview(reviewID, newComment)
-//             .then(updatedReview => {
-//                 setReviews(prevReviews =>
-//                     prevReviews.map(review => (review.id === reviewID ? updatedReview : review))
-//                 );
-//                 setError(null);
-//                 alert("Your comment was updated successfully.");
-//             })
-//             .catch(error => {
-//                 setError(error.message);
-//                 alert(`Error: ${error.message}`);
-//             });
-//     };
-
-//     return (
-//         <div className="reviews-display">
-//             <LeaveReview reviewCount={reviews.length} onAddReview={handleAddReview} recipeID={recipeID} userID={userID} />
-//             <div className="w-full border-black border-t"></div>
-//             <RatingsDisplay reviews={reviews} />
-//             <div className="w-full border-black border-t"></div>
-//             <ReviewList reviews={reviews} onEditReview={handleEditReview} userID={userID} />
-//         </div>
-//     );
-// };
-
-// export default ReviewsDisplay;
-
 import React, { useState, useEffect, useCallback } from 'react';
 import RatingsDisplay from './ratingsDisplay';
 import ReviewList from './reviewList';
@@ -127,20 +53,20 @@ const ReviewsDisplay = ({ recipeID, userID }) => {
             setError(null);
             alert("Your review was posted successfully.");
         } catch (error) {
-            // const errorMessage = error.response?.data?.error || error.message;
-            // setError(errorMessage);
-            // console.log('Error adding review:', errorMessage);
-            // alert(`${errorMessage}`);
             const errorMessage = error.message;
             setError(errorMessage);
             console.log('Error adding review:', errorMessage);
             alert(`${errorMessage}`);
         }
     };
-
     const handleEditReview = async (reviewID, newComment) => {
+        console.log("Received reviewID:", reviewID); // Debugging line
         try {
-            const updatedReview = await editReview(reviewID, newComment);
+            if (!userID) {
+                throw new Error("User not authenticated.");
+            }
+
+            const updatedReview = await editReview(userID, reviewID, newComment);
             setReviews(prevReviews =>
                 prevReviews.map(review => (review.id === reviewID ? updatedReview : review))
             );
@@ -149,10 +75,10 @@ const ReviewsDisplay = ({ recipeID, userID }) => {
         } catch (error) {
             const errorMessage = error.response?.data?.error || error.message;
             setError(errorMessage);
-            alert(`Error: ${errorMessage}`);
+            alert(`${errorMessage}`);
         }
     };
-
+   
     const handleRatingChange = (newRating) => {
         setRating(newRating);
     };
