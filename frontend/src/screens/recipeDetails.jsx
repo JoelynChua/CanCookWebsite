@@ -19,12 +19,6 @@ export default function RecipeDetails() {
         if (id) {
             getRecipeDetails(id);
         }
-        
-
-        // const favoriteState = sessionStorage.getItem(`favorite-${id}`);
-        // if (favoriteState === 'true') {
-        //     setIsFavorite(true);
-        // }
 
         const checkFavoriteStatus = async () => {
             const wishlistID = await getWishlistID(userID, id);
@@ -35,7 +29,7 @@ export default function RecipeDetails() {
             }          
         };
       
-          checkFavoriteStatus();
+        checkFavoriteStatus();
 
     }, [id]);
 
@@ -51,10 +45,9 @@ export default function RecipeDetails() {
               }
             }
           }
-          return []; // Return null if no matching wishlist is found
+          return []; 
         } catch (error) {
           console.error(`Error fetching wishlist ID for userID ${userID} and recipeID ${id}:`, error.message);
-          return null;
         }
       };
 

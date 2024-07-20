@@ -114,8 +114,8 @@ const Wishlist = () => {
 
               <div className='column right'>
               <h3 className='recipe-name'>{recipes[wishlist.RecipeID].recipeName} </h3>
-              <p className='recipe-description'>Calories: {recipes[wishlist.RecipeID].calories}</p>
-              <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
+              <p className='recipe-description'> Calories: {recipes[wishlist.RecipeID].calories}</p>
+              <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>            
               </div> {/* for recipe details */}
               
             </div> // for on click
