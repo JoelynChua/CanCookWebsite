@@ -2,6 +2,9 @@ import axiosInstance from "../utils/axiosInstance";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth(); // Firebase authentication instance
+const cloudURL = "https://can-cook-website-bw1l.vercel.app";
+const localURL = "http://localhost:5000/";
+const finalURL = cloudURL;
 
 // Fetch all reviews for a specific recipe
 async function fetchReviews(recipeId) {
@@ -12,7 +15,7 @@ async function fetchReviews(recipeId) {
         }
         const response = await axiosInstance({
             method: "get",
-            url: `http://localhost:5000/api/recipeDetails/${recipeId}/reviews`,
+            url: `${finalURL}/api/recipeDetails/${recipeId}/reviews`,
         });
         return response.data;
     } catch (error) {
@@ -30,7 +33,7 @@ async function addReview(newReview) {
         console.log('Submitting new review:', newReview); // Debug log
         const response = await axiosInstance({
             method: "post",
-            url: "http://localhost:5000/api/reviews",
+            url: `${finalURL}/api/reviews`,
             data: newReview,
         });
         return response.data;
@@ -61,7 +64,7 @@ async function editReview(userID,reviewID, newComments) {
         const user = userID;
         const response = await axiosInstance({
             method: "put",
-            url: `http://localhost:5000/api/reviews/${reviewID}`,
+            url: `${finalURL}/api/reviews/${reviewID}`,
             data: { user,reviewID,newComments },
         });
         return response.data;
