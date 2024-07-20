@@ -127,7 +127,11 @@ const ReviewsDisplay = ({ recipeID, userID }) => {
             setError(null);
             alert("Your review was posted successfully.");
         } catch (error) {
-            const errorMessage = error.response?.data?.error || error.message;
+            // const errorMessage = error.response?.data?.error || error.message;
+            // setError(errorMessage);
+            // console.log('Error adding review:', errorMessage);
+            // alert(`${errorMessage}`);
+            const errorMessage = error.message;
             setError(errorMessage);
             console.log('Error adding review:', errorMessage);
             alert(`${errorMessage}`);
@@ -143,8 +147,9 @@ const ReviewsDisplay = ({ recipeID, userID }) => {
             setError(null);
             alert("Your comment was updated successfully.");
         } catch (error) {
-            setError(error.message);
-            alert(`Error: ${error.message}`);
+            const errorMessage = error.response?.data?.error || error.message;
+            setError(errorMessage);
+            alert(`Error: ${errorMessage}`);
         }
     };
 
