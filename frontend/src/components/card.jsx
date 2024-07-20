@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Card({ id, recipeName, recipeImage  }) {
+export default function Card({ id, recipeName, recipeImage,  }) {
     // const [viewDetails, setviewDetails] = useState(false);
     const navigate = useNavigate();
 
