@@ -138,6 +138,7 @@ const SignUp = () => {
                                 className="bg-orange_main hover:bg-orange-400 text-textcolor hover:text-green-900 py-2 px-4 rounded-3xl font-bold font-overlock"
                                 type="submit"
                                 disabled={loading}
+                                onClick={handleSubmit}
                             >
                                 Sign up
                             </button>

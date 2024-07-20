@@ -1,0 +1,139 @@
+.review-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.user-review {
+  position: relative; /* Ensure position context for absolute positioning */
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Ensure there's enough padding for the edit button */
+  padding-right: 50px; /* Adjust as needed */
+}
+
+.user-review.highlighted {
+  background-color: #f7f7f7;
+}
+
+.user-review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Center align items vertically */
+}
+
+.user-review-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-review-username {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.user-review-rating {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.review-list-star {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.review-list-star.filled {
+  color: #f0c040; /* Color for filled stars */
+}
+
+.user-review-date {
+  font-size: 0.7rem;
+  color: #666;
+  margin-left: 10px; /* Pushes date to the right */
+  padding-top: 5px;
+}
+
+.user-review-content {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.edit-review-icon {
+  position: absolute;
+  top: 10px; /* Adjust top position */
+  right: 10px; /* Adjust right position */
+  font-size: 1.0rem; /* Larger font size */
+  color: #007BFF;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px; /* Increase padding for larger button */
+}
+
+.edit-review-icon:hover {
+  text-decoration: underline;
+}
+
+.edit-review-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  width: 600px;
+
+}
+
+.edit-review-modal h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.edit-review-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.edit-review-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.edit-review-save-button,
+.edit-review-cancel-button {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.edit-review-save-button {
+  color: #007bff;
+}
+
+.edit-review-cancel-button {
+  color: #dc3545;
+}

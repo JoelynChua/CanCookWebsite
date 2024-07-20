@@ -7,10 +7,14 @@ import { auth } from "../firebase";
 import '../styles/heart.css';
 import '../styles/responsive.css';
 
+import { useAuth } from '../contexts/AuthContext';
+import ReviewsDisplay from '../components/reviewsDisplay'; 
 
 
 export default function RecipeDetails() {
     //const [recipe, setrecipe] = useState([]);
+    const { currentUser } = useAuth(); // Get the current user from the AuthContext
+    //const [showReviews, setShowReviews] = useState(false);
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
@@ -101,7 +105,7 @@ export default function RecipeDetails() {
 
     return (
         <div className=" bg-beige_main ">
-            <div className='center max-width: 500px; margin: auto;'>
+            <div className='self-center'>
                 <div id={recipe._id} >
                     {/* Render = how React components output UI elements */}
                     {/* Render (return statement of the function component) your recipe details here, e.g., recipe name, cuisine, etc. */}
@@ -126,7 +130,17 @@ export default function RecipeDetails() {
                     ))}
                 </div>
             </div>
+            <div>
+            <ReviewsDisplay recipeID={id} userID={currentUser ? currentUser.uid : null} />
+            </div>
+
         </div>
+        
+        
+       
+
+        
+        
 
 
     )
