@@ -41,13 +41,13 @@
   "calories": 250,
   "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2014/07/Mac-and-Cheese-4.jpg",
   "ingredients": [
-    "Suitable amount of Elbow macaroni",
-    "Suitable amount of Butter",
-    "Suitable amount of Flour",
-    "Suitable amount of Salt",
-    "Suitable amount of Ground black pepper",
-    "Suitable amount of Milk",
-    "Suitable amount of Shredded Cheddar cheese"
+    "Elbow macaroni",
+    "Butter",
+    "Flour",
+    "Salt",
+    "Ground black pepper",
+    "Milk",
+    "Shredded Cheddar cheese"
   ],
   "equipments": [
     "Saucepan",

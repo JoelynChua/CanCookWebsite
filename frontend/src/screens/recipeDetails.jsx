@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getRecipeById } from "../services/recipeService";
-import {addWishlist, deleteWishlist, getWishlistByUserID} from '../services/wishlistService';
+import { addWishlist, deleteWishlist, getWishlistByUserID } from '../services/wishlistService';
 // import { useAuth } from "../contexts/AuthContext";
-import {auth} from "../firebase";
+import { auth } from "../firebase";
 import '../styles/heart.css';
+import '../styles/responsive.css';
 
 
 
@@ -26,30 +27,30 @@ export default function RecipeDetails() {
                 setIsFavorite(false);
             } else {
                 setIsFavorite(true);
-            }          
+            }
         };
-      
+
         checkFavoriteStatus();
 
     }, [id]);
 
-   
+
 
     const getWishlistID = async (userID, id) => {
         try {
-          const wishlist = await getWishlistByUserID(userID);
-          if (wishlist !== "error") {
-            for (let indiv_wishlist of wishlist) {
-              if (indiv_wishlist.RecipeID === id) {
-                return indiv_wishlist.WishlistID;
-              }
+            const wishlist = await getWishlistByUserID(userID);
+            if (wishlist !== "error") {
+                for (let indiv_wishlist of wishlist) {
+                    if (indiv_wishlist.RecipeID === id) {
+                        return indiv_wishlist.WishlistID;
+                    }
+                }
             }
-          }
-          return []; 
+            return [];
         } catch (error) {
-          console.error(`Error fetching wishlist ID for userID ${userID} and recipeID ${id}:`, error.message);
+            console.error(`Error fetching wishlist ID for userID ${userID} and recipeID ${id}:`, error.message);
         }
-      };
+    };
 
 
     const getRecipeDetails = async (id) => {
@@ -79,7 +80,7 @@ export default function RecipeDetails() {
         try {
             const response = await deleteWishlist(WishlistID);
             console.log("delete successful");
-        }catch (error) {
+        } catch (error) {
             console.error('failed delete', error)
         }
     }
@@ -99,29 +100,31 @@ export default function RecipeDetails() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen w-full h-screen bg-beige_main">
-            <div id={recipe._id}>
-                {/* Render = how React components output UI elements */}
-                {/* Render (return statement of the function component) your recipe details here, e.g., recipe name, cuisine, etc. */}
-                <p className="font-bold text-2xl">{recipe.recipeName}</p>
-                <br></br>
-                <img className="size-56 rounded-lg" src={recipe.image} /> 
-                <div 
-                    className={`heart ${isFavorite ? 'red' : ''}`}
-                    onClick={() => toggleFavorite(userID, id)}
-                />
-                <p>Cuisine: {recipe.cuisine}</p>
-                <p>Duration: {recipe.duration}</p>
-                <p>Serving Size: {recipe.servingSize}</p>
-                <p>Calories: {recipe.calories}</p>
-                <p>Ingredients: {recipe.ingredients.join(', ')}</p>
-                <p>Equipments: {recipe.equipments.join(', ')}</p>
-                <br></br>
-                {/* Steps to be printed in new line after every , */}
-                <p>Steps:</p>
-                {recipe.steps.map((step, stepIndex) => (
-                    <p key={stepIndex}>{step}</p>
-                ))}
+        <div className=" bg-beige_main ">
+            <div className='center max-width: 500px; margin: auto;'>
+                <div id={recipe._id} >
+                    {/* Render = how React components output UI elements */}
+                    {/* Render (return statement of the function component) your recipe details here, e.g., recipe name, cuisine, etc. */}
+                    <p className="font-bold text-2xl">{recipe.recipeName}</p>
+                    <br></br>
+                    <img className="size-56 rounded-lg" src={recipe.image} />
+                    <div
+                        className={`heart ${isFavorite ? 'red' : ''}`}
+                        onClick={() => toggleFavorite(userID, id)}
+                    />
+                    <p>Cuisine: {recipe.cuisine}</p>
+                    <p>Duration: {recipe.duration}</p>
+                    <p>Serving Size: {recipe.servingSize}</p>
+                    <p>Calories: {recipe.calories}</p>
+                    <p>Ingredients: {recipe.ingredients.join(', ')}</p>
+                    <p>Equipments: {recipe.equipments.join(', ')}</p>
+                    <br></br>
+                    {/* Steps to be printed in new line after every , */}
+                    <p>Steps:</p>
+                    {recipe.steps.map((step, stepIndex) => (
+                        <p key={stepIndex}>{step}</p>
+                    ))}
+                </div>
             </div>
         </div>
 

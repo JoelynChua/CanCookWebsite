@@ -19,9 +19,9 @@ const Wishlist = () => {
   }
 
   useEffect(() => {
-        fetchUserWishlist(userID);
-        // getRecipeDetails(UserWishlist.recipeID);
-      }, [userID]);
+    fetchUserWishlist(userID);
+    // getRecipeDetails(UserWishlist.recipeID);
+  }, [userID]);
 
 
   const fetchUserWishlist = async (userID) => {
@@ -31,13 +31,13 @@ const Wishlist = () => {
       if (wishlists !== "error") {
         setUserWishlist(wishlists); //UserWishlist is not updated at this point yet
         const recipeDetails = {};
-        
+
         for (let wishlist of wishlists) {
           const recipeID = wishlist.RecipeID;
           recipeDetails[recipeID] = await getRecipeDetails(wishlist.RecipeID);
         }
         setRecipes(recipeDetails);
-      }else{
+      } else {
         setUserWishlist([]);
         setRecipes({});
       }
@@ -68,14 +68,14 @@ const Wishlist = () => {
       const updatedWishlists = await getWishlistByUserID(userID);
 
       if (updatedWishlists !== "error") {
-        setUserWishlist(updatedWishlists); 
+        setUserWishlist(updatedWishlists);
         const recipeDetails = {};
         for (let wishlist of (updatedWishlists)) {
           const recipeID = wishlist.RecipeID;
           recipeDetails[recipeID] = await getRecipeDetails(recipeID);
         }
         setRecipes(recipeDetails);
-      }else{
+      } else {
         setUserWishlist([]);
         setRecipes({});
       }
@@ -86,45 +86,48 @@ const Wishlist = () => {
   };
 
   return (
-  <div className='w-full h-screen bg-beige_main'>
-    
-    <h2 className='title'>What do you want to cook today?</h2>
+    <div className='w-full h-screen background-color: bg-beige_main'>
 
-    {/* Spin the wheel */}
-    <SpintheWheel />
-  
-    
-    <div className='title'> <h2>Wishlists</h2> </div> 
-      
-      {UserWishlist.length === 0 ? 
-      (<p className='error'>Your wishlist is empty. Add some recipes to your wishlist!</p> ) 
-      : (
-      UserWishlist.map((wishlist) => (
-        <div className='card' key={wishlist.id}>
-          {/* {wishlist.UserID} - {wishlist.RecipeID} */}
-          {/* {JSON.stringify(wishlist)} */}
+      <h2 className='title'>What do you want to cook today?</h2>
 
-          <button className='button' onClick={() => handleDelete(wishlist.WishlistID)}> X </button>
-          {recipes[wishlist.RecipeID] && (
-            <div onClick={() => viewRecipeDetails(wishlist.RecipeID)}>
+      {/* Spin the wheel */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <SpintheWheel />
+      </div>
 
-              <div className='column left'>
-                {<img className='image' src={recipes[wishlist.RecipeID].image} />}
-              </div>
+      <div className='title'>
+        <h2>Wishlists</h2>
+      </div>
 
-              <div className='column right'>
-                <h3 className='recipe-name'>{recipes[wishlist.RecipeID].recipeName} </h3>
-                <p className='recipe-description'>Calories: {recipes[wishlist.RecipeID].calories}</p>
-                <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
-              </div> {/* for recipe details */}
+      {UserWishlist.length === 0 ?
+        (<p className='error'>Your wishlist is empty. Add some recipes to your wishlist!</p>)
+        : (
+          UserWishlist.map((wishlist) => (
+            <div className='card' key={wishlist.id}>
+              {/* {wishlist.UserID} - {wishlist.RecipeID} */}
+              {/* {JSON.stringify(wishlist)} */}
 
-            </div> // for on click
-          )}
-          </div> // for card
-  
-      ))
-    )}
-  </div>
+              <button className='button' onClick={() => handleDelete(wishlist.WishlistID)}> X </button>
+              {recipes[wishlist.RecipeID] && (
+                <div onClick={() => viewRecipeDetails(wishlist.RecipeID)}>
+
+                  <div className='column left'>
+                    {<img className='image' src={recipes[wishlist.RecipeID].image} />}
+                  </div>
+
+                  <div className='column right'>
+                    <h3 className='recipe-name'>{recipes[wishlist.RecipeID].recipeName} </h3>
+                    <p className='recipe-description'>Calories: {recipes[wishlist.RecipeID].calories}</p>
+                    <p className='recipe-description'>Cusine: {recipes[wishlist.RecipeID].cuisine}</p>
+                  </div> {/* for recipe details */}
+
+                </div> // for on click
+              )}
+            </div> // for card
+
+          ))
+        )}
+    </div>
   );
 }
 
