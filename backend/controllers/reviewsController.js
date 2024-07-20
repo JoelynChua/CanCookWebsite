@@ -14,45 +14,44 @@ const getReviewsByRecipeID = async (req, res) => {
 
 // Endpoint to post reviews 
 const postReview = async (req, res) => {
-    console.log("req123", req.body)
-    // console.log("res", res)
-    
+    console.log("Request Body:", req.body);
+
     const { user, recipeID, rating, comments } = req.body;
 
-
-    // Check if user is logged in 
-    if (!user) {
-        return res.status(401).json({ message: 'Please login/Signup to post a review.' });
-    }
-
-    // Check all fields are filled 
-    if (!rating || !comments) {
-        console.log(123)
-        return res.status(400).json({ message: 'All fields (rating, comments) are required.' });
-
-    }
-
     try {
-        // Ensure rating is a number and within a valid range (if applicable)
-        const parsedRating = parseInt(rating);
-        if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
-            return res.status(400).json({ message: 'Rating must be a number between 0 and 5.' });
+        // 1. Validate User Authentication
+        if (!user) {
+            return res.status(401).json({ error: 'Please login/Signup to post a review.' });
         }
 
+        // 2. Validate Required Fields
+        if (!rating || !comments) {
+            console.log("Missing fields");
+            return res.status(400).json({ error: 'All fields (rating, comments) are required.' });
+        }
+
+        // 3. Validate Rating
+        const parsedRating = parseInt(rating, 10);
+        if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
+            return res.status(400).json({ message: 'Rating must be a number between 1 and 5.' });
+        }
+
+        // 4. Post Review
         const newReview = await reviewService.postReview(user, recipeID, parsedRating, comments);
-        console.log("Posted");
+        console.log("Review Posted Successfully");
         return res.status(201).json(newReview);
+        
     } catch (error) {
         console.error('Error adding review:', error);
-        console.log("here");
 
+        // 5. Handle Errors
         let statusCode = 500;
         let errorMessage = 'Internal Server Error';
 
         if (error.message === 'User not found' || error.message === 'Recipe not found') {
             statusCode = 404;
             errorMessage = error.message;
-        } else if (error.message === 'User has already reviewed this recipe!') {
+        } else if (error.message === 'You have already reviewed this recipe!') {
             statusCode = 400;
             errorMessage = error.message;
         }
@@ -61,19 +60,26 @@ const postReview = async (req, res) => {
     }
 };
 
+
 // Endpoint to edit reviews
 const editReview = async (req, res) => {
-    const { reviewID } = req.params;
-    const { newComments } = req.body;
-    const userID = "-NzZ8BoZIR7Ojom64STS"; // to change 
+    // const { reviewID } = req.params;
+    const { reviewID, user, newComments } = req.body;
+    console.log('Review ID:', reviewID);
 
     try {
+          // Validate reviewID
+          if (!reviewID || typeof reviewID !== 'string' || reviewID.trim().length === 0) {
+            console.log('Invalid reviewID:', reviewID);
+            return res.status(400).json({ error: 'Invalid review ID' });
+        }
+   
         // Validate newComments
         if (!reviewService.isValidComments(newComments)) {
             return res.status(400).json({ error: 'Invalid comments format or length' });
         }
 
-        const updatedReview = await reviewService.editReview(reviewID, userID, newComments);
+        const updatedReview = await reviewService.editReview(reviewID, user, newComments);
         if (!updatedReview) {
             return res.status(404).json({ message: 'Review not found' });
         }
