@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
+import logo from "../assets/logo.png";
 
 const SignIn = () => {
     const emailRef = useRef();
@@ -47,7 +48,7 @@ const SignIn = () => {
             <div className="flex flex-col md:flex-row rounded-3xl shadow-lg max-w-6xl max-h-6xl p-5 md:p-0 bg-beige_main h-full">
                 <div className=" flex flex-col justify-center items-center p-10  md:rounded-l-3xl bg-pink_main">
                     <img
-                        src="/icon.png"
+                        src={logo}
                         alt="CanCook?"
                         className="w-25 h-25 "
                     />
