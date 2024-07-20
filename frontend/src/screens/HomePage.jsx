@@ -125,10 +125,10 @@ export default function HomePage() {
                     {/* Example wishlist rendering: */}
                     <ul>
                         {/* Assuming you have a wishlist array in the user object */}
-                        {currentUser.wishlist &&
-                        currentUser.wishlist.length > 0 ? (
-                            currentUser.wishlist.map((item, index) => (
-                                <li key={index}>{item}</li>
+                        {wishlist &&
+                        wishlist.length > 0 ? (
+                            wishlist.map((indiv_element) => (
+                                <li key={indiv_element.id}>ho</li>
                             ))
                         ) : (
                             <p>You have no items in your wishlist.</p>

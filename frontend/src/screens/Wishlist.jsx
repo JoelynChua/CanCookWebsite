@@ -7,9 +7,6 @@ import { getRecipeById } from "../services/recipeService";
 import { useNavigate } from 'react-router-dom';
 
 
-
-
-
 const Wishlist = () => {
   const userID = auth.currentUser.uid
   const [UserWishlist, setUserWishlist] = useState([]);

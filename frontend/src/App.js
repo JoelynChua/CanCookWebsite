@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./screens/HomePage";
 import Wishlist from "./screens/Wishlist";
+import AboutUs from "./screens/AboutUs";
 import NaviBar from "./components/naviBar";
 import RecipeDetails from "./screens/recipeDetails";
 import Signup from "./screens/Signup";
@@ -32,6 +33,7 @@ const AppContent = () => {
                 <Route path="/Wishlist" element={<Wishlist />} />
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route
                     path="/"
                     element={
