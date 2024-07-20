@@ -45,21 +45,3 @@ exports.deleteWishlist = async (req, res) => {
     console.error(error.message)
   }
 };
-
-exports.GetWishlistID = async (req, res) => {
-  try {
-    const userID = req.params.userID;
-    const recipeID = req.params.recipeID;
-    // console.log(userID,recipeID);
-    const wishlistID = await WishlistService.GetWishlistID(userID, recipeID);
-    if (wishlistID) {
-      res.status(200).json({ wishlistID });
-    } else {
-      res.status(404).json({ message: 'Wishlist item not found' });
-    }
-  } catch (error) {
-    console.error('Failed to get wishlist ID:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-

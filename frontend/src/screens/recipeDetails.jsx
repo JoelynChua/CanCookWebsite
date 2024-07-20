@@ -14,8 +14,6 @@ export default function RecipeDetails() {
     const [recipe, setRecipe] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const userID = auth.currentUser.uid;
-    const wishlist = getWishlistByUserID(userID);
-
 
     useEffect(() => {
         if (id) {
@@ -28,6 +26,25 @@ export default function RecipeDetails() {
         }
 
     }, [id]);
+
+   
+
+    const getWishlistID = async (userID, id) => {
+        try {
+          const wishlist = await getWishlistByUserID(userID);
+          if (wishlist !== "error") {
+            for (let indiv_wishlist of wishlist) {
+              if (indiv_wishlist.RecipeID === id) {
+                return indiv_wishlist.WishlistID;
+              }
+            }
+          }
+          return []; // Return null if no matching wishlist is found
+        } catch (error) {
+          console.error(`Error fetching wishlist ID for userID ${userID} and recipeID ${id}:`, error.message);
+          return null;
+        }
+      };
 
 
     const getRecipeDetails = async (id) => {
@@ -48,26 +65,29 @@ export default function RecipeDetails() {
             const newWishlist = await addWishlist(userID, recipeID);
             console.log(newWishlist)
         } catch (error) {
+            console.error(`Error creating wishlist for userID ${userID} and recipeID ${recipeID}:`);
             console.error('failed', error);
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (WishlistID) => {
         try {
-            const response = await deleteWishlist(id);
+            const response = await deleteWishlist(WishlistID);
             console.log(response);
         }catch (error) {
             console.error('failed delete', error)
         }
     }
 
-    const toggleFavorite = () => {
-        if (!isFavorite) {
+    const toggleFavorite = async (userID, id) => {
+        // check if recipe has its wishlistID
+        const wishlistID = await getWishlistID(userID, id);
+        if (wishlistID.length === 0) {
             handleCreate(userID, id);
             setIsFavorite(true);
             sessionStorage.setItem(`favorite-${id}`, 'true');
         } else {
-            handleDelete(id);
+            handleDelete(wishlistID);
             setIsFavorite(false);
             sessionStorage.setItem(`favorite-${id}`, 'false');
         }
@@ -83,7 +103,7 @@ export default function RecipeDetails() {
                 <img className="size-56 rounded-lg" src={recipe.image} /> 
                 <div 
                     className={`heart ${isFavorite ? 'red' : ''}`}
-                    onClick={toggleFavorite}
+                    onClick={() => toggleFavorite(userID, id)}
                 />
                 <p>Cuisine: {recipe.cuisine}</p>
                 <p>Duration: {recipe.duration}</p>

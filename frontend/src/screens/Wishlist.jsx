@@ -23,29 +23,27 @@ const Wishlist = () => {
 
   useEffect(() => {
         fetchUserWishlist(userID);
-        getRecipeDetails(UserWishlist.recipeID);
+        // getRecipeDetails(UserWishlist.recipeID);
       }, [userID]);
 
 
   const fetchUserWishlist = async (userID) => {
     try {
       const wishlists = await getWishlistByUserID(userID);
-      
-      if (wishlists) {
+      console.log(wishlists)
+      if (wishlists !== "error") {
         setUserWishlist(wishlists); //UserWishlist is not updated at this point yet
+        const recipeDetails = {};
+        
+        for (let wishlist of wishlists) {
+          const recipeID = wishlist.RecipeID;
+          recipeDetails[recipeID] = await getRecipeDetails(wishlist.RecipeID);
+        }
+        setRecipes(recipeDetails);
       }else{
-        setUserWishlist("");
-        setRecipes("");
+        setUserWishlist([]);
+        setRecipes({});
       }
-      console.log("hi",UserWishlist)
-      const recipeDetails = {};
-      if (wishlists){
-      for (let wishlist of wishlists) {
-        const recipeID = wishlist.RecipeID;
-        recipeDetails[recipeID] = await getRecipeDetails(wishlist.RecipeID);
-      }
-      setRecipes(recipeDetails);
-    }
 
     } catch (error) {
       console.error('Failed to fetch wishlists:', error);
@@ -71,18 +69,24 @@ const Wishlist = () => {
       await deleteWishlist(wishlistID);
       // Refetch wishlist after deletion
       const updatedWishlists = await getWishlistByUserID(userID);
-      setUserWishlist(updatedWishlists);
-      const recipeDetails = {};
-      for (let wishlist of updatedWishlists) {
-        const recipeID = wishlist.RecipeID;
-        recipeDetails[recipeID] = await getRecipeDetails(recipeID);
+
+      if (updatedWishlists !== "error") {
+        setUserWishlist(updatedWishlists); 
+        const recipeDetails = {};
+        for (let wishlist of (updatedWishlists)) {
+          const recipeID = wishlist.RecipeID;
+          recipeDetails[recipeID] = await getRecipeDetails(recipeID);
+        }
+        setRecipes(recipeDetails);
+      }else{
+        setUserWishlist([]);
+        setRecipes({});
       }
-      setRecipes(recipeDetails);
+
     } catch (error) {
       console.error('Failed to delete wishlist:', error);
     }
   };
-
 
   return (
   <div>
@@ -92,9 +96,9 @@ const Wishlist = () => {
     
     <div className='title'> <h2>Wishlists</h2> </div> 
       
-      {UserWishlist.length !== 0 ? (
-        <p className='error'>Your wishlist is empty. Add some recipes to your wishlist! </p>
-  ) : (
+      {UserWishlist.length === 0 ? 
+      (<p className='error'>Your wishlist is empty. Add some recipes to your wishlist!</p> ) 
+      : (
       UserWishlist.map((wishlist) => (
         <div className='card' key={wishlist.id}>
           {/* {wishlist.UserID} - {wishlist.RecipeID} */}
@@ -118,9 +122,10 @@ const Wishlist = () => {
           )}
           </div> // for card
   
-      )))}
+      ))
+    )}
   </div>
-  )
+  );
 }
 
 
