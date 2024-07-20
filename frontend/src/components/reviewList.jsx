@@ -1,3 +1,4 @@
+// export default ReviewList;
 import React, { useState } from 'react';
 import '../styles/ReviewList.css'; // Adjust path as per your project structure
 import { FaPen } from 'react-icons/fa'; // Import the pen icon
@@ -27,8 +28,12 @@ const ReviewList = ({ reviews, onEditReview }) => {
 
     const handleSaveReview = () => {
         if (selectedReview) {
+            console.log("Handling save for review ID:", selectedReview.id); // Debugging line
+            console.log("New comment:", editComment); // Debugging line
             onEditReview(selectedReview.id, editComment);
             closeEditModal();
+        } else {
+            console.error("No review selected for editing.");
         }
     };
 
@@ -37,14 +42,19 @@ const ReviewList = ({ reviews, onEditReview }) => {
             {reviews.length === 0 ? (
                 <p>No reviews found.</p>
             ) : (
-                reviews.map((review, index) => (
-                    <article key={index} className="user-review">
+                reviews.map((review) => (
+                    <article key={review.id} className="user-review">
                         <header className="user-review-header">
                             <div className="user-review-info">
                                 <h2 className="user-review-username">{review.username}</h2>
                                 <div className="user-review-rating">
                                     {[...Array(5)].map((_, i) => (
-                                        <span key={i} className={`review-list-star ${i < review.rating ? 'filled' : ''}`}>&#9733;</span>
+                                        <span
+                                            key={`star-${review.id}-${i}`} // Unique key for each star
+                                            className={`review-list-star ${i < review.rating ? 'filled' : ''}`}
+                                        >
+                                            &#9733;
+                                        </span>
                                     ))}
                                     <time className="user-review-date">{formatDate(review.createdAt)}</time>
                                 </div>
@@ -76,3 +86,4 @@ const ReviewList = ({ reviews, onEditReview }) => {
 };
 
 export default ReviewList;
+
