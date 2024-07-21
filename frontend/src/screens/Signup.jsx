@@ -41,12 +41,15 @@ const SignUp = () => {
     } catch (error) {
       if (error.message.includes("auth/invalid-email")) {
         alert("Please enter a valid email");
+      } else if (error.message.includes("auth/missing-email")) {
+        alert("Please enter a valid email");
       } else if (error.message.includes("auth/weak-password")) {
         alert("Password should be at least 6 characters");
       } else if (error.message.includes("auth/missing-password")) {
         alert("Please enter a password");
       } else if (error.message.includes("auth/email-already-in-use")) {
         alert("Email is already in use");
+  
       } else {
         alert(error);
       }

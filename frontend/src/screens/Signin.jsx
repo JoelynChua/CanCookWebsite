@@ -3,11 +3,12 @@ import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 
+import logo from "../assets/logo.png";
+
 import eyeopen from "../assets/eyeopen.png";
 import eyeclose from "../assets/eyeclose.png";
 
 const SignIn = () => {
-  
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(eyeclose);
 
@@ -62,7 +63,7 @@ const SignIn = () => {
     <div className="flex justify-center items-center min-h-screen bg-purple_main">
       <div className="flex flex-col md:flex-row rounded-3xl shadow-lg max-w-6xl max-h-6xl p-5 md:p-0 bg-beige_main h-full">
         <div className=" flex flex-col justify-center items-center p-10  md:rounded-l-3xl bg-pink_main">
-          <img src="/icon.png" alt="CanCook?" className="w-25 h-25 " />
+          <img src={logo} alt="CanCook?" className="w-25 h-25 " />
           <h1 className="text-6xl text-textcolor font-baloo">CanCook?</h1>
           <p className="mt-2 text-center font-overlock font-bold text-textcolor text-md">
             Want to cook something delicious with ingredients you have? Let us
