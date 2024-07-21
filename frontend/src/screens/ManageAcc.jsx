@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { auth, db, storage } from "../firebase";
 import { ref, get, update } from "firebase/database";
 
-
 const ManageAcc = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
