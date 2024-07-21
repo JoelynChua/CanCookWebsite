@@ -2,6 +2,8 @@
 
 import axiosInstance from "../utils/axiosInstance";
 
+
+
 async function getAllRecipes() {
     //Send a request to the backend
     const res = await axiosInstance({

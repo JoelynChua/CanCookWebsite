@@ -1,10 +1,6 @@
 import axiosInstance from "../utils/axiosInstance";
 import { getAuth } from "firebase/auth";
 
-const cloudURL = "https://can-cook-website-bw1l.vercel.app";
-const localURL = "http://localhost:5000/";
-const finalURL = cloudURL;
-
 const auth = getAuth(); // Firebase authentication instance
 const cloudURL = "https://can-cook-website-bw1l.vercel.app";
 const localURL = "http://localhost:5000/";
