@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
 const cloudURL = "https://can-cook-website-bw1l.vercel.app";
+const localURL = "http://localhost:5000/";
 const finalURL = cloudURL;
 
 export const getAllWishlists = async () => {

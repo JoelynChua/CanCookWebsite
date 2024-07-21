@@ -161,9 +161,9 @@ const ReviewsDisplay = ({ recipeID, userID }) => {
                     </form>
                 </div>
             </main>
-            <div className="w-full border-black border-t"></div>
+            <div className="w-full border-black-review border-t-review"></div>
             <RatingsDisplay reviews={reviews} />
-            <div className="w-full border-black border-t"></div>
+            <div className="w-full border-black-review border-t-review"></div>
             <ReviewList reviews={reviews} onEditReview={handleEditReview} userID={userID} />
         </div>
     );
