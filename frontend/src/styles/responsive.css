@@ -1,0 +1,17 @@
+.content-wrapper {
+    max-width: 80%; /* Adjust the max-width as needed */
+    margin: 0 auto; /* Center the content horizontally */
+    text-align: center; /* Center the text */
+  }
+
+  @media (min-width: 768px) {
+    .content-wrapper {
+      max-width: 60%; /* Adjust for larger screens */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .content-wrapper {
+      max-width: 50%; /* Adjust for even larger screens */
+    }
+  }

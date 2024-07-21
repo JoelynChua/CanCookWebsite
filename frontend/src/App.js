@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./screens/HomePage";
 import Wishlist from "./screens/Wishlist";
+import AboutUs from "./screens/AboutUs";
 import NaviBar from "./components/naviBar";
 import RecipeDetails from "./screens/recipeDetails";
 import Signup from "./screens/Signup";
@@ -10,6 +11,7 @@ import ForgotPassword from "./screens/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import ManageAcc from "./screens/ManageAcc";
+import FilteredResults from "./screens/filteredResults";
 
 const AppContent = () => {
     const location = useLocation();
@@ -33,6 +35,27 @@ const AppContent = () => {
 
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
                 <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
+                {/* <Route path="/" element={<HomePage />} /> */}
+                <Route path="/Wishlist" element={<Wishlist />} />
+                <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
+                <Route
+                    path="/filteredResults/cuisine/:cuisine"
+                    element={<FilteredResults />}
+                />
+                <Route
+                    path="/filteredResults/ingredients"
+                    element={<FilteredResults />}
+                />
+                <Route
+                    path="/filteredResults/calories"
+                    element={<FilteredResults />}
+                />
+                <Route
+                    path="/filteredResults/caloriesIngredients"
+                    element={<FilteredResults />}
+                />
+                <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route
                     path="/"
                     element={

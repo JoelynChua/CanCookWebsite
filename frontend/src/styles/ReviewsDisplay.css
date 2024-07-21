@@ -1,0 +1,26 @@
+.reviews-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+.w-full-review {
+    padding: 20px;
+    width: 100%;
+}
+
+.border-black-review {
+    border-color: rgb(173, 171, 171);
+}
+
+.border-t-review {
+    border-top-width: 1px;
+    border-style: solid;
+    margin-top: 50px;
+}
+
+
