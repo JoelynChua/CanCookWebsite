@@ -11,7 +11,7 @@ const NaviBar = () => {
     const [showDropdown, setShowDropdown] = useState(false); // State for dropdown menu
 
     let Links = [
-        { name: "All recipes", link: "/all-recipes" },
+        { name: "All recipes", link: "/" },
         { name: "About Us", link: "/about-us" },
     ];
 
@@ -54,8 +54,7 @@ const NaviBar = () => {
                         ) : (
                             <div className="w-10"></div> // Render this when currentUser is false
                         )}
-
-                        <ul
+<ul
                             className={`md:flex md:items-center ${
                                 isOpen ? "block" : "hidden"
                             } md:block`}
@@ -90,7 +89,7 @@ const NaviBar = () => {
                                 {showDropdown && (
                                     <div className="absolute right-0 left-1 mt-1 w-40 bg-beige_main rounded-md shadow-lg">
                                         <a
-                                            href="/ManageAcc"
+                                            href="/manage-account"
                                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                         >
                                             Manage Account
