@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import Card from "./card";
 import { getAllRecipes } from "../services/recipeService";
 
@@ -10,25 +10,25 @@ export default function Carousel() {
     useEffect(() => {
         getRecipes();
         updateVisibleCards();
-        window.addEventListener("resize", updateVisibleCards);
+        window.addEventListener('resize', updateVisibleCards);
+        // Set title for tab
         document.title = "HomePage";
-        return () => window.removeEventListener("resize", updateVisibleCards);
+        return () => window.removeEventListener('resize', updateVisibleCards);
     }, []);
 
-    const getRecipes = async () => {
-        try {
-            const response = await getAllRecipes();
-            setRecipeList(response);
-        } catch (error) {
-            console.error("Error fetching recipes:", error);
-        }
+    const getRecipes = () => {
+        getAllRecipes()
+            .then(response => {
+                setRecipeList(response);
+            })
+            .catch(error => console.error("Error fetching recipes:", error));
     };
 
     const updateVisibleCards = () => {
         const width = window.innerWidth;
-        if (width >= 1400) {
+        if (width >= 1200) {
             setVisibleCards(3);
-        } else if (width >= 1000) {
+        } else if (width >= 800) {
             setVisibleCards(2);
         } else {
             setVisibleCards(1);
@@ -36,14 +36,11 @@ export default function Carousel() {
     };
 
     const handleLeftClick = () => {
-        setActiveIndex(
-            (prevIndex) =>
-                (prevIndex - 1 + recipeList.length) % recipeList.length
-        );
+        setActiveIndex(prevIndex => (prevIndex - 1 + recipeList.length) % recipeList.length);
     };
 
     const handleRightClick = () => {
-        setActiveIndex((prevIndex) => (prevIndex + 1) % recipeList.length);
+        setActiveIndex(prevIndex => (prevIndex + 1) % recipeList.length);
     };
 
     const getVisibleRecipes = () => {
@@ -53,35 +50,25 @@ export default function Carousel() {
     };
 
     return (
-        <div className="container mx-auto px-4">
+        <div>
             <div className="flex items-left mb-4">
-                <p className="font-serif text-2xl font-bold text-textcolor ml-5 ">
-                    What we're loving now...
-                </p>
+                <p class="font-serif text-2xl font-bold underline">What we're loving now</p>
             </div>
-            <div className="flex items-center justify-between">
-                <div
-                    className="text-xl md:text-5xl cursor-pointer"
-                    onClick={handleLeftClick}
-                >
-                    &#8249;
-                </div>
-                <div className="flex overflow-hidden space-x-8">
+            <div className="flex items-center">
+                <div className="text-xl md:text-5xl cursor-pointer" onClick={handleLeftClick}>{"<"}</div>
+                <div className="flex overflow-x-auto space-x-4">
+                    {/* .map is used for array */}
                     {getVisibleRecipes().map((recipe, index) => (
-                        <Card
-                            key={index}
-                            id={recipe.id}
-                            recipeName={recipe.recipeName}
-                            recipeImage={recipe.image}
-                        />
+                        <div key={index}>
+                            <Card
+                                id = {recipe.id}
+                                recipeName={recipe.recipeName}
+                                recipeImage={recipe.image}
+                            />
+                        </div>
                     ))}
                 </div>
-                <div
-                    className="text-xl md:text-5xl cursor-pointer"
-                    onClick={handleRightClick}
-                >
-                    &#8250;
-                </div>
+                <div className="text-xl md:text-5xl cursor-pointer" onClick={handleRightClick}>{">"}</div>
             </div>
         </div>
     );
