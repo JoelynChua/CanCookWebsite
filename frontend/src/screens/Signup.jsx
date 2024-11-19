@@ -42,6 +42,8 @@ const SignUp = () => {
     } catch (error) {
       if (error.message.includes("auth/invalid-email")) {
         alert("Please enter a valid email");
+      } else if (error.message.includes("auth/missing-email")) {
+        alert("Please enter a valid email");
       } else if (error.message.includes("auth/weak-password")) {
         alert("Password should be at least 6 characters");
       } else if (error.message.includes("auth/missing-password")) {

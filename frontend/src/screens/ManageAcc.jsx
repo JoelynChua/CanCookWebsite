@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth, db, storage } from "../firebase";
 import { ref, get, update } from "firebase/database";
+import egg from "../assets/egg.png";
 
 const ManageAcc = () => {
   const [username, setUsername] = useState("");
@@ -54,9 +55,25 @@ const ManageAcc = () => {
           <div className="relative">
             <img
               className="w-48 h-48 rounded-full border-4 border-gray-300"
-              src="/profilepic.png"
+              src={egg}
               alt="Profile"
             />
+            {/* <button className="absolute bottom-0 right-0 bg-gray-200 rounded-full p-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 4v4m0 0v4m0-4h4m-4 0H8m8 8h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2m-4 4H8m0 0H4a2 2 0 01-2-2V8a2 2 0 012-2h4M8 16h4"
+                                />
+                            </svg>
+                        </button> */}
           </div>
         </div>
         <div className="flex flex-col flex-grow">
