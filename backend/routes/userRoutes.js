@@ -1,6 +1,6 @@
+const express = require('express'); // Import Express
+const cors = require('cors'); // Import CORS if used
 
-const express = require('express');
-const cors = require('cors');
 const userController = require('../controllers/userController');
 const wishlistController = require('../controllers/wishlistController');
 const recipeController = require('../controllers/recipeController');

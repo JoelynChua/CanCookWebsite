@@ -31,14 +31,17 @@ const SignUp = () => {
 
   const handleSignup = async (email, password, username) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      // Alert and navigate after acknowledgment
+      alert("Account created successfully! Please log in.");
+      setTimeout(() => {
+        navigate("/Signin");
+      }, 100); // 100ms delay ensures alert displays
+
       await set(ref(db, "users/" + user.uid), { username, email });
-      navigate("/");
+
+
     } catch (error) {
       if (error.message.includes("auth/invalid-email")) {
         alert("Please enter a valid email");
@@ -51,10 +54,11 @@ const SignUp = () => {
       } else if (error.message.includes("auth/email-already-in-use")) {
         alert("Email is already in use");
       } else {
-        alert(error);
+        alert(error.message);
       }
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
